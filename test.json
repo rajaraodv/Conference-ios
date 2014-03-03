@@ -108,6 +108,7 @@
     ]
   },
   "a06i000000BYJorAAH": {
+    "Title__c": "Analytics Unleashed - Putting the New Analytics API to Work for Your Business",
     "Track__c": "Admin",
     "Id": "a06i000000BYJorAAH",
     "Name": "Enterprise Security",
@@ -118,6 +119,7 @@
     "Location__c": "Room3"
   },
   "a06i000000BYJocAAH": {
+    "Title__c": "Anatomy Of A Mobile App – Build Your App Today With Salesforce Platform",
     "Track__c": "Advanced",
     "Id": "a06i000000BYJocAAH",
     "Name": "Elevate Beginner",
@@ -128,6 +130,7 @@
     "Location__c": "Room2"
   },
   "a06i000000BYKQTAA5": {
+    "Title__c": "Lunch",
     "Track__c": "Lunch Break",
     "Id": "a06i000000BYKQTAA5",
     "Name": "Lunch",
