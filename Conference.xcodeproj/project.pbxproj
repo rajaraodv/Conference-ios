@@ -30,6 +30,7 @@
 		2E7E32B318C22A7F00426121 /* SessionsCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E32B218C22A7F00426121 /* SessionsCustomCell.xib */; };
 		2E7E32B618C22B2E00426121 /* SFSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7E32B518C22B2E00426121 /* SFSessionCell.m */; };
 		2E7E32B818C2302600426121 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E32B718C2302600426121 /* test.json */; };
+		2E88D39218C4581700EFE315 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D39118C4581700EFE315 /* IconDownloader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,8 @@
 		2E7E32B418C22B2E00426121 /* SFSessionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSessionCell.h; sourceTree = "<group>"; };
 		2E7E32B518C22B2E00426121 /* SFSessionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSessionCell.m; sourceTree = "<group>"; };
 		2E7E32B718C2302600426121 /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
+		2E88D39018C4581700EFE315 /* IconDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconDownloader.h; sourceTree = "<group>"; };
+		2E88D39118C4581700EFE315 /* IconDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconDownloader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +137,8 @@
 		2E7E326818C216A800426121 /* Conference */ = {
 			isa = PBXGroup;
 			children = (
+				2E88D39018C4581700EFE315 /* IconDownloader.h */,
+				2E88D39118C4581700EFE315 /* IconDownloader.m */,
 				2E7E32B418C22B2E00426121 /* SFSessionCell.h */,
 				2E7E32B518C22B2E00426121 /* SFSessionCell.m */,
 				2E7E327118C216A800426121 /* SFAppDelegate.h */,
@@ -297,6 +302,7 @@
 			files = (
 				2E7E326F18C216A800426121 /* main.m in Sources */,
 				2E7E327318C216A800426121 /* SFAppDelegate.m in Sources */,
+				2E88D39218C4581700EFE315 /* IconDownloader.m in Sources */,
 				2E7E32B018C2293800426121 /* SFSessionsViewController.m in Sources */,
 				2E7E32B618C22B2E00426121 /* SFSessionCell.m in Sources */,
 			);
@@ -508,6 +514,7 @@
 				2E7E329618C216A800426121 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2E7E329718C216A800426121 /* Build configuration list for PBXNativeTarget "ConferenceTests" */ = {
 			isa = XCConfigurationList;
@@ -516,6 +523,7 @@
 				2E7E329918C216A800426121 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
