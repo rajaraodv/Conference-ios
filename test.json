@@ -116,7 +116,8 @@
     "End_Date_And_Time__c": "2014-03-01T20:00:00.000+0000",
     "Start_Date_And_Time__c": "2014-03-01T19:00:00.000+0000",
     "Session_Duration__C": 60,
-    "Location__c": "Room3"
+    "Location__c": "Room3",
+    "Background_Image_Url__c": null
   },
   "a06i000000BYJocAAH": {
     "Title__c": "Anatomy Of A Mobile App – Build Your App Today With Salesforce Platform",
@@ -127,7 +128,8 @@
     "End_Date_And_Time__c": "2014-03-01T20:00:00.000+0000",
     "Start_Date_And_Time__c": "2014-03-01T19:00:00.000+0000",
     "Session_Duration__C": 60,
-    "Location__c": "Room2"
+    "Location__c": "Room2",
+    "Background_Image_Url__c": null
   },
   "a06i000000BYKQTAA5": {
     "Title__c": "Lunch",
@@ -138,6 +140,7 @@
     "End_Date_And_Time__c": "2014-03-01T21:00:00.000+0000",
     "Start_Date_And_Time__c": "2014-03-01T20:00:00.000+0000",
     "Session_Duration__C": 60,
-    "Location__c": "Room1"
+    "Location__c": "Room1",
+    "Background_Image_Url__c": "http://www.discoverbranson.com/cms/wp-content/uploads/2011/12/Grand-Country4.jpg"
   }
 }
