@@ -1,5 +1,5 @@
 //
-//  SFFirstViewController.h
+//  SFSessionCell.h
 //  Conference
 //
 //  Created by Raja Rao DV on 3/1/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SFFirstViewController : UIViewController
+@interface SFSessionCell : UITableViewCell
 
 @end

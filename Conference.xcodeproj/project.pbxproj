@@ -14,14 +14,22 @@
 		2E7E326F18C216A800426121 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7E326E18C216A800426121 /* main.m */; };
 		2E7E327318C216A800426121 /* SFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7E327218C216A800426121 /* SFAppDelegate.m */; };
 		2E7E327618C216A800426121 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E327418C216A800426121 /* Main.storyboard */; };
-		2E7E327918C216A800426121 /* SFFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7E327818C216A800426121 /* SFFirstViewController.m */; };
-		2E7E327C18C216A800426121 /* SFSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7E327B18C216A800426121 /* SFSecondViewController.m */; };
 		2E7E327E18C216A800426121 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E327D18C216A800426121 /* Images.xcassets */; };
 		2E7E328518C216A800426121 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7E328418C216A800426121 /* XCTest.framework */; };
 		2E7E328618C216A800426121 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7E326218C216A800426121 /* Foundation.framework */; };
 		2E7E328718C216A800426121 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7E326618C216A800426121 /* UIKit.framework */; };
 		2E7E328F18C216A800426121 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E328D18C216A800426121 /* InfoPlist.strings */; };
 		2E7E329118C216A800426121 /* ConferenceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7E329018C216A800426121 /* ConferenceTests.m */; };
+		2E7E329D18C21AD700426121 /* conference-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E329B18C21AD700426121 /* conference-50.png */; };
+		2E7E329E18C21AD700426121 /* like-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E329C18C21AD700426121 /* like-50.png */; };
+		2E7E32A118C21B4500426121 /* conference-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E329F18C21B4500426121 /* conference-25.png */; };
+		2E7E32A218C21B4500426121 /* conference-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E32A018C21B4500426121 /* conference-32.png */; };
+		2E7E32A518C21B5200426121 /* like-25.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E32A318C21B5200426121 /* like-25.png */; };
+		2E7E32A618C21B5200426121 /* like-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E32A418C21B5200426121 /* like-32.png */; };
+		2E7E32B018C2293800426121 /* SFSessionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7E32AE18C2293800426121 /* SFSessionsViewController.m */; };
+		2E7E32B318C22A7F00426121 /* SessionsCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E32B218C22A7F00426121 /* SessionsCustomCell.xib */; };
+		2E7E32B618C22B2E00426121 /* SFSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7E32B518C22B2E00426121 /* SFSessionCell.m */; };
+		2E7E32B818C2302600426121 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E32B718C2302600426121 /* test.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,16 +54,24 @@
 		2E7E327118C216A800426121 /* SFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFAppDelegate.h; sourceTree = "<group>"; };
 		2E7E327218C216A800426121 /* SFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFAppDelegate.m; sourceTree = "<group>"; };
 		2E7E327518C216A800426121 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		2E7E327718C216A800426121 /* SFFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFFirstViewController.h; sourceTree = "<group>"; };
-		2E7E327818C216A800426121 /* SFFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFFirstViewController.m; sourceTree = "<group>"; };
-		2E7E327A18C216A800426121 /* SFSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSecondViewController.h; sourceTree = "<group>"; };
-		2E7E327B18C216A800426121 /* SFSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFSecondViewController.m; sourceTree = "<group>"; };
 		2E7E327D18C216A800426121 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2E7E328318C216A800426121 /* ConferenceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConferenceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E7E328418C216A800426121 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		2E7E328C18C216A800426121 /* ConferenceTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ConferenceTests-Info.plist"; sourceTree = "<group>"; };
 		2E7E328E18C216A800426121 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2E7E329018C216A800426121 /* ConferenceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConferenceTests.m; sourceTree = "<group>"; };
+		2E7E329B18C21AD700426121 /* conference-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "conference-50.png"; sourceTree = "<group>"; };
+		2E7E329C18C21AD700426121 /* like-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "like-50.png"; sourceTree = "<group>"; };
+		2E7E329F18C21B4500426121 /* conference-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "conference-25.png"; sourceTree = "<group>"; };
+		2E7E32A018C21B4500426121 /* conference-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "conference-32.png"; sourceTree = "<group>"; };
+		2E7E32A318C21B5200426121 /* like-25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "like-25.png"; sourceTree = "<group>"; };
+		2E7E32A418C21B5200426121 /* like-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "like-32.png"; sourceTree = "<group>"; };
+		2E7E32AD18C2293800426121 /* SFSessionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSessionsViewController.h; sourceTree = "<group>"; };
+		2E7E32AE18C2293800426121 /* SFSessionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSessionsViewController.m; sourceTree = "<group>"; };
+		2E7E32B218C22A7F00426121 /* SessionsCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SessionsCustomCell.xib; sourceTree = "<group>"; };
+		2E7E32B418C22B2E00426121 /* SFSessionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSessionCell.h; sourceTree = "<group>"; };
+		2E7E32B518C22B2E00426121 /* SFSessionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSessionCell.m; sourceTree = "<group>"; };
+		2E7E32B718C2302600426121 /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +101,9 @@
 		2E7E325618C216A800426121 = {
 			isa = PBXGroup;
 			children = (
+				2E7E32B718C2302600426121 /* test.json */,
+				2E7E32B218C22A7F00426121 /* SessionsCustomCell.xib */,
+				2E7E327418C216A800426121 /* Main.storyboard */,
 				2E7E326818C216A800426121 /* Conference */,
 				2E7E328A18C216A800426121 /* ConferenceTests */,
 				2E7E326118C216A800426121 /* Frameworks */,
@@ -115,14 +134,14 @@
 		2E7E326818C216A800426121 /* Conference */ = {
 			isa = PBXGroup;
 			children = (
+				2E7E32B418C22B2E00426121 /* SFSessionCell.h */,
+				2E7E32B518C22B2E00426121 /* SFSessionCell.m */,
 				2E7E327118C216A800426121 /* SFAppDelegate.h */,
 				2E7E327218C216A800426121 /* SFAppDelegate.m */,
-				2E7E327418C216A800426121 /* Main.storyboard */,
-				2E7E327718C216A800426121 /* SFFirstViewController.h */,
-				2E7E327818C216A800426121 /* SFFirstViewController.m */,
-				2E7E327A18C216A800426121 /* SFSecondViewController.h */,
-				2E7E327B18C216A800426121 /* SFSecondViewController.m */,
+				2E7E32AD18C2293800426121 /* SFSessionsViewController.h */,
+				2E7E32AE18C2293800426121 /* SFSessionsViewController.m */,
 				2E7E327D18C216A800426121 /* Images.xcassets */,
+				2E7E329A18C21AD700426121 /* images */,
 				2E7E326918C216A800426121 /* Supporting Files */,
 			);
 			path = Conference;
@@ -155,6 +174,19 @@
 				2E7E328D18C216A800426121 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2E7E329A18C21AD700426121 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				2E7E329F18C21B4500426121 /* conference-25.png */,
+				2E7E32A018C21B4500426121 /* conference-32.png */,
+				2E7E329B18C21AD700426121 /* conference-50.png */,
+				2E7E32A318C21B5200426121 /* like-25.png */,
+				2E7E32A418C21B5200426121 /* like-32.png */,
+				2E7E329C18C21AD700426121 /* like-50.png */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,9 +266,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E7E32A118C21B4500426121 /* conference-25.png in Resources */,
 				2E7E327E18C216A800426121 /* Images.xcassets in Resources */,
 				2E7E326D18C216A800426121 /* InfoPlist.strings in Resources */,
+				2E7E329E18C21AD700426121 /* like-50.png in Resources */,
+				2E7E32A218C21B4500426121 /* conference-32.png in Resources */,
+				2E7E32B318C22A7F00426121 /* SessionsCustomCell.xib in Resources */,
+				2E7E329D18C21AD700426121 /* conference-50.png in Resources */,
 				2E7E327618C216A800426121 /* Main.storyboard in Resources */,
+				2E7E32A618C21B5200426121 /* like-32.png in Resources */,
+				2E7E32B818C2302600426121 /* test.json in Resources */,
+				2E7E32A518C21B5200426121 /* like-25.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,9 +296,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E7E326F18C216A800426121 /* main.m in Sources */,
-				2E7E327918C216A800426121 /* SFFirstViewController.m in Sources */,
 				2E7E327318C216A800426121 /* SFAppDelegate.m in Sources */,
-				2E7E327C18C216A800426121 /* SFSecondViewController.m in Sources */,
+				2E7E32B018C2293800426121 /* SFSessionsViewController.m in Sources */,
+				2E7E32B618C22B2E00426121 /* SFSessionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +335,7 @@
 				2E7E327518C216A800426121 /* Base */,
 			);
 			name = Main.storyboard;
+			path = Conference;
 			sourceTree = "<group>";
 		};
 		2E7E328D18C216A800426121 /* InfoPlist.strings */ = {

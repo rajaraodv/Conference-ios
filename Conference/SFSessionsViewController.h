@@ -1,5 +1,5 @@
 //
-//  SFSecondViewController.h
+//  SFSessionsViewController.h
 //  Conference
 //
 //  Created by Raja Rao DV on 3/1/14.
@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SFSessionCell.h"
 
-@interface SFSecondViewController : UIViewController
+@interface SFSessionsViewController : UITableViewController
 
 @end
