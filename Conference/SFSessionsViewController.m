@@ -32,20 +32,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.iconCache =  [NSMutableDictionary dictionary];
+    self.iconCache = [NSMutableDictionary dictionary];
     
     //register main table view's xib file
     [self.tableView registerNib:[UINib nibWithNibName:@"SessionsCustomCell"
                                                bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"sessionCell"];
     
-    NSString *str = @"http://localhost:3000/";
+    NSString *str = @"http://10.0.67.26:3000/";
     NSURL *url = [NSURL URLWithString:str];
     NSData *data = [NSData dataWithContentsOfURL:url];
+    if (data == nil) {
+        [self showAlertWithTitle:@"No Data From Server" AndMessage:@"Looks like there is no Internet or the server is down."];
+        return;
+    }
     NSError *error = nil;
     NSDictionary *groupedBySessions = [NSJSONSerialization JSONObjectWithData:data options:
                                        NSJSONReadingMutableContainers                              error:&error];
     
+    if (error != nil) {
+        [self showAlertWithTitle:@"No Session Data" AndMessage:@"Data from server is not a valid JSON. Please Contact Admin. "];
+        return;
+    }
     //NSLog(@"Your JSON Object: %@ Or Error is: %@", groupedBySessions, error);
     
     NSArray *groupedBySessionsArray = [groupedBySessions allValues];
@@ -169,7 +177,7 @@
     NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
     NSDictionary *session = [sessionsAtThisStartTime objectAtIndex:indexPath.row];
     
-    cell.sessionNameLabel.text = [session objectForKey:@"Name"];
+    cell.sessionNameLabel.text = [session objectForKey:@"Title__c"];
     cell.trackLabel.text = [session objectForKey:@"Track__c"];
     
     //speaker scroll view..
@@ -184,7 +192,7 @@
         [view removeFromSuperview];
     }
     NSArray *speakers = [session objectForKey:@"speakers"];
-   // NSArray *imageArray = [[NSArray alloc] initWithObjects:@"conference-25.png", @"like-50.png", @"conference-32.png", nil];
+    // NSArray *imageArray = [[NSArray alloc] initWithObjects:@"conference-25.png", @"like-50.png", @"conference-32.png", nil];
     for (int i = 0; i < [speakers count]; i++) {
         NSDictionary *speaker = speakers[i];
         //We'll create an imageView object in every 'page' of our scrollView.
@@ -197,8 +205,8 @@
         [button addTarget:self
                    action:@selector(aMethod:)
          forControlEvents:UIControlEventTouchUpInside];
-   
-       
+        
+        
         UIImageView *speakerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
         [self setImageView:speakerImageView forSpeakerImageUrl:[speaker objectForKey:@"Photo_Url__c"]];
         [button addSubview:speakerImageView];
@@ -208,12 +216,12 @@
         [speakerNamelabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f]];
         speakerNamelabel.textColor = [UIColor whiteColor];
         [button addSubview:speakerNamelabel];
- 
+        
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 20, 200, 30)];
         titleLabel.text = [speaker objectForKey:@"Title__c"];
         titleLabel.textColor = [UIColor whiteColor];
         [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:12.0f]];
-
+        
         [button addSubview:titleLabel];
         
         
@@ -228,10 +236,10 @@
 // -------------------------------------------------------------------------------
 //	setImageView:
 // -------------------------------------------------------------------------------
-- (void)setImageView:(UIImageView *)speakerImageView forSpeakerImageUrl:(NSString*) imageUrl {
+- (void)setImageView:(UIImageView *)speakerImageView forSpeakerImageUrl:(NSString *)imageUrl {
     
-    UIImage *image =  [self.iconCache objectForKey:imageUrl];
-    if(image != nil) {
+    UIImage *image = [self.iconCache objectForKey:imageUrl];
+    if (image != nil) {
         [self makeImageViewRounded:speakerImageView AndSetImage:image];
         return;
     }
@@ -258,10 +266,10 @@
     }
 }
 
-- (void)makeImageViewRounded:(UIImageView *)speakerImageView AndSetImage:(UIImage*) image {
+- (void)makeImageViewRounded:(UIImageView *)speakerImageView AndSetImage:(UIImage *)image {
     
     speakerImageView.image = image;
-
+    
     // Begin a new image that will be the new image with the rounded corners
     // (here with the size of an UIImageView)
     UIGraphicsBeginImageContextWithOptions(speakerImageView.bounds.size, NO, [UIScreen mainScreen].scale);
@@ -277,22 +285,33 @@
     
     // Lets forget about that we were drawing
     UIGraphicsEndImageContext();
-
+    
 }
 
 
--(void) aMethod: sender {
+- (void)aMethod:sender {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    SFSessionCell *cell = (SFSessionCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    SFSessionCell * cell = (SFSessionCell *)
+    [self.tableView cellForRowAtIndexPath:indexPath];
     NSLog(@"%d", cell.pageControl.currentPage);
     NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
     NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
     NSDictionary *session = [sessionsAtThisStartTime objectAtIndex:indexPath.row];
     NSArray *speakers = [session objectForKey:@"speakers"];
-   NSDictionary *speaker = speakers[cell.pageControl.currentPage];
+    NSDictionary *speaker = speakers[cell.pageControl.currentPage];
     NSLog(@"speaker %@ clicked", [speaker objectForKey:@"Name"]);
 }
 
+- (void)showAlertWithTitle:(NSString *)title AndMessage: (NSString *)message {
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    
+}
 
 @end
