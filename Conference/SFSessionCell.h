@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface SFSessionCell : UITableViewCell<UIScrollViewDelegate>
-@property (strong, nonatomic) IBOutlet UILabel *sessionNameLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *trackLabel;
+@property (strong, nonatomic) IBOutlet UITextView *sessionTitleTextView;
 
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
+@property (strong, nonatomic) IBOutlet UILabel *sessionRoomLabel;
 
 
 @end

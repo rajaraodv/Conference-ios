@@ -31,6 +31,7 @@
 		2E7E32B618C22B2E00426121 /* SFSessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E7E32B518C22B2E00426121 /* SFSessionCell.m */; };
 		2E7E32B818C2302600426121 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7E32B718C2302600426121 /* test.json */; };
 		2E88D39218C4581700EFE315 /* IconDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D39118C4581700EFE315 /* IconDownloader.m */; };
+		2E88D39618C52D7300EFE315 /* lunch.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2E88D39518C52D7300EFE315 /* lunch.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		2E7E32B718C2302600426121 /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 		2E88D39018C4581700EFE315 /* IconDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconDownloader.h; sourceTree = "<group>"; };
 		2E88D39118C4581700EFE315 /* IconDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconDownloader.m; sourceTree = "<group>"; };
+		2E88D39518C52D7300EFE315 /* lunch.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lunch.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 		2E7E329A18C21AD700426121 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				2E88D39518C52D7300EFE315 /* lunch.jpg */,
 				2E7E329F18C21B4500426121 /* conference-25.png */,
 				2E7E32A018C21B4500426121 /* conference-32.png */,
 				2E7E329B18C21AD700426121 /* conference-50.png */,
@@ -281,6 +284,7 @@
 				2E7E327618C216A800426121 /* Main.storyboard in Resources */,
 				2E7E32A618C21B5200426121 /* like-32.png in Resources */,
 				2E7E32B818C2302600426121 /* test.json in Resources */,
+				2E88D39618C52D7300EFE315 /* lunch.jpg in Resources */,
 				2E7E32A518C21B5200426121 /* like-25.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
