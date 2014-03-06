@@ -8,7 +8,7 @@
 
 #import "SFSessionsViewController.h"
 #import "IconDownloader.h"
-
+#import "SFFeedbackViewController.h"
 
 @interface SFSessionsViewController ()
 @property(strong, nonatomic) NSMutableDictionary *sections;
@@ -17,6 +17,9 @@
 @property(nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
 @property(strong, nonatomic) NSMutableDictionary *imageCache;
 @property(strong, nonatomic) UIColor *defaultCellBGColor;
+@property(strong, nonatomic) GIConnection *conn;
+@property(strong, nonatomic) GIChannel *channel;
+@property(strong, nonatomic) NSDictionary *currentSession; //used by segue
 
 @end
 
@@ -100,6 +103,8 @@
     // Create a sorted list of days
     NSArray *unsortedDays = [self.sections allKeys];
     self.sortedStartTimes = [unsortedDays sortedArrayUsingSelector:@selector(compare:)];
+    
+    [self goInstant];
 
     
     //
@@ -131,10 +136,50 @@
     
 }
 
+- (void)goInstant{
+     self.conn = [GIConnection connectionWithConnectUrl:[NSURL URLWithString:@"https://goinstant.net/6d90f902767a/Conference"]];
+   
+    GIConnectionRoomHandler testConnRoomBlock = ^(NSError *error, GIConnection *connection, GIRoom *room) {
+        //subscribe to channel
+        self.channel =  [room channelWithName:@"conferenceChannel"];
+        [self.channel subscribe:self];
+    };
+    
+    //join room1
+    [self.conn connectAndJoinRoom:@"room1" completion:testConnRoomBlock];
+}
+
+// wait for messages
+- (void)channel:(GIChannel *)channel didReceiveMessage:(id)message fromUser:(GIUser *)userId {
+    NSLog(@"%@", message);
+};
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark - feedbackButtonDelegateHandler
+
+- (void) feedbackButtonClickedOnCell:(id)cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
+    NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
+    NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
+    self.currentSession = [sessionsAtThisStartTime objectAtIndex:indexPath.row]; // save it to property
+    
+    [self performSegueWithIdentifier:@"showFeedbackViewSegue" sender:self];
+}
+
+#pragma mark - segue
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([[segue identifier] isEqualToString:@"showFeedbackViewSegue"]) {
+        NSLog(@"%@", (SFFeedbackViewController*)[[segue destinationViewController] class]);
+
+        [(SFFeedbackViewController*)[segue destinationViewController] setSession: self.currentSession];
+    }
+}
+
 
 #pragma mark - Table view data source
 
@@ -167,6 +212,9 @@
     if (cell == nil) {
         cell = [[SFSessionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    
+    //add current controller as delegate to cell's FeedbackButton control
+    cell.delegate = self;
     
     //Note: store background image/color and set it back to cells in the beginning.
     //coz, imagine we had set some custom backbround image to a cell and if that cell is reused,
@@ -208,7 +256,7 @@
     NSArray *speakers = [session objectForKey:@"speakers"];
     for (int i = 0; i < [speakers count]; i++) {
         NSDictionary *speaker = speakers[i];
-        //We'll create an imageView object in every 'page' of our scrollView.
+        //We'll create a button that represent each frame of the scroll view and embed everything else as its sub view.
         CGRect frame;
         frame.origin.x = cell.scrollView.frame.size.width * i;
         frame.origin.y = 0;
@@ -221,6 +269,7 @@
         
         
         UIImageView *speakerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+        speakerImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self setImageView:speakerImageView forSpeakerImageUrl:[speaker objectForKey:@"Photo_Url__c"]];
         [button addSubview:speakerImageView];
         
