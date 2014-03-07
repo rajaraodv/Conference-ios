@@ -36,6 +36,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    
     self.imageCache = [NSMutableDictionary dictionary];
     
     //register main table view's xib file
@@ -135,6 +137,9 @@
     // NSArray* values = [groupedBySessions allValues];
     
 }
+
+
+
 
 - (void)goInstant{
      self.conn = [GIConnection connectionWithConnectUrl:[NSURL URLWithString:@"https://goinstant.net/6d90f902767a/Conference"]];

@@ -37,6 +37,7 @@
 		2E88D39C18C6BD6100EFE315 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E88D39B18C6BD6100EFE315 /* libicucore.dylib */; };
 		2E88D39F18C7EC1B00EFE315 /* SFFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D39E18C7EC1B00EFE315 /* SFFeedbackViewController.m */; };
 		2E88D3A218C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D3A118C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.m */; };
+		2E88D3A818C9370300EFE315 /* SFThankYouViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D3A718C9370300EFE315 /* SFThankYouViewController.m */; };
 		533E1502ABF64EF9945964ED /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F15F53602B641A881152715 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,8 @@
 		2E88D39E18C7EC1B00EFE315 /* SFFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFFeedbackViewController.m; sourceTree = "<group>"; };
 		2E88D3A018C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		2E88D3A118C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
+		2E88D3A618C9370300EFE315 /* SFThankYouViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFThankYouViewController.h; sourceTree = "<group>"; };
+		2E88D3A718C9370300EFE315 /* SFThankYouViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFThankYouViewController.m; sourceTree = "<group>"; };
 		9F15F53602B641A881152715 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20A02FD691B4D4F97A98A6C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -173,6 +176,8 @@
 				2E7E32AE18C2293800426121 /* SFSessionsViewController.m */,
 				2E88D39D18C7EC1B00EFE315 /* SFFeedbackViewController.h */,
 				2E88D39E18C7EC1B00EFE315 /* SFFeedbackViewController.m */,
+				2E88D3A618C9370300EFE315 /* SFThankYouViewController.h */,
+				2E88D3A718C9370300EFE315 /* SFThankYouViewController.m */,
 				2E88D3A018C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.h */,
 				2E88D3A118C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.m */,
 				2E7E327D18C216A800426121 /* Images.xcassets */,
@@ -367,6 +372,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E88D3A818C9370300EFE315 /* SFThankYouViewController.m in Sources */,
 				2E88D3A218C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				2E88D39F18C7EC1B00EFE315 /* SFFeedbackViewController.m in Sources */,
 				2E7E326F18C216A800426121 /* main.m in Sources */,
