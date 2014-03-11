@@ -338,7 +338,7 @@
 }
 
 // -------------------------------------------------------------------------------
-//	setImageView:
+//	setImageView:withImageUrl
 // -------------------------------------------------------------------------------
 - (void)setBackgroundImageForCell:(SFSessionCell *)cell withImageUrl:(NSString *)imageUrl {
     

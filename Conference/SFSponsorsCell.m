@@ -26,4 +26,13 @@
     // Configure the view for the selected state
 }
 
+
+- (IBAction)feedbackButton:(id)sender {
+    //Is anyone listening
+    if([self.delegate respondsToSelector:@selector(feedbackButtonClickedOnCell:)])
+    {
+        //send the delegate function with the amount entered by the user
+        [self.delegate feedbackButtonClickedOnCell:self];
+    }
+}
 @end

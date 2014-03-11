@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SFSponsorsCell.h"
 
-@interface SFSponsorsViewController : UITableViewController
+@interface SFSponsorsViewController : UITableViewController<FeedbackButtonDelegate, UIAlertViewDelegate>
 
 @end
