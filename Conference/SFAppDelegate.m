@@ -12,8 +12,28 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+//    [[ETPush pushManager] configureSDKWithAppID:@"191b32b2-bedf-454c-8c5a-7be8e4e7d613" andAccessToken:@"zhuqg4xugcyb3rdsq39zjzhq" withAnalytics:NO andLocationServices:NO andCloudPages:NO];
+//
+//    [[ETPush pushManager] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+//    [[ETPush pushManager] applicationLaunchedWithOptions:launchOptions];
     return YES;
+}
+
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    [[ETPush pushManager] registerDeviceToken:deviceToken];
+}
+-(void)application:(UIApplication *)application
+didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    [[ETPush pushManager]
+     applicationDidFailToRegisterForRemoteNotificationsWithError:error];
+}
+-(void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    [[ETPush pushManager] handleNotification:userInfo
+                         forApplicationState:application.applicationState];
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

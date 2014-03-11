@@ -10,7 +10,7 @@
 #import "SFSessionCell.h"
 #import <GoInstant/GoInstant.h>
 
-@interface SFSessionsViewController : UITableViewController<GIChannelObserver, FeedbackButtonDelegate>
+@interface SFSessionsViewController : UITableViewController<GIChannelObserver, FeedbackButtonDelegate, UIAlertViewDelegate>
 
 
 @end

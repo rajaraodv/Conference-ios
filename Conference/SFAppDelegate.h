@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ETPush.h"
 
 @interface SFAppDelegate : UIResponder <UIApplicationDelegate>
 

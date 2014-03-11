@@ -20,6 +20,7 @@
 @property(strong, nonatomic) GIConnection *conn;
 @property(strong, nonatomic) GIChannel *channel;
 @property(strong, nonatomic) NSDictionary *currentSession; //used by segue
+@property(strong, nonatomic) UIAlertView *reloadAlert;
 
 @end
 
@@ -44,6 +45,13 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"SessionsCustomCell"
                                                bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"sessionCell"];
+
+    [self loadSessionDataAndReloadTable:NO];
+    [self goInstant];
+    
+}
+
+-(void)loadSessionDataAndReloadTable:(BOOL) reloadTableView{
     
     NSString *str = @"http://localhost:3000/";
     // NSString *str = @"https://raw.github.com/rajaraodv/Conference-ios/master/test.json";
@@ -106,39 +114,11 @@
     NSArray *unsortedDays = [self.sections allKeys];
     self.sortedStartTimes = [unsortedDays sortedArrayUsingSelector:@selector(compare:)];
     
-    [self goInstant];
-
-    
-    //
-    //    NSArray *myArray = [groupedBySessions allValues];
-    //    NSLog(@"\n\nBefore sorting.. ");
-    //    for(int i = 0; i < [myArray count]; i++) {
-    //         NSLog(@"%@ Start time: %@", [myArray[i] objectForKey:@"Name"], [myArray[i] objectForKey:@"Start_Date_And_Time__c"]) ;
-    //    }
-    //    NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey: @"Start_Date_And_Time__c" ascending: YES];
-    //
-    //    NSArray *sortedArray = [myArray sortedArrayUsingDescriptors:[NSArray arrayWithObject: dateSortDescriptor]];
-    //   // NSLog(@"After Sorting: %@", sortedArray);
-    //    NSLog(@"\n\nAfter sorting.. ");
-    //    for(int i = 0; i < [sortedArray count]; i++) {
-    //        NSLog(@"%@ Start time: %@ track %@", [sortedArray[i] objectForKey:@"Name"], [sortedArray[i] objectForKey:@"Start_Date_And_Time__c"], [sortedArray[i] objectForKey:@"Track__c"] ) ;
-    //    }
-    //    NSLog(@"Now: %@",  [NSDate date]);
-    //
-    //    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    //    [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.zzzZ"];
-    //    NSDate *myDate = [df dateFromString: @"2014-03-01T16:00:00.000+0000"];
-    //       NSLog(@"myDate: %@",  myDate);
-    //    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    //    [formatter setDateStyle:NSDateFormatterShortStyle];
-    //    [formatter setTimeStyle:NSDateFormatterShortStyle];
-    //    NSLog(@"myDate: %@",  myDate);
-    //    NSLog(@"myDate: %@",[formatter stringFromDate:myDate]);
-    // NSArray* values = [groupedBySessions allValues];
-    
+    if(reloadTableView) {
+        [self.tableView reloadData];
+        [self.reloadAlert dismissWithClickedButtonIndex:0 animated:YES];
+    }
 }
-
-
 
 
 - (void)goInstant{
@@ -156,8 +136,25 @@
 
 // wait for messages
 - (void)channel:(GIChannel *)channel didReceiveMessage:(id)message fromUser:(GIUser *)userId {
-    NSLog(@"%@", message);
+    //[self showAlertWithTitle:@"Updates Available" AndMessage:[message description]];
+    self.reloadAlert = [[UIAlertView alloc]initWithTitle:@"Updates Available" message:@"Would you like to reload data?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    [self.reloadAlert show];
 };
+
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        //Code for OK button
+    }
+    if (buttonIndex == 1)
+    {
+        [self loadSessionDataAndReloadTable:YES];
+        
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
