@@ -9,6 +9,7 @@
 #import "SFSponsorsViewController.h"
 #import "SFSponsorsCell.h"
 #import "IconDownloader.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface SFSponsorsViewController ()
 @property(strong, nonatomic) NSMutableDictionary *sections;
@@ -140,7 +141,8 @@
     //add current controller as delegate to cell's FeedbackButton control
     cell.delegate = self;
     
-    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+
     //Get current sponsor from indexPath
     NSString *currentLevel = [self.sortedLevels objectAtIndex:indexPath.section];
     NSArray *sponsorsAtThisLevel = [self.sections objectForKey:currentLevel];
@@ -150,10 +152,12 @@
     cell.boothLabel.text = [currentSponsor objectForKey:@"Booth_Number__c"];
     cell.sponsorsBioTextView.text = [currentSponsor objectForKey:@"About_Text__c"];
     cell.sponsorNameLabel.text = [currentSponsor objectForKey:@"Name"];
+  
+    cell.logoImageView.layer.cornerRadius = 20.0;
+    cell.logoImageView.clipsToBounds = YES;
     
     [self setImageView:cell.logoImageView forSponsorLogoUrl:[currentSponsor objectForKey:@"Image_Url__c"]];
 
-    // Configure the cell...
     
     return cell;
 }
@@ -163,7 +167,13 @@
 // -------------------------------------------------------------------------------
 - (void)setImageView:(UIImageView *)logoImageView forSponsorLogoUrl:(NSString *)imageUrl {
     
-
+    
+    UIImage *image = [self.imageCache objectForKey:imageUrl];
+    if (image != nil) {
+        logoImageView.image = image;
+       // [self makeImageViewRounded:logoImageView AndSetImage:image];
+        return;
+    }
     IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:imageUrl];
     if (iconDownloader == nil) {
         iconDownloader = [[IconDownloader alloc] init];
@@ -173,7 +183,8 @@
             // Display the newly loaded image
             [self.imageCache setObject:image forKey:imageUrl];
             logoImageView.image = image;
-            
+            //[self makeImageViewRounded:logoImageView AndSetImage:image];
+
             // Remove the IconDownloader from the in progress list.
             // This will result in it being deallocated.
             [self.imageDownloadsInProgress removeObjectForKey:imageUrl];
@@ -183,6 +194,28 @@
         
         [iconDownloader startDownloadWithURL:imageUrl AndToken:nil];
     }
+}
+
+- (void)makeImageViewRounded:(UIImageView *)imageView AndSetImage:(UIImage *)image {
+    
+    imageView.image = image;
+    
+    // Begin a new image that will be the new image with the rounded corners
+    // (here with the size of an UIImageView)
+    UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, NO, [UIScreen mainScreen].scale);
+    
+    // Add a clip before drawing anything, in the shape of an rounded rect
+    [[UIBezierPath bezierPathWithRoundedRect:imageView.bounds
+                                cornerRadius:300] addClip];
+    // Draw your image
+    [image drawInRect:imageView.bounds];
+    
+    // Get the image, here setting the UIImageView image
+    imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // Lets forget about that we were drawing
+    UIGraphicsEndImageContext();
+    
 }
 
 - (void)showAlertWithTitle:(NSString *)title AndMessage: (NSString *)message {

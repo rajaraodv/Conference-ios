@@ -48,6 +48,7 @@
 		2E88D3C818CE413B00EFE315 /* SponsorsCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E88D3C718CE413B00EFE315 /* SponsorsCustomCell.xib */; };
 		2E88D3CB18CE41A200EFE315 /* SFSponsorsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D3CA18CE41A200EFE315 /* SFSponsorsCell.m */; };
 		2E88D3CE18CE440000EFE315 /* SFSponsorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D3CD18CE440000EFE315 /* SFSponsorsViewController.m */; };
+		2E88D3D018CF9B7A00EFE315 /* sponsorsTest.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E88D3CF18CF9B7A00EFE315 /* sponsorsTest.json */; };
 		533E1502ABF64EF9945964ED /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F15F53602B641A881152715 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -124,6 +125,7 @@
 		2E88D3CA18CE41A200EFE315 /* SFSponsorsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSponsorsCell.m; sourceTree = "<group>"; };
 		2E88D3CC18CE440000EFE315 /* SFSponsorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSponsorsViewController.h; sourceTree = "<group>"; };
 		2E88D3CD18CE440000EFE315 /* SFSponsorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSponsorsViewController.m; sourceTree = "<group>"; };
+		2E88D3CF18CF9B7A00EFE315 /* sponsorsTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sponsorsTest.json; sourceTree = "<group>"; };
 		9F15F53602B641A881152715 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20A02FD691B4D4F97A98A6C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -161,6 +163,7 @@
 		2E7E325618C216A800426121 = {
 			isa = PBXGroup;
 			children = (
+				2E88D3CF18CF9B7A00EFE315 /* sponsorsTest.json */,
 				2E7E32B718C2302600426121 /* test.json */,
 				2E7E32B218C22A7F00426121 /* SessionsCustomCell.xib */,
 				2E88D3C718CE413B00EFE315 /* SponsorsCustomCell.xib */,
@@ -380,6 +383,7 @@
 				2E7E32A218C21B4500426121 /* conference-32.png in Resources */,
 				2E7E32B318C22A7F00426121 /* SessionsCustomCell.xib in Resources */,
 				2E7E329D18C21AD700426121 /* conference-50.png in Resources */,
+				2E88D3D018CF9B7A00EFE315 /* sponsorsTest.json in Resources */,
 				2E7E327618C216A800426121 /* Main.storyboard in Resources */,
 				2E7E32A618C21B5200426121 /* like-32.png in Resources */,
 				2E7E32B818C2302600426121 /* test.json in Resources */,

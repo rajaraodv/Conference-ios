@@ -1,0 +1,60 @@
+{
+    "1": [
+          {
+          "Id": "a0Ai000000D8mGxEAJ",
+          "Name": "Cap Gemini",
+          "About_Text__c": "As one of only five Platinum Partners and winner of the Partner Innovation Award at Dreamforce 2012, Capgemini has over 725 global practitioners who will help you become a customer connected company. With more than 125,000 people in 44 countries, Capgemin",
+          "Booth_Number__c": "Booth 45",
+          "Give_Away_Details__c": "1 Month Free Books",
+          "Image_Url__c": "http://www2.sfdcstatic.com/assets/images/dreamforce/13/sp/titanium/sp_capgemini_lg.png",
+          "Unique_Sponsor_Id__c": "SPONSOR-0003",
+          "Twitter__c": "capgemini",
+          "Facebook_URL__c": "https://www.facebook.com/Capgemini",
+          "Sponsorship_Level_Name": "Platinum",
+          "Sponsorship_Level_Internal_Sort_Number": 1
+          },
+          {
+          "Id": "a0Ai000000D8m9LEAR",
+          "Name": "Accenture",
+          "About_Text__c": "Accenture is a global management consulting, technology services and outsourcing company, with approximately 275,000 people serving clients in more than 120 countries. Combining unparalleled experience, comprehensive capabilities across all industries and",
+          "Booth_Number__c": "Booth 1",
+          "Give_Away_Details__c": "Giving away iPads!",
+          "Image_Url__c": "http://www2.sfdcstatic.com/assets/images/dreamforce/13/sp/diamond/sp_accenture_lg.png",
+          "Unique_Sponsor_Id__c": "SPONSOR-0001",
+          "Twitter__c": "@accenture",
+          "Facebook_URL__c": "https://www.facebook.com/accenture",
+          "Sponsorship_Level_Name": "Platinum",
+          "Sponsorship_Level_Internal_Sort_Number": 1
+          }
+          ],
+    "4": [
+          {
+          "Id": "a0Ai000000D8m9zEAB",
+          "Name": "Blue Wolf",
+          "About_Text__c": "Your global consulting firm. Companies around the world choose Bluewolf to help them engage their customers and drive profitable growth. As the first global business consulting firm born in the cloud, Bluewolf’s strategic consulting, implementation, train",
+          "Booth_Number__c": "Both 4",
+          "Give_Away_Details__c": "Free Initial Consulting (value: 250$)",
+          "Image_Url__c": "http://www2.sfdcstatic.com/assets/images/dreamforce/13/sp/titanium/sp_bluewolf_lg.png",
+          "Unique_Sponsor_Id__c": "SPONSOR-0002",
+          "Twitter__c": "bluewolf",
+          "Facebook_URL__c": "https://www.facebook.com/bluewolf",
+          "Sponsorship_Level_Name": "Bronze",
+          "Sponsorship_Level_Internal_Sort_Number": 4
+          }
+          ],
+    "6": [
+          {
+          "Id": "a0Ai000000D8oZ3EAJ",
+          "Name": "Dropbox",
+          "About_Text__c": "Dropbox simplifies the work and personal lives of more than 200 million people by letting them collaborate seamlessly with their teams and securely bring their documents, photos, and videos everywhere. Over a billion files are downloaded every day across",
+          "Booth_Number__c": "Booth 24",
+          "Give_Away_Details__c": "Sign up w/ \"Sforce\" and get 10 GB Free space!",
+          "Image_Url__c": "http://www2.sfdcstatic.com/assets/images/dreamforce/13/sp/innovation/sp_dropbox_lg.png",
+          "Unique_Sponsor_Id__c": "SPONSOR-0004",
+          "Twitter__c": "dropbox",
+          "Facebook_URL__c": "https://www.facebook.com/dropbox",
+          "Sponsorship_Level_Name": "Breakfast",
+          "Sponsorship_Level_Internal_Sort_Number": 6
+          }
+          ]
+}
