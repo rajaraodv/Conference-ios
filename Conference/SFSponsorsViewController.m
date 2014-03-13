@@ -10,6 +10,9 @@
 #import "SFSponsorsCell.h"
 #import "IconDownloader.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SFFeedbackViewController.h"
+#import "GM_FSHighlightAnimationAdditions.h"
+
 
 @interface SFSponsorsViewController ()
 @property(strong, nonatomic) NSMutableDictionary *sections;
@@ -19,6 +22,8 @@
 // Handle image/icon downloads
 @property(nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
 @property(strong, nonatomic) NSMutableDictionary *imageCache;
+
+@property(strong, nonatomic) UIColor *headerBGColor;
 
 @end
 
@@ -46,12 +51,15 @@
 
 
     [self loadSessionDataAndReloadTable:NO];
+    
+    
 
 }
 
 -(void)loadSessionDataAndReloadTable:(BOOL) reloadTableView{
     
     NSString *str = @"http://localhost:3000/sponsors";
+    //str = @"https://raw.github.com/rajaraodv/Conference-ios/master/sponsorsTest.json";
     NSURL *url = [NSURL URLWithString:str];
     NSData *data = [NSData dataWithContentsOfURL:url];
     if (data == nil) {
@@ -101,7 +109,13 @@
    // NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
    // self.currentSession = [sessionsAtThisStartTime objectAtIndex:indexPath.row]; // save it to property
     
-    [self performSegueWithIdentifier:@"showFeedbackViewSegue" sender:self];
+    [self performSegueWithIdentifier:@"showFeedbackViewSegue2" sender:self];
+}
+#pragma mark - segue
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([[segue identifier] isEqualToString:@"showFeedbackViewSegue2"]) {
+        [(SFFeedbackViewController*)[segue destinationViewController] setSponsor: self.currentSponsor];
+    }
 }
 
 #pragma mark - Table view data source
@@ -141,7 +155,8 @@
     //add current controller as delegate to cell's FeedbackButton control
     cell.delegate = self;
     
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    //dont highlight selection
+   [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 
     //Get current sponsor from indexPath
     NSString *currentLevel = [self.sortedLevels objectAtIndex:indexPath.section];
@@ -150,17 +165,51 @@
     
     cell.levelLabel.text = [currentSponsor objectForKey:@"Sponsorship_Level_Name"];
     cell.boothLabel.text = [currentSponsor objectForKey:@"Booth_Number__c"];
-    cell.sponsorsBioTextView.text = [currentSponsor objectForKey:@"About_Text__c"];
     cell.sponsorNameLabel.text = [currentSponsor objectForKey:@"Name"];
-  
+   cell.giveAwayTextView.text = [currentSponsor objectForKey:@"Give_Away_Details__c"];
+   
+    
     cell.logoImageView.layer.cornerRadius = 20.0;
     cell.logoImageView.clipsToBounds = YES;
+    cell.logoImageView.backgroundColor = [UIColor whiteColor];
+    
+    if(self.headerBGColor == nil)
+        self.headerBGColor = cell.levelLabel.backgroundColor;
     
     [self setImageView:cell.logoImageView forSponsorLogoUrl:[currentSponsor objectForKey:@"Image_Url__c"]];
+   
+  //  [cell.levelLabel GM_setAnimationLTRWithText:[currentSponsor objectForKey:@"Sponsorship_Level_Name"] andWithDuration:2.0f andWithRepeatCount:0];
+   
 
-    
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    // Background color
+    view.tintColor = [UIColor colorWithRed:(47/255.0) green:(80/255.0) blue:(173/255.0) alpha:1] ;
+    
+    // Text Color
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [header.textLabel setTextColor:[UIColor whiteColor]];
+    [header.textLabel setBackgroundColor:self.headerBGColor];
+    
+    // Another way to set the background color
+    // Note: does not preserve gradient effect of original header
+    // header.contentView.backgroundColor = [UIColor blackColor];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40;
+}
+
+
+-(CGFloat)tableView:(UITableView*)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 20.0;
+}
+
 
 // -------------------------------------------------------------------------------
 //	setImageView:
@@ -171,6 +220,8 @@
     UIImage *image = [self.imageCache objectForKey:imageUrl];
     if (image != nil) {
         logoImageView.image = image;
+        [self spinImageView:logoImageView];
+
        // [self makeImageViewRounded:logoImageView AndSetImage:image];
         return;
     }
@@ -183,6 +234,7 @@
             // Display the newly loaded image
             [self.imageCache setObject:image forKey:imageUrl];
             logoImageView.image = image;
+            [self spinImageView:logoImageView];
             //[self makeImageViewRounded:logoImageView AndSetImage:image];
 
             // Remove the IconDownloader from the in progress list.
@@ -196,27 +248,24 @@
     }
 }
 
-- (void)makeImageViewRounded:(UIImageView *)imageView AndSetImage:(UIImage *)image {
+- (void)spinImageView:(UIImageView *)imageView  {
+//    CABasicAnimation *rotation;
+//    rotation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+//    rotation.fromValue = [NSNumber numberWithFloat:0];
+//    rotation.toValue = [NSNumber numberWithFloat:((360*M_PI)/180)];
+//    rotation.duration = 1.0; // Speed
+//    rotation.repeatCount = 0; // Repeat forever. Can be a finite number.
+//    [imageView.layer addAnimation:rotation forKey:@"Spin"];
     
-    imageView.image = image;
-    
-    // Begin a new image that will be the new image with the rounded corners
-    // (here with the size of an UIImageView)
-    UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, NO, [UIScreen mainScreen].scale);
-    
-    // Add a clip before drawing anything, in the shape of an rounded rect
-    [[UIBezierPath bezierPathWithRoundedRect:imageView.bounds
-                                cornerRadius:300] addClip];
-    // Draw your image
-    [image drawInRect:imageView.bounds];
-    
-    // Get the image, here setting the UIImageView image
-    imageView.image = UIGraphicsGetImageFromCurrentImageContext();
-    
-    // Lets forget about that we were drawing
-    UIGraphicsEndImageContext();
-    
+//    //Create a CABasicAnimation object
+//    CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"transform.translation.x" ];
+//    [move setFromValue:[NSNumber numberWithFloat:0.0f]];
+//    [move setToValue:[NSNumber numberWithFloat:100.0f]];
+//    [move setDuration:1.0f];
+//    //Add animation to a specific element's layer. Must be called after the element is displayed.
+//    [[imageView layer] addAnimation:move forKey:@"transform.translation.x"];
 }
+
 
 - (void)showAlertWithTitle:(NSString *)title AndMessage: (NSString *)message {
     

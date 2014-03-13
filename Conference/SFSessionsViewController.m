@@ -9,19 +9,24 @@
 #import "SFSessionsViewController.h"
 #import "IconDownloader.h"
 #import "SFFeedbackViewController.h"
+#import "SFSpeakerViewController.h"
+#import "SFFilterViewController.h"
 
 @interface SFSessionsViewController ()
 @property(strong, nonatomic) NSMutableDictionary *sections;
 @property(strong, nonatomic) NSArray *sortedStartTimes;
 @property(strong, nonatomic) NSDateFormatter *dateToStringFormatter;
+@property(strong, nonatomic)NSDateFormatter *salesforceDateFormatter;
 @property(nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
 @property(strong, nonatomic) NSMutableDictionary *imageCache;
 @property(strong, nonatomic) UIColor *defaultCellBGColor;
 @property(strong, nonatomic) GIConnection *conn;
 @property(strong, nonatomic) GIChannel *channel;
-@property(strong, nonatomic) NSDictionary *currentSession; //used by segue
+@property(strong, nonatomic) NSDictionary *currentSession; //used by feedback segue
 @property(strong, nonatomic) UIAlertView *reloadAlert;
-
+@property(strong, nonatomic) NSDictionary *currentSpeaker; //used by speaker segue
+@property(strong, nonatomic) NSMutableArray *tracks;//used by filters segue
+@property(strong, nonatomic) NSArray *allSessions; //all sessions from server
 @end
 
 @implementation SFSessionsViewController
@@ -38,8 +43,20 @@
     [super viewDidLoad];
     
     
-    
+    //init
     self.imageCache = [NSMutableDictionary dictionary];
+    self.tracks = [[NSMutableArray alloc] init];
+    
+    
+    //Used to convert Salesforce date+time string "2014-03-01T16:00:00.000+0000" to NSDate
+    self.salesforceDateFormatter = [[NSDateFormatter alloc] init];
+    [self.salesforceDateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.zzzZ"];
+    
+    //Converts a NSDate to a readable string like: "10/10/2014 10:00PM"
+    self.dateToStringFormatter = [[NSDateFormatter alloc] init];
+    [self.dateToStringFormatter setDateStyle:NSDateFormatterShortStyle];
+    [self.dateToStringFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
     
     //register main table view's xib file
     [self.tableView registerNib:[UINib nibWithNibName:@"SessionsCustomCell"
@@ -51,10 +68,20 @@
     
 }
 
--(void)loadSessionDataAndReloadTable:(BOOL) reloadTableView{
+- (void) viewWillAppear:(BOOL)animated  {
+    [super viewWillAppear:animated];
+    if(self.currentFilter != nil && ![self.previousFilter isEqualToString:self.currentFilter]) {
+        self.previousFilter = self.currentFilter;
+        [self loadSessionDataAndReloadTable:YES];
+    }
+}
+
+
+
+-(void)loadSessionDataAndReloadTable:(BOOL) reloadTableView {
     
     NSString *str = @"http://localhost:3000/";
-    // NSString *str = @"https://raw.github.com/rajaraodv/Conference-ios/master/test.json";
+    //str = @"https://raw.github.com/rajaraodv/Conference-ios/master/test.json";
     NSURL *url = [NSURL URLWithString:str];
     NSData *data = [NSData dataWithContentsOfURL:url];
     if (data == nil) {
@@ -69,25 +96,29 @@
         [self showAlertWithTitle:@"No Session Data" AndMessage:@"Data from server is not a valid JSON. Please Contact Admin. "];
         return;
     }
-    //NSLog(@"Your JSON Object: %@ Or Error is: %@", groupedBySessions, error);
     
-    NSArray *groupedBySessionsArray = [groupedBySessions allValues];
+    self.allSessions = [groupedBySessions allValues];
     NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"Start_Date_And_Time__c" ascending:YES];
-    groupedBySessionsArray = [groupedBySessionsArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]];
+    self.allSessions = [self.allSessions sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]];
+
     
-    //Used to convert Salesforce date+time string "2014-03-01T16:00:00.000+0000" to NSDate
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.zzzZ"];
-    
-    //Converts a NSDate to a readable string like: "10/10/2014 10:00PM"
-    self.dateToStringFormatter = [[NSDateFormatter alloc] init];
-    [self.dateToStringFormatter setDateStyle:NSDateFormatterShortStyle];
-    [self.dateToStringFormatter setTimeStyle:NSDateFormatterShortStyle];
-    
+    [self initTracks];
+
+    [self createSectionsAndreloadTableView:reloadTableView];
+}
+
+- (void)createSectionsAndreloadTableView:(BOOL)reloadTableView {
     self.sections = [NSMutableDictionary dictionary];
-    for (id session in groupedBySessionsArray) {
+    for (id session in self.allSessions) {
+        //ignore filter for None and nil.
+        if(self.currentFilter != nil && ![self.currentFilter isEqualToString:@"None"]) {
+            BOOL filterMatched = [[session objectForKey:@"Track__c"] isEqualToString:self.currentFilter];
+            if(!filterMatched) {//dont add session that dont match filter
+                continue;
+            }
+        }
         // Get NSDate from "2014-03-01T16:00:00.000+0000" string
-        NSDate *currentStartTime = [df dateFromString:[session objectForKey:@"Start_Date_And_Time__c"]];
+        NSDate *currentStartTime = [self.salesforceDateFormatter dateFromString:[session objectForKey:@"Start_Date_And_Time__c"]];
         
         //        // Format it to look like like: "10/10/2014 10:00PM"
         //        NSString* currentStartDateAndTime = [dateToStringFormatter stringFromDate:sessionNSDate];
@@ -120,6 +151,15 @@
     }
 }
 
+-(void) initTracks {
+    //create tracks
+    self.tracks = [(NSArray *) [self.allSessions valueForKeyPath:@"Track__c"] mutableCopy];
+    //get distinct/ unique values and sort it
+    self.tracks = [(NSArray *)[[self.tracks valueForKeyPath:@"@distinctUnionOfObjects.self"] sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
+    
+    //Add a special None filter.
+    [self.tracks addObject:@"None"];
+}
 
 - (void)goInstant{
      self.conn = [GIConnection connectionWithConnectUrl:[NSURL URLWithString:@"https://goinstant.net/6d90f902767a/Conference"]];
@@ -173,17 +213,16 @@
     [self performSegueWithIdentifier:@"showFeedbackViewSegue" sender:self];
 }
 
-#pragma mark - segue
--(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([[segue identifier] isEqualToString:@"showFeedbackViewSegue"]) {
-        NSLog(@"%@", (SFFeedbackViewController*)[[segue destinationViewController] class]);
 
-        [(SFFeedbackViewController*)[segue destinationViewController] setSession: self.currentSession];
-    }
-}
 
 
 #pragma mark - Table view data source
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.sections count];
@@ -396,17 +435,41 @@
 
 
 - (void)aMethod:sender {
+    // Get IndexPath based on x,y coordinates
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    SFSessionCell * cell = (SFSessionCell *)
-    [self.tableView cellForRowAtIndexPath:indexPath];
-    NSLog(@"%d", cell.pageControl.currentPage);
+    
+    //Get list of speakers for the current session
     NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
     NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
     NSDictionary *session = [sessionsAtThisStartTime objectAtIndex:indexPath.row];
     NSArray *speakers = [session objectForKey:@"speakers"];
-    NSDictionary *speaker = speakers[cell.pageControl.currentPage];
-    NSLog(@"speaker %@ clicked", [speaker objectForKey:@"Name"]);
+    
+    //get cell for the indexPath
+    SFSessionCell * cell = (SFSessionCell *) [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    //Get current speaker via cell's pagecontrol's currentPage
+    self.currentSpeaker = speakers[cell.pageControl.currentPage];
+
+    //perform segue to show speaker details
+    [self performSegueWithIdentifier:@"showSpeakerViewSegue" sender:self];
+    
+    
+}
+
+#pragma mark - segue
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([[segue identifier] isEqualToString:@"showFeedbackViewSegue"]) {
+        [(SFFeedbackViewController*)[segue destinationViewController] setSession: self.currentSession];
+    } else if ([[segue identifier] isEqualToString:@"showSpeakerViewSegue"]) {
+        SFSpeakerViewController *svc = (SFSpeakerViewController*)[segue destinationViewController];
+        [svc setSpeaker:self.currentSpeaker];
+        [svc setSpeakerImage:[self.imageCache objectForKey:[self.currentSpeaker objectForKey:@"Photo_Url__c"]]];
+    } else if ([[segue identifier] isEqualToString:@"showFilterViewSegue"]) {
+        SFFilterViewController *fvc = (SFFilterViewController *)[segue destinationViewController];
+        [fvc setTracks:self.tracks];
+        [fvc setSessionsViewController:self];
+    }
 }
 
 - (void)showAlertWithTitle:(NSString *)title AndMessage: (NSString *)message {
@@ -418,6 +481,11 @@
                                           otherButtonTitles:nil];
     [alert show];
     
+}
+
+#pragma mark - filter button related
+- (IBAction)filterBtnClicked:(id)sender {
+    [self performSegueWithIdentifier:@"showFilterViewSegue" sender:self];
 }
 
 @end

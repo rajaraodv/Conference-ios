@@ -49,6 +49,14 @@
 		2E88D3CB18CE41A200EFE315 /* SFSponsorsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D3CA18CE41A200EFE315 /* SFSponsorsCell.m */; };
 		2E88D3CE18CE440000EFE315 /* SFSponsorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D3CD18CE440000EFE315 /* SFSponsorsViewController.m */; };
 		2E88D3D018CF9B7A00EFE315 /* sponsorsTest.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E88D3CF18CF9B7A00EFE315 /* sponsorsTest.json */; };
+		2E88D3D618D0D4EE00EFE315 /* SFSpeakerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D3D518D0D4EE00EFE315 /* SFSpeakerViewController.m */; };
+		2E88D3D918D0FB4C00EFE315 /* SFFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D3D818D0FB4C00EFE315 /* SFFilterViewController.m */; };
+		2E88D3E018D1086100EFE315 /* empty_filter-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E88D3DF18D1086100EFE315 /* empty_filter-32.png */; };
+		2E88D3E218D108C400EFE315 /* empty_filter-26.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E88D3E118D108C400EFE315 /* empty_filter-26.png */; };
+		2E88D3E418D13F6100EFE315 /* gray-like-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E88D3E318D13F6100EFE315 /* gray-like-32.png */; };
+		2E88D3E918D1776300EFE315 /* GM_FSHighlightAnimationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E88D3E618D1776300EFE315 /* GM_FSHighlightAnimationAdditions.m */; };
+		2E88D3EA18D1776300EFE315 /* Mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E88D3E718D1776300EFE315 /* Mask.png */; };
+		2E88D3EB18D1776300EFE315 /* Mask2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E88D3E818D1776300EFE315 /* Mask2.png */; };
 		533E1502ABF64EF9945964ED /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F15F53602B641A881152715 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -126,6 +134,17 @@
 		2E88D3CC18CE440000EFE315 /* SFSponsorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSponsorsViewController.h; sourceTree = "<group>"; };
 		2E88D3CD18CE440000EFE315 /* SFSponsorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSponsorsViewController.m; sourceTree = "<group>"; };
 		2E88D3CF18CF9B7A00EFE315 /* sponsorsTest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sponsorsTest.json; sourceTree = "<group>"; };
+		2E88D3D418D0D4EE00EFE315 /* SFSpeakerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSpeakerViewController.h; sourceTree = "<group>"; };
+		2E88D3D518D0D4EE00EFE315 /* SFSpeakerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSpeakerViewController.m; sourceTree = "<group>"; };
+		2E88D3D718D0FB4C00EFE315 /* SFFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFFilterViewController.h; sourceTree = "<group>"; };
+		2E88D3D818D0FB4C00EFE315 /* SFFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFFilterViewController.m; sourceTree = "<group>"; };
+		2E88D3DF18D1086100EFE315 /* empty_filter-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "empty_filter-32.png"; sourceTree = "<group>"; };
+		2E88D3E118D108C400EFE315 /* empty_filter-26.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "empty_filter-26.png"; sourceTree = "<group>"; };
+		2E88D3E318D13F6100EFE315 /* gray-like-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray-like-32.png"; sourceTree = "<group>"; };
+		2E88D3E518D1776300EFE315 /* GM_FSHighlightAnimationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GM_FSHighlightAnimationAdditions.h; sourceTree = "<group>"; };
+		2E88D3E618D1776300EFE315 /* GM_FSHighlightAnimationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GM_FSHighlightAnimationAdditions.m; sourceTree = "<group>"; };
+		2E88D3E718D1776300EFE315 /* Mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Mask.png; sourceTree = "<group>"; };
+		2E88D3E818D1776300EFE315 /* Mask2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Mask2.png; sourceTree = "<group>"; };
 		9F15F53602B641A881152715 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20A02FD691B4D4F97A98A6C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -204,24 +223,17 @@
 		2E7E326818C216A800426121 /* Conference */ = {
 			isa = PBXGroup;
 			children = (
-				2E88D39018C4581700EFE315 /* IconDownloader.h */,
-				2E88D39118C4581700EFE315 /* IconDownloader.m */,
-				2E7E32B418C22B2E00426121 /* SFSessionCell.h */,
-				2E7E32B518C22B2E00426121 /* SFSessionCell.m */,
 				2E7E327118C216A800426121 /* SFAppDelegate.h */,
 				2E7E327218C216A800426121 /* SFAppDelegate.m */,
-				2E88D3C918CE41A200EFE315 /* SFSponsorsCell.h */,
-				2E88D3CA18CE41A200EFE315 /* SFSponsorsCell.m */,
-				2E88D3CC18CE440000EFE315 /* SFSponsorsViewController.h */,
-				2E88D3CD18CE440000EFE315 /* SFSponsorsViewController.m */,
-				2E7E32AD18C2293800426121 /* SFSessionsViewController.h */,
-				2E7E32AE18C2293800426121 /* SFSessionsViewController.m */,
-				2E88D39D18C7EC1B00EFE315 /* SFFeedbackViewController.h */,
-				2E88D39E18C7EC1B00EFE315 /* SFFeedbackViewController.m */,
-				2E88D3A618C9370300EFE315 /* SFThankYouViewController.h */,
-				2E88D3A718C9370300EFE315 /* SFThankYouViewController.m */,
-				2E88D3A018C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.h */,
-				2E88D3A118C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.m */,
+				2E88D39018C4581700EFE315 /* IconDownloader.h */,
+				2E88D39118C4581700EFE315 /* IconDownloader.m */,
+				2E88D3DA18D0FFE300EFE315 /* Sessions */,
+				2E88D3DB18D0FFF700EFE315 /* Sponsors */,
+				2E88D3DC18D1002200EFE315 /* Filters */,
+				2E88D3DD18D1002F00EFE315 /* Feedbacks */,
+				2E88D3DE18D1004000EFE315 /* Speakers */,
+				2E88D3ED18D177AC00EFE315 /* KeyboardAvoidingScrollView */,
+				2E88D3EC18D1776D00EFE315 /* TextAnimation */,
 				2E7E327D18C216A800426121 /* Images.xcassets */,
 				2E7E329A18C21AD700426121 /* images */,
 				2E7E326918C216A800426121 /* Supporting Files */,
@@ -266,6 +278,8 @@
 				2E88D3C318CE3A6C00EFE315 /* slr_camera-32.png */,
 				2E7E329F18C21B4500426121 /* conference-25.png */,
 				2E7E32A018C21B4500426121 /* conference-32.png */,
+				2E88D3E118D108C400EFE315 /* empty_filter-26.png */,
+				2E88D3DF18D1086100EFE315 /* empty_filter-32.png */,
 				2E88D3C518CE3ABE00EFE315 /* speech_bubble-32.png */,
 				2E7E329B18C21AD700426121 /* conference-50.png */,
 				2E88D3B718CE38D300EFE315 /* business-25.png */,
@@ -273,6 +287,7 @@
 				2E88D3B918CE38D300EFE315 /* business-50.png */,
 				2E7E32A318C21B5200426121 /* like-25.png */,
 				2E7E32A418C21B5200426121 /* like-32.png */,
+				2E88D3E318D13F6100EFE315 /* gray-like-32.png */,
 				2E7E329C18C21AD700426121 /* like-50.png */,
 			);
 			path = images;
@@ -293,6 +308,77 @@
 				2E88D3B318CACB1B00EFE315 /* Region.h */,
 			);
 			path = etpushsdk;
+			sourceTree = "<group>";
+		};
+		2E88D3DA18D0FFE300EFE315 /* Sessions */ = {
+			isa = PBXGroup;
+			children = (
+				2E7E32B418C22B2E00426121 /* SFSessionCell.h */,
+				2E7E32B518C22B2E00426121 /* SFSessionCell.m */,
+				2E7E32AD18C2293800426121 /* SFSessionsViewController.h */,
+				2E7E32AE18C2293800426121 /* SFSessionsViewController.m */,
+			);
+			name = Sessions;
+			sourceTree = "<group>";
+		};
+		2E88D3DB18D0FFF700EFE315 /* Sponsors */ = {
+			isa = PBXGroup;
+			children = (
+				2E88D3C918CE41A200EFE315 /* SFSponsorsCell.h */,
+				2E88D3CA18CE41A200EFE315 /* SFSponsorsCell.m */,
+				2E88D3CC18CE440000EFE315 /* SFSponsorsViewController.h */,
+				2E88D3CD18CE440000EFE315 /* SFSponsorsViewController.m */,
+			);
+			name = Sponsors;
+			sourceTree = "<group>";
+		};
+		2E88D3DC18D1002200EFE315 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				2E88D3D718D0FB4C00EFE315 /* SFFilterViewController.h */,
+				2E88D3D818D0FB4C00EFE315 /* SFFilterViewController.m */,
+			);
+			name = Filters;
+			sourceTree = "<group>";
+		};
+		2E88D3DD18D1002F00EFE315 /* Feedbacks */ = {
+			isa = PBXGroup;
+			children = (
+				2E88D3A618C9370300EFE315 /* SFThankYouViewController.h */,
+				2E88D3A718C9370300EFE315 /* SFThankYouViewController.m */,
+				2E88D39D18C7EC1B00EFE315 /* SFFeedbackViewController.h */,
+				2E88D39E18C7EC1B00EFE315 /* SFFeedbackViewController.m */,
+			);
+			name = Feedbacks;
+			sourceTree = "<group>";
+		};
+		2E88D3DE18D1004000EFE315 /* Speakers */ = {
+			isa = PBXGroup;
+			children = (
+				2E88D3D418D0D4EE00EFE315 /* SFSpeakerViewController.h */,
+				2E88D3D518D0D4EE00EFE315 /* SFSpeakerViewController.m */,
+			);
+			name = Speakers;
+			sourceTree = "<group>";
+		};
+		2E88D3EC18D1776D00EFE315 /* TextAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				2E88D3E518D1776300EFE315 /* GM_FSHighlightAnimationAdditions.h */,
+				2E88D3E618D1776300EFE315 /* GM_FSHighlightAnimationAdditions.m */,
+				2E88D3E718D1776300EFE315 /* Mask.png */,
+				2E88D3E818D1776300EFE315 /* Mask2.png */,
+			);
+			name = TextAnimation;
+			sourceTree = "<group>";
+		};
+		2E88D3ED18D177AC00EFE315 /* KeyboardAvoidingScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				2E88D3A018C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.h */,
+				2E88D3A118C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.m */,
+			);
+			name = KeyboardAvoidingScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -374,14 +460,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E88D3E018D1086100EFE315 /* empty_filter-32.png in Resources */,
 				2E7E32A118C21B4500426121 /* conference-25.png in Resources */,
 				2E7E327E18C216A800426121 /* Images.xcassets in Resources */,
 				2E88D3BB18CE38D300EFE315 /* business-32.png in Resources */,
+				2E88D3E418D13F6100EFE315 /* gray-like-32.png in Resources */,
 				2E7E326D18C216A800426121 /* InfoPlist.strings in Resources */,
 				2E88D3C618CE3ABE00EFE315 /* speech_bubble-32.png in Resources */,
 				2E7E329E18C21AD700426121 /* like-50.png in Resources */,
 				2E7E32A218C21B4500426121 /* conference-32.png in Resources */,
 				2E7E32B318C22A7F00426121 /* SessionsCustomCell.xib in Resources */,
+				2E88D3EB18D1776300EFE315 /* Mask2.png in Resources */,
+				2E88D3EA18D1776300EFE315 /* Mask.png in Resources */,
 				2E7E329D18C21AD700426121 /* conference-50.png in Resources */,
 				2E88D3D018CF9B7A00EFE315 /* sponsorsTest.json in Resources */,
 				2E7E327618C216A800426121 /* Main.storyboard in Resources */,
@@ -391,6 +481,7 @@
 				2E88D3C818CE413B00EFE315 /* SponsorsCustomCell.xib in Resources */,
 				2E88D39618C52D7300EFE315 /* lunch.jpg in Resources */,
 				2E7E32A518C21B5200426121 /* like-25.png in Resources */,
+				2E88D3E218D108C400EFE315 /* empty_filter-26.png in Resources */,
 				2E88D3BA18CE38D300EFE315 /* business-25.png in Resources */,
 				2E88D3C418CE3A6C00EFE315 /* slr_camera-32.png in Resources */,
 			);
@@ -444,6 +535,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E88D3D618D0D4EE00EFE315 /* SFSpeakerViewController.m in Sources */,
 				2E88D3A818C9370300EFE315 /* SFThankYouViewController.m in Sources */,
 				2E88D3A218C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				2E88D3CB18CE41A200EFE315 /* SFSponsorsCell.m in Sources */,
@@ -452,8 +544,10 @@
 				2E7E327318C216A800426121 /* SFAppDelegate.m in Sources */,
 				2E88D3CE18CE440000EFE315 /* SFSponsorsViewController.m in Sources */,
 				2E88D39218C4581700EFE315 /* IconDownloader.m in Sources */,
+				2E88D3D918D0FB4C00EFE315 /* SFFilterViewController.m in Sources */,
 				2E7E32B018C2293800426121 /* SFSessionsViewController.m in Sources */,
 				2E7E32B618C22B2E00426121 /* SFSessionCell.m in Sources */,
+				2E88D3E918D1776300EFE315 /* GM_FSHighlightAnimationAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,5 +12,8 @@
 
 @interface SFSessionsViewController : UITableViewController<GIChannelObserver, FeedbackButtonDelegate, UIAlertViewDelegate>
 
+- (IBAction)filterBtnClicked:(id)sender;
+@property(strong, nonatomic) NSString* currentFilter;
+@property(strong, nonatomic) NSString* previousFilter;
 
 @end

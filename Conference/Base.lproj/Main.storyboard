@@ -84,20 +84,25 @@
             </objects>
             <point key="canvasLocation" x="1141" y="180"/>
         </scene>
-        <!--Sponsors View Controller-->
+        <!--Sponsors View Controller - Sponsors-->
         <scene sceneID="Gbt-IN-2dh">
             <objects>
                 <tableViewController id="zLZ-cC-dRx" customClass="SFSponsorsViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="300" sectionHeaderHeight="22" sectionFooterHeight="22" id="J3y-iP-ini">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="300" sectionHeaderHeight="22" sectionFooterHeight="22" id="J3y-iP-ini">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="separatorColor" red="0.3058823645" green="0.49411767719999999" blue="0.7607843876" alpha="1" colorSpace="deviceRGB"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <connections>
                             <outlet property="dataSource" destination="zLZ-cC-dRx" id="M5W-eO-lHw"/>
                             <outlet property="delegate" destination="zLZ-cC-dRx" id="rc3-Pk-hQ6"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="qXm-kf-9oC"/>
+                    <navigationItem key="navigationItem" title="Sponsors" id="qXm-kf-9oC"/>
+                    <connections>
+                        <segue destination="iHj-UB-zZP" kind="push" identifier="showFeedbackViewSegue2" id="FmV-cO-UBy"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kA2-U4-D7N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -145,14 +150,133 @@
                             <outlet property="delegate" destination="Mix-rA-UP6" id="Hn6-T8-kwX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Sessions" id="Eg6-yU-DqM"/>
+                    <navigationItem key="navigationItem" title="Sessions" id="Eg6-yU-DqM">
+                        <barButtonItem key="rightBarButtonItem" title="Filter" id="g6n-x9-Yxb">
+                            <connections>
+                                <action selector="filterBtnClicked:" destination="Mix-rA-UP6" id="i8i-ks-gH1"/>
+                                <segue destination="pHL-WM-9Ut" kind="push" identifier="showFilterViewSegue" id="Pod-Nq-dzu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="iHj-UB-zZP" kind="push" identifier="showFeedbackViewSegue" id="Auc-Gd-uGQ"/>
+                        <segue destination="wrH-Ig-iP4" kind="push" identifier="showSpeakerViewSegue" id="mqi-lk-qdg"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m0Y-pb-FnG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1163" y="-1067"/>
+        </scene>
+        <!--Filter View Controller - Filter-->
+        <scene sceneID="67r-2T-Yw1">
+            <objects>
+                <tableViewController id="pHL-WM-9Ut" customClass="SFFilterViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="12r-U3-D0h">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="sectionIndexTrackingBackgroundColor" red="0.0" green="0.29446158010000001" blue="0.61314174109999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FilterCell" textLabel="Ulq-5e-fRh" style="IBUITableViewCellStyleDefault" id="BnS-vi-EnF">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BnS-vi-EnF" id="jP2-un-aeB">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ulq-5e-fRh">
+                                            <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.3058823645" green="0.49411767719999999" blue="0.7607843876" alpha="1" colorSpace="deviceRGB"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.3058823645" green="0.49411767719999999" blue="0.7607843876" alpha="1" colorSpace="deviceRGB"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="pHL-WM-9Ut" id="jAk-y7-Wqu"/>
+                            <outlet property="delegate" destination="pHL-WM-9Ut" id="CJe-9X-P9n"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Filter" id="55E-4R-RI5"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SzY-8d-x6k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1777" y="-1611"/>
+        </scene>
+        <!--Speaker View Controller - Speaker-->
+        <scene sceneID="zHE-Rx-JZu">
+            <objects>
+                <viewController id="wrH-Ig-iP4" customClass="SFSpeakerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hmf-JT-mQV"/>
+                        <viewControllerLayoutGuide type="bottom" id="s4x-33-Bic"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="raU-p8-YGz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UGW-3L-b72">
+                                <rect key="frame" x="6" y="71" width="122" height="122"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIc-q7-sn8">
+                                <rect key="frame" x="136" y="71" width="179" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="22"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Twitter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WXw-OU-IQi">
+                                <rect key="frame" x="136" y="136" width="179" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Company" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tan-Pp-mUO">
+                                <rect key="frame" x="136" y="114" width="179" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4da-Mn-9Ie">
+                                <rect key="frame" x="136" y="94" width="179" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8GW-Wq-gGS">
+                                <rect key="frame" x="6" y="195" width="309" height="164"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.3058823645" green="0.49411767719999999" blue="0.7607843876" alpha="1" colorSpace="deviceRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Speaker" id="EW9-au-NKp"/>
+                    <connections>
+                        <outlet property="speakerBioTextView" destination="8GW-Wq-gGS" id="hFb-iv-oqO"/>
+                        <outlet property="speakerCompany" destination="Tan-Pp-mUO" id="yZl-kk-b20"/>
+                        <outlet property="speakerImageView" destination="UGW-3L-b72" id="XDt-br-QOA"/>
+                        <outlet property="speakerNameLabel" destination="dIc-q7-sn8" id="kOg-Df-Yer"/>
+                        <outlet property="speakerTitleLabel" destination="4da-Mn-9Ie" id="g3Z-TK-73Z"/>
+                        <outlet property="speakerTwitterLabel" destination="WXw-OU-IQi" id="Hj7-mj-0Z5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n3a-UP-JlT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1787" y="-1050"/>
         </scene>
         <!--Feedback View Controller - Feedback-->
         <scene sceneID="UwJ-SF-oVe">
@@ -230,7 +354,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXR-eM-Hnj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1697" y="-1067"/>
+            <point key="canvasLocation" x="1763" y="293"/>
         </scene>
         <!--Thank You View Controller - Thank You!-->
         <scene sceneID="Kw3-Ef-gWz">
@@ -272,7 +396,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hQV-1R-yht" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2191" y="-1067"/>
+            <point key="canvasLocation" x="2265" y="293"/>
         </scene>
         <!--Navigation Controller - Sessions-->
         <scene sceneID="idC-ff-UbK">
@@ -382,4 +506,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="FmV-cO-UBy"/>
+    </inferredMetricsTieBreakers>
 </document>
