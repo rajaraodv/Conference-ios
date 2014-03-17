@@ -10,7 +10,5 @@
 #import "ETPush.h"
 
 @interface SFAppDelegate : UIResponder <UIApplicationDelegate>
-
 @property (strong, nonatomic) UIWindow *window;
-
 @end

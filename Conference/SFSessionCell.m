@@ -48,4 +48,14 @@
     }
 }
 
+
+- (IBAction)likeButtonClicked:(id)sender {
+    //Is anyone listening
+    if([self.likeButtonDelegate respondsToSelector:@selector(likeButtonClickedOnCell:forButton:)])
+    {
+        //send the delegate function with the amount entered by the user
+        [self.likeButtonDelegate likeButtonClickedOnCell:self forButton:(UIButton*)sender];
+    }
+}
+
 @end

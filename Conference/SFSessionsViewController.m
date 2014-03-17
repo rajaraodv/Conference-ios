@@ -16,8 +16,8 @@
 @property(strong, nonatomic) NSMutableDictionary *sections;
 @property(strong, nonatomic) NSArray *sortedStartTimes;
 @property(strong, nonatomic) NSDateFormatter *dateToStringFormatter;
-@property(strong, nonatomic)NSDateFormatter *salesforceDateFormatter;
-@property(nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
+@property(strong, nonatomic) NSDateFormatter *salesforceDateFormatter;
+@property(strong, nonatomic) NSMutableDictionary *imageDownloadsInProgress;
 @property(strong, nonatomic) NSMutableDictionary *imageCache;
 @property(strong, nonatomic) UIColor *defaultCellBGColor;
 @property(strong, nonatomic) GIConnection *conn;
@@ -25,8 +25,8 @@
 @property(strong, nonatomic) NSDictionary *currentSession; //used by feedback segue
 @property(strong, nonatomic) UIAlertView *reloadAlert;
 @property(strong, nonatomic) NSDictionary *currentSpeaker; //used by speaker segue
-@property(strong, nonatomic) NSMutableArray *tracks;//used by filters segue
-@property(strong, nonatomic) NSArray *allSessions; //all sessions from server
+@property(strong, nonatomic) SFSessionsManager *sessionsManager;
+//@property BOOL useCurrentDataButReloadTable;
 @end
 
 @implementation SFSessionsViewController
@@ -42,11 +42,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.sessionsManager = [SFSessionsManager sharedInstance];
+    if(!self.sessionsManager.loaded) {
+        [self.sessionsManager loadSessions];
+    }
+    
     
     //init
     self.imageCache = [NSMutableDictionary dictionary];
-    self.tracks = [[NSMutableArray alloc] init];
-    
+  //  self.tracks = [[NSMutableArray alloc] init];
+    self.sessionsManager.sessionsModifiedByUser = NO;
+
     
     //Used to convert Salesforce date+time string "2014-03-01T16:00:00.000+0000" to NSDate
     self.salesforceDateFormatter = [[NSDateFormatter alloc] init];
@@ -54,7 +60,7 @@
     
     //Converts a NSDate to a readable string like: "10/10/2014 10:00PM"
     self.dateToStringFormatter = [[NSDateFormatter alloc] init];
-    [self.dateToStringFormatter setDateStyle:NSDateFormatterShortStyle];
+    [self.dateToStringFormatter setDateStyle:NSDateFormatterLongStyle];
     [self.dateToStringFormatter setTimeStyle:NSDateFormatterShortStyle];
     
     
@@ -62,58 +68,55 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"SessionsCustomCell"
                                                bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"sessionCell"];
+ 
 
-    [self loadSessionDataAndReloadTable:NO];
+    //[self loadSessionDataAndReloadTable:NO];
+    [self.sessionsManager loadSessions];
+    [self createSectionsAndreloadTableView:NO];
     [self goInstant];
-    
 }
 
 - (void) viewWillAppear:(BOOL)animated  {
-    [super viewWillAppear:animated];
+    [super viewWillAppear:YES];
     if(self.currentFilter != nil && ![self.previousFilter isEqualToString:self.currentFilter]) {
         self.previousFilter = self.currentFilter;
-        [self loadSessionDataAndReloadTable:YES];
+        [self.sessionsManager loadSessions];
+    }
+    
+   
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    //Note: Do this in view_did_appear. coz viewWillAppear wont have selectedIndex set yet.
+    //reload just table cells(used to ensure favorite and not favorite sessions lists are updated
+    // every time user toggles b/w two tabs)
+    if(self.sessionsManager.sessionsModifiedByUser) {
+        [self createSectionsAndreloadTableView:YES];
     }
 }
 
 
 
--(void)loadSessionDataAndReloadTable:(BOOL) reloadTableView {
-    
-    NSString *str = @"http://localhost:3000/";
-    //str = @"https://raw.github.com/rajaraodv/Conference-ios/master/test.json";
-    NSURL *url = [NSURL URLWithString:str];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    if (data == nil) {
-        [self showAlertWithTitle:@"No Data From Server" AndMessage:@"Looks like there is no Internet or the server is down."];
-        return;
-    }
-    NSError *error = nil;
-    NSDictionary *groupedBySessions = [NSJSONSerialization JSONObjectWithData:data options:
-                                       NSJSONReadingMutableContainers                              error:&error];
-    
-    if (error != nil) {
-        [self showAlertWithTitle:@"No Session Data" AndMessage:@"Data from server is not a valid JSON. Please Contact Admin. "];
-        return;
-    }
-    
-    self.allSessions = [groupedBySessions allValues];
-    NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"Start_Date_And_Time__c" ascending:YES];
-    self.allSessions = [self.allSessions sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]];
 
-    
-    [self initTracks];
-
-    [self createSectionsAndreloadTableView:reloadTableView];
-}
 
 - (void)createSectionsAndreloadTableView:(BOOL)reloadTableView {
+    NSLog(@"**********************%lu", (unsigned long)self.navigationController.tabBarController.selectedIndex);
+
     self.sections = [NSMutableDictionary dictionary];
-    for (id session in self.allSessions) {
-        //ignore filter for None and nil.
-        if(self.currentFilter != nil && ![self.currentFilter isEqualToString:@"None"]) {
-            BOOL filterMatched = [[session objectForKey:@"Track__c"] isEqualToString:self.currentFilter];
-            if(!filterMatched) {//dont add session that dont match filter
+    for (id session in self.sessionsManager.allSessions) {
+        //in sessions tab..
+        if(self.navigationController.tabBarController.selectedIndex == 0) {
+            //ignore filter for None and nil.
+            if(self.currentFilter != nil && ![self.currentFilter isEqualToString:@"None"]) {
+                BOOL filterMatched = [[session objectForKey:@"Track__c"] isEqualToString:self.currentFilter];
+                if(!filterMatched) {//dont add session that dont match filter
+                    continue;
+                }
+            }
+            
+        } else if(self.navigationController.tabBarController.selectedIndex == 1) {//in favorites tab..
+            if(![self.sessionsManager.favorites containsObject:[session objectForKey:@"Id"]]) {
+                //skip if not in favorites list
                 continue;
             }
         }
@@ -151,15 +154,7 @@
     }
 }
 
--(void) initTracks {
-    //create tracks
-    self.tracks = [(NSArray *) [self.allSessions valueForKeyPath:@"Track__c"] mutableCopy];
-    //get distinct/ unique values and sort it
-    self.tracks = [(NSArray *)[[self.tracks valueForKeyPath:@"@distinctUnionOfObjects.self"] sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
-    
-    //Add a special None filter.
-    [self.tracks addObject:@"None"];
-}
+
 
 - (void)goInstant{
      self.conn = [GIConnection connectionWithConnectUrl:[NSURL URLWithString:@"https://goinstant.net/6d90f902767a/Conference"]];
@@ -191,7 +186,10 @@
     }
     if (buttonIndex == 1)
     {
-        [self loadSessionDataAndReloadTable:YES];
+        //[self loadSessionDataAndReloadTable:YES];
+        [self.sessionsManager loadSessions];
+        [self createSectionsAndreloadTableView:YES];
+
         
     }
 }
@@ -202,7 +200,7 @@
 }
 
 
-#pragma mark - feedbackButtonDelegateHandler
+#pragma mark - feedbackButtonClickedOnCell and likeButtonClickedOnCell (SessionCellDelegate)
 
 - (void) feedbackButtonClickedOnCell:(id)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
@@ -214,7 +212,13 @@
 }
 
 
-
+- (void) likeButtonClickedOnCell:(id)cell forButton:(UIButton *)button {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
+    NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
+    NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
+    self.currentSession = [sessionsAtThisStartTime objectAtIndex:indexPath.row]; // save it to property
+    [self toggleFavoritesForCell:(SFSessionCell *) cell];
+}
 
 #pragma mark - Table view data source
 
@@ -241,9 +245,9 @@
     NSString *timeStr = [self.dateToStringFormatter stringFromDate:currentStartTime];
     if ([sessionsAtThisStartTime count] > 1) {
         NSString *tracks = [@([sessionsAtThisStartTime count]) stringValue];
-        return [NSString stringWithFormat:@"%@\t\t\t\t\t[%@ Tracks] ", timeStr, tracks];
+        return [NSString stringWithFormat:@" %@\t\t\t[%@ Tracks] ", timeStr, tracks];
     } else {
-        return timeStr;
+        return [NSString stringWithFormat:@" %@", timeStr];
     }
 }
 
@@ -254,8 +258,9 @@
         cell = [[SFSessionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    //add current controller as delegate to cell's FeedbackButton control
-    cell.delegate = self;
+    //add current controller as delegate to cell's FeedbackButton and LikeButton control
+    cell.delegate = self;//feedback
+    cell.likeButtonDelegate = self; //like
     
     //Note: store background image/color and set it back to cells in the beginning.
     //coz, imagine we had set some custom backbround image to a cell and if that cell is reused,
@@ -269,6 +274,13 @@
     NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
     NSDictionary *session = [sessionsAtThisStartTime objectAtIndex:indexPath.row];
     
+    NSString *sessionId = [session objectForKey:@"Id"];
+    
+    //reset like image before setting it filled (coz cells are reused!)
+    [cell.likeButton setImage:[UIImage imageNamed:@"like-32.png"] forState:UIControlStateNormal];
+    if([self.sessionsManager.favorites containsObject:sessionId]) {//set filled if found
+        [cell.likeButton setImage:[UIImage imageNamed:@"like-filled-32.png"] forState:UIControlStateNormal];
+    }
     cell.sessionTitleTextView.text = [session objectForKey:@"Title__c"];
     cell.trackLabel.text = [session objectForKey:@"Track__c"];
     cell.sessionRoomLabel.text = [session objectForKey:@"Location__c"];
@@ -280,10 +292,6 @@
     //hide horizontal scroller (as we have page controller)
     cell.scrollView.showsHorizontalScrollIndicator = NO;
     
-   // UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lunch.png"]];
-    
-    //cell.backgroundView = imageView;
-   // cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"lunch.jpg"]]; //set image for cell 0
     
     if([session objectForKey:@"Background_Image_Url__c"] != nil && [session objectForKey:@"Background_Image_Url__c"] != (id)[NSNull null]) {
         [self setBackgroundImageForCell:cell withImageUrl:[session objectForKey:@"Background_Image_Url__c"]];
@@ -467,8 +475,9 @@
         [svc setSpeakerImage:[self.imageCache objectForKey:[self.currentSpeaker objectForKey:@"Photo_Url__c"]]];
     } else if ([[segue identifier] isEqualToString:@"showFilterViewSegue"]) {
         SFFilterViewController *fvc = (SFFilterViewController *)[segue destinationViewController];
-        [fvc setTracks:self.tracks];
+        [fvc setTracks:self.sessionsManager.tracks];
         [fvc setSessionsViewController:self];
+        [fvc setSelectedTrack: self.currentFilter];
     }
 }
 
@@ -486,6 +495,26 @@
 #pragma mark - filter button related
 - (IBAction)filterBtnClicked:(id)sender {
     [self performSegueWithIdentifier:@"showFilterViewSegue" sender:self];
+}
+
+#pragma mark - toggle favorites
+-(void)toggleFavoritesForCell: (SFSessionCell *) cell {
+    NSString *imageName = @"like-filled-32.png";
+    NSString *sessionId = [self.currentSession objectForKey:@"Id"];
+    if(![self.sessionsManager.favorites containsObject:sessionId]) {
+        [self.sessionsManager.favorites addObject: sessionId];
+    } else {//unfavorite
+        [self.sessionsManager.favorites removeObject:sessionId];
+        [self.sessionsManager.userDefaults setObject:self.sessionsManager.favorites forKey:@"favorites"];
+        imageName = @"like-32.png";
+    }
+    //add to defaults and save it
+    [self.sessionsManager.userDefaults setObject:self.sessionsManager.favorites forKey:@"favorites"];
+    [self.sessionsManager.userDefaults synchronize];
+    
+    //change button's background
+    [cell.likeButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    self.sessionsManager.sessionsModifiedByUser = YES;
 }
 
 @end

@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SFSessionCell.h"
 #import <GoInstant/GoInstant.h>
+#import "SFSessionsManager.h"
 
-@interface SFSessionsViewController : UITableViewController<GIChannelObserver, FeedbackButtonDelegate, UIAlertViewDelegate>
+@interface SFSessionsViewController : UITableViewController<GIChannelObserver, SessionCellDelegate, UIAlertViewDelegate>
 
 - (IBAction)filterBtnClicked:(id)sender;
 @property(strong, nonatomic) NSString* currentFilter;

@@ -16,6 +16,8 @@
 //
 //    [[ETPush pushManager] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
 //    [[ETPush pushManager] applicationLaunchedWithOptions:launchOptions];
+    
+    
     return YES;
 }
 
@@ -35,7 +37,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     [[ETPush pushManager] handleNotification:userInfo
                          forApplicationState:application.applicationState];
 }
-							
+
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

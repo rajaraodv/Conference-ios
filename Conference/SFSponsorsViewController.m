@@ -99,7 +99,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - feedbackButtonDelegateHandler
+#pragma mark - feedbackButtonDelegateHandler (SessionCustomCell)
 
 - (void) feedbackButtonClickedOnCell:(id)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
@@ -111,6 +111,12 @@
     
     [self performSegueWithIdentifier:@"showFeedbackViewSegue2" sender:self];
 }
+
+
+#pragma mark - likeButtonDelegateHandler (SessionCustomCell)
+
+
+
 #pragma mark - segue
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue identifier] isEqualToString:@"showFeedbackViewSegue2"]) {
@@ -138,9 +144,9 @@
     NSString *levelName = [sponsorsAtThisLevel[0] objectForKey:@"Sponsorship_Level_Name"];
     if ([sponsorsAtThisLevel count] > 1) {
         NSString *sponsorsCount = [@([sponsorsAtThisLevel count]) stringValue];
-        return [NSString stringWithFormat:@"%@\t\t\t\t\t[%@ Sponsors]", levelName, sponsorsCount];
+        return [NSString stringWithFormat:@"   %@\t\t\t\t\t\t[%@ Sponsors]", levelName, sponsorsCount];
     } else {
-        return levelName;
+        return [NSString stringWithFormat:@"   %@", levelName];
     }
 }
 

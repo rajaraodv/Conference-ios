@@ -14,5 +14,5 @@
 
 @property (strong, nonatomic) NSArray *tracks;
 @property (strong, nonatomic) SFSessionsViewController *sessionsViewController;
-
+@property (strong, nonatomic) NSString *selectedTrack;
 @end

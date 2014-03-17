@@ -31,6 +31,10 @@
     UIView* footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320.0, 0)];
     [footerView setBackgroundColor:[UIColor clearColor]];
     self.tableView.tableFooterView = footerView;
+    
+    //used to make chackmark white
+    self.tableView.tintColor = [UIColor whiteColor];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,68 +62,22 @@
     static NSString *CellIdentifier = @"FilterCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    cell.textLabel.text = [self.tracks objectAtIndex:indexPath.row];
+    NSString* text =  [self.tracks objectAtIndex:indexPath.row];
+    cell.textLabel.text = text;
+    if ([self.selectedTrack isEqualToString: text] || (self.selectedTrack == nil && [text isEqualToString:@"None"])) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray * stack = self.navigationController.viewControllers;
-    NSLog(@"%lu", (unsigned long)stack.count);
     [tableView deselectRowAtIndexPath:indexPath animated:NO];//deselect
-    NSString *track = [self.tracks objectAtIndex:indexPath.row];
-    [self.sessionsViewController setCurrentFilter:track];
+    self.selectedTrack = [self.tracks objectAtIndex:indexPath.row];
+    [self.sessionsViewController setCurrentFilter:self.selectedTrack];
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
 
 @end
