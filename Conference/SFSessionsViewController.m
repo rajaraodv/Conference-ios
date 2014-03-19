@@ -11,6 +11,7 @@
 #import "SFFeedbackViewController.h"
 #import "SFSpeakerViewController.h"
 #import "SFFilterViewController.h"
+#import "SFSessionDetailsViewController.h"
 
 @interface SFSessionsViewController ()
 @property(strong, nonatomic) NSMutableDictionary *sections;
@@ -26,6 +27,7 @@
 @property(strong, nonatomic) UIAlertView *reloadAlert;
 @property(strong, nonatomic) NSDictionary *currentSpeaker; //used by speaker segue
 @property(strong, nonatomic) SFSessionsManager *sessionsManager;
+@property(strong, nonatomic)  NSString *currentSessionsFormattedTimeStr;//used by session details segue
 //@property BOOL useCurrentDataButReloadTable;
 @end
 
@@ -50,7 +52,6 @@
     
     //init
     self.imageCache = [NSMutableDictionary dictionary];
-  //  self.tracks = [[NSMutableArray alloc] init];
     self.sessionsManager.sessionsModifiedByUser = NO;
 
     
@@ -69,20 +70,22 @@
                                                bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"sessionCell"];
  
-
-    //[self loadSessionDataAndReloadTable:NO];
+    //load sessions
     [self.sessionsManager loadSessions];
-    [self createSectionsAndreloadTableView:NO];
+    [self createSectionsAndreloadTableView:NO]; //create sections but dont reload as it will be automatically done
+    
+    //initialize goInstant
     [self goInstant];
+    
+   
 }
 
 - (void) viewWillAppear:(BOOL)animated  {
     [super viewWillAppear:YES];
-    if(self.currentFilter != nil && ![self.previousFilter isEqualToString:self.currentFilter]) {
-        self.previousFilter = self.currentFilter;
-        [self.sessionsManager loadSessions];
-    }
+
+   
     
+    [self manageFilters];
    
 }
 
@@ -95,8 +98,37 @@
     }
 }
 
+-(void) manageFilters {
+    
+    if(self.currentFilter != nil && ![self.previousFilter isEqualToString:self.currentFilter]) {
+        
+        self.previousFilter = self.currentFilter;
+        [self createSectionsAndreloadTableView:YES];
+        
+        
+    }
+    //change title color
+    if(self.currentFilter == nil || [self.currentFilter isEqualToString:@"None"]) {
+        self.title = @"Sessions";
+        self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor blackColor]};
+    } else {
+        self.title = self.currentFilter;
+        self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor redColor]};
+    }
+}
 
+-(void)handleTapOnTextView:(UIGestureRecognizer *)recognizer {
+    // Get IndexPath based on x,y coordinates
+    CGPoint tapLocation = [recognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:tapLocation];
 
+    
+    //Get list of speakers for the current session
+    NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
+    NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
+    NSDictionary *session = [sessionsAtThisStartTime objectAtIndex:indexPath.row];
+    NSLog(@"%@", session);
+}
 
 
 - (void)createSectionsAndreloadTableView:(BOOL)reloadTableView {
@@ -203,21 +235,24 @@
 #pragma mark - feedbackButtonClickedOnCell and likeButtonClickedOnCell (SessionCellDelegate)
 
 - (void) feedbackButtonClickedOnCell:(id)cell {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
-    NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
-    NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
-    self.currentSession = [sessionsAtThisStartTime objectAtIndex:indexPath.row]; // save it to property
-    
+    self.currentSession = [self getSessionForCell:cell]; // save it to property
     [self performSegueWithIdentifier:@"showFeedbackViewSegue" sender:self];
 }
 
 
 - (void) likeButtonClickedOnCell:(id)cell forButton:(UIButton *)button {
+    self.currentSession = [self getSessionForCell:cell]; // save it to property
+    [self toggleFavoritesForCell:(SFSessionCell *) cell];
+}
+
+//show session details when textViewButtonClickedOnCell
+- (void) textViewButtonClickedOnCell:(id)cell forButton:(UIButton *)button {
+    self.currentSession = [self getSessionForCell:cell]; // save it to property
     NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
     NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
-    NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
-    self.currentSession = [sessionsAtThisStartTime objectAtIndex:indexPath.row]; // save it to property
-    [self toggleFavoritesForCell:(SFSessionCell *) cell];
+   self.currentSessionsFormattedTimeStr = [self.dateToStringFormatter stringFromDate:currentStartTime];
+
+    [self performSegueWithIdentifier:@"showSessionDetailsSegue" sender:self];
 }
 
 #pragma mark - Table view data source
@@ -226,6 +261,15 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 40;
+}
+
+
+
+-(NSDictionary *)getSessionForCell:(id) cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
+    NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
+    NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
+    return [sessionsAtThisStartTime objectAtIndex:indexPath.row];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -241,8 +285,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:section];
-    NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
     NSString *timeStr = [self.dateToStringFormatter stringFromDate:currentStartTime];
+    
+    NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
     if ([sessionsAtThisStartTime count] > 1) {
         NSString *tracks = [@([sessionsAtThisStartTime count]) stringValue];
         return [NSString stringWithFormat:@" %@\t\t\t[%@ Tracks] ", timeStr, tracks];
@@ -250,8 +295,15 @@
         return [NSString stringWithFormat:@" %@", timeStr];
     }
 }
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+// 
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+   
+    
     static NSString *CellIdentifier = @"sessionCell";
     SFSessionCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -261,6 +313,12 @@
     //add current controller as delegate to cell's FeedbackButton and LikeButton control
     cell.delegate = self;//feedback
     cell.likeButtonDelegate = self; //like
+    cell.textViewButtonDelegate = self;//click on textview
+    
+    
+    //dont highlight selection
+  //  [cell.contentView setUserInteractionEnabled:NO];
+   // [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     //Note: store background image/color and set it back to cells in the beginning.
     //coz, imagine we had set some custom backbround image to a cell and if that cell is reused,
@@ -348,6 +406,9 @@
     //Set the content size of our scrollview according to the total width of our speakers objects.
     cell.scrollView.contentSize = CGSizeMake(cell.scrollView.frame.size.width * [speakers count], cell.scrollView.frame.size.height);
     [cell.pageControl setNumberOfPages:[speakers count]];
+    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+
     return cell;
 }
 
@@ -478,6 +539,11 @@
         [fvc setTracks:self.sessionsManager.tracks];
         [fvc setSessionsViewController:self];
         [fvc setSelectedTrack: self.currentFilter];
+    } else if ([[segue identifier] isEqualToString:@"showSessionDetailsSegue"]) {
+        SFSessionDetailsViewController *sdvc = (SFSessionDetailsViewController *)[segue destinationViewController];
+        [sdvc setSession:self.currentSession];
+        [sdvc setCurrentSessionsFormattedTimeStr:self.currentSessionsFormattedTimeStr];
+        [sdvc setImageCache:self.imageCache];
     }
 }
 

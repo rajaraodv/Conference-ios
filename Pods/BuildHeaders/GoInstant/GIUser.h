@@ -1,0 +1,1 @@
+../../GoInstant/GoInstant/GIUser.h

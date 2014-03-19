@@ -1,0 +1,13 @@
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#endif
+
+#import "Pods-environment.h"
+//
+// Prefix header for all source files of the 'GoInstantDriver' target in the 'GoInstantDriver' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import "Defines.h"
+#endif

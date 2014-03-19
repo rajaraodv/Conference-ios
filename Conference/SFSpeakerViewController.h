@@ -19,5 +19,6 @@
 
 @property(strong, nonatomic) NSDictionary *speaker;//set speaker obj from prepareForSegue
 @property(strong,nonatomic) UIImage *speakerImage;//set image from prepareForSeque
+- (IBAction)closeBtn:(id)sender;
 
 @end

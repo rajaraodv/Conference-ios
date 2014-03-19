@@ -1,0 +1,1 @@
+PODS_ENGINEIOCLIENT_OTHER_LDFLAGS = -lObjc -licucore -framework Security

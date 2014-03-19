@@ -1,0 +1,1 @@
+pod 'GoInstant', '0.1.5'

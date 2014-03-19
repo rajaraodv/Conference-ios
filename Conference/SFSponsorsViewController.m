@@ -59,7 +59,7 @@
 -(void)loadSessionDataAndReloadTable:(BOOL) reloadTableView{
     
     NSString *str = @"http://localhost:3000/sponsors";
-    //str = @"https://raw.github.com/rajaraodv/Conference-ios/master/sponsorsTest.json";
+    str = @"https://raw.github.com/rajaraodv/Conference-ios/master/sponsorsTest.json";
     NSURL *url = [NSURL URLWithString:str];
     NSData *data = [NSData dataWithContentsOfURL:url];
     if (data == nil) {
@@ -163,6 +163,7 @@
     
     //dont highlight selection
    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
 
     //Get current sponsor from indexPath
     NSString *currentLevel = [self.sortedLevels objectAtIndex:indexPath.section];

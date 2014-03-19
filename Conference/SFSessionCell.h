@@ -11,6 +11,7 @@
 @protocol SessionCellDelegate <NSObject>;
 -(void)feedbackButtonClickedOnCell:(id) cell;
 -(void)likeButtonClickedOnCell:(id) cell forButton:(UIButton *) button;
+-(void)textViewButtonClickedOnCell:(id) cell forButton:(UIButton *) button;
 
 @end
 
@@ -19,6 +20,8 @@
 @property (nonatomic,strong) id <SessionCellDelegate> delegate;
 
 @property (nonatomic,strong) id <SessionCellDelegate> likeButtonDelegate;
+
+@property (nonatomic,strong) id <SessionCellDelegate> textViewButtonDelegate;
 
 @property (strong, nonatomic) IBOutlet UILabel *trackLabel;
 @property (strong, nonatomic) IBOutlet UITextView *sessionTitleTextView;
@@ -30,6 +33,9 @@
 - (IBAction)feedbackButton:(id)sender;
 
 - (IBAction)likeButtonClicked:(id)sender;
+
+//this is used to make uitextview act like button
+- (IBAction)textViewButtonClicked:(id)sender;
 
 //this is used to set likeButton's bgimage
 @property (strong, nonatomic) IBOutlet UIButton *likeButton;

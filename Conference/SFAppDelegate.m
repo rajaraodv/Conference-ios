@@ -15,8 +15,8 @@
 //    [[ETPush pushManager] configureSDKWithAppID:@"191b32b2-bedf-454c-8c5a-7be8e4e7d613" andAccessToken:@"zhuqg4xugcyb3rdsq39zjzhq" withAnalytics:NO andLocationServices:NO andCloudPages:NO];
 //
 //    [[ETPush pushManager] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+//    [[ETPush pushManager] shouldDisplayAlertViewIfPushReceived:YES];
 //    [[ETPush pushManager] applicationLaunchedWithOptions:launchOptions];
-    
     
     return YES;
 }
@@ -37,6 +37,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     [[ETPush pushManager] handleNotification:userInfo
                          forApplicationState:application.applicationState];
 }
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application

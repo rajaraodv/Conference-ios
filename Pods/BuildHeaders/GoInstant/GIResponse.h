@@ -1,0 +1,1 @@
+../../GoInstant/GoInstant/GIResponse.h

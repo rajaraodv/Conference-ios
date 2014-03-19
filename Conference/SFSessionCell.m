@@ -43,18 +43,27 @@
     //Is anyone listening
     if([self.delegate respondsToSelector:@selector(feedbackButtonClickedOnCell:)])
     {
-        //send the delegate function with the amount entered by the user
         [self.delegate feedbackButtonClickedOnCell:self];
     }
 }
+
 
 
 - (IBAction)likeButtonClicked:(id)sender {
     //Is anyone listening
     if([self.likeButtonDelegate respondsToSelector:@selector(likeButtonClickedOnCell:forButton:)])
     {
-        //send the delegate function with the amount entered by the user
+        //send the delegate function
         [self.likeButtonDelegate likeButtonClickedOnCell:self forButton:(UIButton*)sender];
+    }
+}
+
+- (IBAction)textViewButtonClicked:(id)sender {
+    //Is anyone listening
+    if([self.textViewButtonDelegate respondsToSelector:@selector(textViewButtonClickedOnCell:forButton:)])
+    {
+        //send the delegate function
+        [self.textViewButtonDelegate textViewButtonClickedOnCell:self forButton:(UIButton*)sender];
     }
 }
 

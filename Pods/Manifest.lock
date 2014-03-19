@@ -1,0 +1,16 @@
+PODS:
+  - EngineIOClient (0.1.2):
+    - SocketRocket (~> 0.3.1-beta2)
+  - GoInstant (0.1.5):
+    - EngineIOClient (~> 0.1.2)
+  - SocketRocket (0.3.1-beta2)
+
+DEPENDENCIES:
+  - GoInstant (= 0.1.5)
+
+SPEC CHECKSUMS:
+  EngineIOClient: b879089fc626ca67576003ce774a9fe1b6970342
+  GoInstant: 50b374f15ee53ffe8221d7398ecaafd88cf39f8a
+  SocketRocket: 7ac946bcce46287a791dfff3c1f8daa692821dae
+
+COCOAPODS: 0.29.0

@@ -1,0 +1,1 @@
+../../GoInstant/GoInstant/GIOptions+protected.h

@@ -17,4 +17,5 @@
 @property(strong, nonatomic) NSString* currentFilter;
 @property(strong, nonatomic) NSString* previousFilter;
 
+
 @end

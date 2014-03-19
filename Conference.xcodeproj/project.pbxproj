@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E5AB92218DA09B000FAD67E /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5AB92118DA09B000FAD67E /* BackgroundLayer.m */; };
 		2E7E326318C216A800426121 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7E326218C216A800426121 /* Foundation.framework */; };
 		2E7E326518C216A800426121 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7E326418C216A800426121 /* CoreGraphics.framework */; };
 		2E7E326718C216A800426121 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7E326618C216A800426121 /* UIKit.framework */; };
@@ -59,6 +60,7 @@
 		2E88D3EB18D1776300EFE315 /* Mask2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E88D3E818D1776300EFE315 /* Mask2.png */; };
 		2E9FBD1518D789D4004B945F /* like-filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E9FBD1418D789D4004B945F /* like-filled-32.png */; };
 		2E9FBD1818D79AF8004B945F /* SFSessionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9FBD1718D79AF8004B945F /* SFSessionsManager.m */; };
+		2E9FBD1B18D8A064004B945F /* SFSessionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9FBD1A18D8A064004B945F /* SFSessionDetailsViewController.m */; };
 		533E1502ABF64EF9945964ED /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F15F53602B641A881152715 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E5AB92018DA09B000FAD67E /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
+		2E5AB92118DA09B000FAD67E /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
 		2E7E325F18C216A800426121 /* Conference.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Conference.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E7E326218C216A800426121 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2E7E326418C216A800426121 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -150,6 +154,8 @@
 		2E9FBD1418D789D4004B945F /* like-filled-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "like-filled-32.png"; sourceTree = "<group>"; };
 		2E9FBD1618D79AF8004B945F /* SFSessionsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSessionsManager.h; sourceTree = "<group>"; };
 		2E9FBD1718D79AF8004B945F /* SFSessionsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSessionsManager.m; sourceTree = "<group>"; };
+		2E9FBD1918D8A064004B945F /* SFSessionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSessionDetailsViewController.h; sourceTree = "<group>"; };
+		2E9FBD1A18D8A064004B945F /* SFSessionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSessionDetailsViewController.m; sourceTree = "<group>"; };
 		9F15F53602B641A881152715 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20A02FD691B4D4F97A98A6C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,6 +190,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E5AB92318DA09BE00FAD67E /* BackGroundLayer */ = {
+			isa = PBXGroup;
+			children = (
+				2E5AB92018DA09B000FAD67E /* BackgroundLayer.h */,
+				2E5AB92118DA09B000FAD67E /* BackgroundLayer.m */,
+			);
+			name = BackGroundLayer;
+			sourceTree = "<group>";
+		};
 		2E7E325618C216A800426121 = {
 			isa = PBXGroup;
 			children = (
@@ -232,6 +247,7 @@
 				2E7E327218C216A800426121 /* SFAppDelegate.m */,
 				2E88D39018C4581700EFE315 /* IconDownloader.h */,
 				2E88D39118C4581700EFE315 /* IconDownloader.m */,
+				2E5AB92318DA09BE00FAD67E /* BackGroundLayer */,
 				2E88D3DA18D0FFE300EFE315 /* Sessions */,
 				2E88D3DB18D0FFF700EFE315 /* Sponsors */,
 				2E88D3DC18D1002200EFE315 /* Filters */,
@@ -319,6 +335,8 @@
 		2E88D3DA18D0FFE300EFE315 /* Sessions */ = {
 			isa = PBXGroup;
 			children = (
+				2E9FBD1918D8A064004B945F /* SFSessionDetailsViewController.h */,
+				2E9FBD1A18D8A064004B945F /* SFSessionDetailsViewController.m */,
 				2E7E32B418C22B2E00426121 /* SFSessionCell.h */,
 				2E7E32B518C22B2E00426121 /* SFSessionCell.m */,
 				2E7E32AD18C2293800426121 /* SFSessionsViewController.h */,
@@ -439,6 +457,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Salesforce;
 				TargetAttributes = {
+					2E7E325E18C216A800426121 = {
+						DevelopmentTeam = FB7YA25X78;
+					};
 					2E7E328218C216A800426121 = {
 						TestTargetID = 2E7E325E18C216A800426121;
 					};
@@ -549,9 +570,11 @@
 				2E88D3A218C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				2E88D3CB18CE41A200EFE315 /* SFSponsorsCell.m in Sources */,
 				2E88D39F18C7EC1B00EFE315 /* SFFeedbackViewController.m in Sources */,
+				2E9FBD1B18D8A064004B945F /* SFSessionDetailsViewController.m in Sources */,
 				2E7E326F18C216A800426121 /* main.m in Sources */,
 				2E7E327318C216A800426121 /* SFAppDelegate.m in Sources */,
 				2E88D3CE18CE440000EFE315 /* SFSponsorsViewController.m in Sources */,
+				2E5AB92218DA09B000FAD67E /* BackgroundLayer.m in Sources */,
 				2E88D39218C4581700EFE315 /* IconDownloader.m in Sources */,
 				2E9FBD1818D79AF8004B945F /* SFSessionsManager.m in Sources */,
 				2E88D3D918D0FB4C00EFE315 /* SFFilterViewController.m in Sources */,
@@ -686,6 +709,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Conference/Conference-Prefix.pch";
 				INFOPLIST_FILE = "Conference/Conference-Info.plist";
@@ -694,6 +719,7 @@
 					/Users/rraodv/apps/Conference/Conference/etpushsdk,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "A1DAD88B-4E8B-4806-B6E0-EE7B3275F8FF";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -704,6 +730,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Conference/Conference-Prefix.pch";
 				INFOPLIST_FILE = "Conference/Conference-Info.plist";
@@ -712,6 +740,7 @@
 					/Users/rraodv/apps/Conference/Conference/etpushsdk,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "A1DAD88B-4E8B-4806-B6E0-EE7B3275F8FF";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
