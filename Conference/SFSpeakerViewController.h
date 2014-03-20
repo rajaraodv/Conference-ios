@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SFSessionsManager.h"
+#import "SFImageManager.h"  
 
 @interface SFSpeakerViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIImageView *speakerImageView;
@@ -17,8 +19,7 @@
 @property (strong, nonatomic) IBOutlet UITextView *speakerBioTextView;
 @property (strong, nonatomic) IBOutlet UILabel *speakerCompany;
 
-@property(strong, nonatomic) NSDictionary *speaker;//set speaker obj from prepareForSegue
-@property(strong,nonatomic) UIImage *speakerImage;//set image from prepareForSeque
+//@property(strong,nonatomic) UIImage *cachedSpeakerImage;//set image from prepareForSeque
 - (IBAction)closeBtn:(id)sender;
 
 @end

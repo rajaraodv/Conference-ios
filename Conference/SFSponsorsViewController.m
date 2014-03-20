@@ -8,10 +8,11 @@
 
 #import "SFSponsorsViewController.h"
 #import "SFSponsorsCell.h"
-#import "IconDownloader.h"
+//#import "IconDownloader.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SFFeedbackViewController.h"
 #import "GM_FSHighlightAnimationAdditions.h"
+#import "SFImageManager.h"
 
 
 @interface SFSponsorsViewController ()
@@ -21,9 +22,11 @@
 
 // Handle image/icon downloads
 @property(nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
-@property(strong, nonatomic) NSMutableDictionary *imageCache;
+//@property(strong, nonatomic) NSMutableDictionary *imageCache;
 
 @property(strong, nonatomic) UIColor *headerBGColor;
+
+@property(strong, nonatomic) SFImageManager *imageManager;
 
 @end
 
@@ -44,11 +47,15 @@
 {
     [super viewDidLoad];
     
+    //init and load imageManager singleton
+    self.imageManager = [SFImageManager sharedInstance];
+    
     //register main table view's xib file
     [self.tableView registerNib:[UINib nibWithNibName:@"SponsorsCustomCell"
                                                bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"sponsorCell"];
 
+    
 
     [self loadSessionDataAndReloadTable:NO];
     
@@ -173,7 +180,7 @@
     cell.levelLabel.text = [currentSponsor objectForKey:@"Sponsorship_Level_Name"];
     cell.boothLabel.text = [currentSponsor objectForKey:@"Booth_Number__c"];
     cell.sponsorNameLabel.text = [currentSponsor objectForKey:@"Name"];
-   cell.giveAwayTextView.text = [currentSponsor objectForKey:@"Give_Away_Details__c"];
+    cell.giveAwayTextView.text = [currentSponsor objectForKey:@"Give_Away_Details__c"];
    
     
     cell.logoImageView.layer.cornerRadius = 20.0;
@@ -183,7 +190,8 @@
     if(self.headerBGColor == nil)
         self.headerBGColor = cell.levelLabel.backgroundColor;
     
-    [self setImageView:cell.logoImageView forSponsorLogoUrl:[currentSponsor objectForKey:@"Image_Url__c"]];
+    //[self setImageView:cell.logoImageView forSponsorLogoUrl:[currentSponsor objectForKey:@"Image_Url__c"]];
+    [self.imageManager setImageView:cell.logoImageView forImageUrl:[currentSponsor objectForKey:@"Image_Url__c"] WithRadius:0.0];
    
   //  [cell.levelLabel GM_setAnimationLTRWithText:[currentSponsor objectForKey:@"Sponsorship_Level_Name"] andWithDuration:2.0f andWithRepeatCount:0];
    
@@ -221,39 +229,39 @@
 // -------------------------------------------------------------------------------
 //	setImageView:
 // -------------------------------------------------------------------------------
-- (void)setImageView:(UIImageView *)logoImageView forSponsorLogoUrl:(NSString *)imageUrl {
-    
-    
-    UIImage *image = [self.imageCache objectForKey:imageUrl];
-    if (image != nil) {
-        logoImageView.image = image;
-        [self spinImageView:logoImageView];
-
-       // [self makeImageViewRounded:logoImageView AndSetImage:image];
-        return;
-    }
-    IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:imageUrl];
-    if (iconDownloader == nil) {
-        iconDownloader = [[IconDownloader alloc] init];
-        [iconDownloader setCompletionHandler:^(UIImage *image) {
-            
-            
-            // Display the newly loaded image
-            [self.imageCache setObject:image forKey:imageUrl];
-            logoImageView.image = image;
-            [self spinImageView:logoImageView];
-            //[self makeImageViewRounded:logoImageView AndSetImage:image];
-
-            // Remove the IconDownloader from the in progress list.
-            // This will result in it being deallocated.
-            [self.imageDownloadsInProgress removeObjectForKey:imageUrl];
-            
-        }];
-        [self.imageDownloadsInProgress setObject:iconDownloader forKey:imageUrl];
-        
-        [iconDownloader startDownloadWithURL:imageUrl AndToken:nil];
-    }
-}
+//- (void)setImageView:(UIImageView *)logoImageView forSponsorLogoUrl:(NSString *)imageUrl {
+//    
+//    
+//    UIImage *image = [self.imageCache objectForKey:imageUrl];
+//    if (image != nil) {
+//        logoImageView.image = image;
+//        [self spinImageView:logoImageView];
+//
+//       // [self makeImageViewRounded:logoImageView AndSetImage:image];
+//        return;
+//    }
+//    IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:imageUrl];
+//    if (iconDownloader == nil) {
+//        iconDownloader = [[IconDownloader alloc] init];
+//        [iconDownloader setCompletionHandler:^(UIImage *image) {
+//            
+//            
+//            // Display the newly loaded image
+//            [self.imageCache setObject:image forKey:imageUrl];
+//            logoImageView.image = image;
+//            [self spinImageView:logoImageView];
+//            //[self makeImageViewRounded:logoImageView AndSetImage:image];
+//
+//            // Remove the IconDownloader from the in progress list.
+//            // This will result in it being deallocated.
+//            [self.imageDownloadsInProgress removeObjectForKey:imageUrl];
+//            
+//        }];
+//        [self.imageDownloadsInProgress setObject:iconDownloader forKey:imageUrl];
+//        
+//        [iconDownloader startDownloadWithURL:imageUrl AndToken:nil];
+//    }
+//}
 
 - (void)spinImageView:(UIImageView *)imageView  {
 //    CABasicAnimation *rotation;

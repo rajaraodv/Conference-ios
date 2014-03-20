@@ -78,7 +78,7 @@
     [jsonDict setValue:self.feedbackTextView.text forKey:@"Text__c"];
     [jsonDict setValue:self.appId forKey:@"Anonymous_App_Id__c"];
     if(self.session != nil) {
-        [jsonDict setValue:[self.session objectForKey:@"Id"] forKey:@"Session__c"];
+        [jsonDict setValue:self.session.Id forKey:@"Session__c"];
     }
     if(self.sponsor != nil) {
         [jsonDict setValue:[self.sponsor objectForKey:@"Id"] forKey:@"Sponsor__c"];

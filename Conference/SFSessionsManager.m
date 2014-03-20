@@ -7,7 +7,7 @@
 //
 
 #import "SFSessionsManager.h"
-
+//#import "IconDownloader.h"
 @implementation SFSessionsManager
 
 + (SFSessionsManager *)sharedInstance {
@@ -15,14 +15,21 @@
     @synchronized(self) {
         if (sharedInstance == nil) {
             sharedInstance = [[SFSessionsManager alloc] init];
+            [sharedInstance initStuff];
         }
     }
     return sharedInstance;
 }
 
+-(void) initStuff {
+    //init
+    self.allSessions = [[NSMutableArray alloc] init];
+    self.tracks = [[NSMutableArray alloc] init];
+    self.loaded = NO;
+}
+
 -(void) loadSessions {
     //init
-    self.tracks = [[NSMutableArray alloc] init];
     self.loaded = NO;
 
     NSString *str = @"http://localhost:3000/";
@@ -42,15 +49,20 @@
         return;
     }
     
-    self.allSessions = [groupedBySessions allValues];
+    NSArray *rawSessions = [groupedBySessions allValues];
+    for(id rawSession in rawSessions) {
+        SFSession *session = [[SFSession alloc] initWithJSONDictinoary:rawSession];
+        [self.allSessions addObject: session];
+    }
+ 
     NSSortDescriptor *dateSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"Start_Date_And_Time__c" ascending:YES];
-    self.allSessions = [self.allSessions sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]];
-    
+    self.allSessions = [[self.allSessions sortedArrayUsingDescriptors:[NSArray arrayWithObject:dateSortDescriptor]] mutableCopy];
     
     [self initTracks];
     [self initFavorites];
     self.loaded = YES;
 }
+
 
 -(void) initTracks {
     //create tracks
@@ -71,6 +83,26 @@
         self.favorites = [[NSMutableArray alloc] init];
     }
 }
+
+-(BOOL) isCurrentSessionFavorite {
+    return [self.favorites containsObject:self.currentSession.Id];
+}
+
+-(void) toggleCurrentSessionFavorite {
+    NSString *sessionId = self.currentSession.Id;
+    if(![self.favorites containsObject:sessionId]) {
+        [self.favorites addObject: sessionId];
+    } else {//unfavorite
+        [self.favorites removeObject:sessionId];
+        [self.userDefaults setObject:self.favorites forKey:@"favorites"];
+    }
+    //add to defaults and save it
+    [self.userDefaults setObject:self.favorites forKey:@"favorites"];
+    [self.userDefaults synchronize];
+    
+    self.sessionsModifiedByUser = YES;
+}
+
 
 - (void)showAlertWithTitle:(NSString *)title AndMessage: (NSString *)message {
     

@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SFSession.h"
+#import "SFSpeaker.h"
+
 
 @interface SFSessionDetailsViewController : UIViewController<UIScrollViewDelegate>
 
 //set session, currentSessionsFormattedTimeStr and imageCache from previous view
-@property(nonatomic, strong) NSDictionary *session;
-@property(nonatomic, strong) NSString *currentSessionsFormattedTimeStr;
-@property (strong, nonatomic) NSMutableDictionary *imageCache;
+//@property(nonatomic, strong) SFSession *session;
+//@property(nonatomic, strong) NSString *currentSessionsFormattedTimeStr;
+//@property (strong, nonatomic) NSMutableDictionary *imageCache;
 
 
 @property (strong, nonatomic) IBOutlet UITextView *sessionTitleTextview;
@@ -24,6 +27,8 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *speakersScrollView;
 @property (strong, nonatomic) IBOutlet UIPageControl *speakersPageControl;
 @property (strong, nonatomic) IBOutlet UIImageView *favoriteImageView;
+
+
 
 
 @end

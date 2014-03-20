@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2E5AB92218DA09B000FAD67E /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5AB92118DA09B000FAD67E /* BackgroundLayer.m */; };
+		2E5AB92618DA38C500FAD67E /* SFSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5AB92518DA38C500FAD67E /* SFSession.m */; };
+		2E5AB92918DA3FFD00FAD67E /* SFSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5AB92818DA3FFD00FAD67E /* SFSpeaker.m */; };
+		2E5AB92D18DA628F00FAD67E /* SFImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5AB92C18DA628F00FAD67E /* SFImageManager.m */; };
 		2E7E326318C216A800426121 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7E326218C216A800426121 /* Foundation.framework */; };
 		2E7E326518C216A800426121 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7E326418C216A800426121 /* CoreGraphics.framework */; };
 		2E7E326718C216A800426121 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7E326618C216A800426121 /* UIKit.framework */; };
@@ -77,6 +80,12 @@
 /* Begin PBXFileReference section */
 		2E5AB92018DA09B000FAD67E /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
 		2E5AB92118DA09B000FAD67E /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
+		2E5AB92418DA38C500FAD67E /* SFSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSession.h; sourceTree = "<group>"; };
+		2E5AB92518DA38C500FAD67E /* SFSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSession.m; sourceTree = "<group>"; };
+		2E5AB92718DA3FFD00FAD67E /* SFSpeaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSpeaker.h; sourceTree = "<group>"; };
+		2E5AB92818DA3FFD00FAD67E /* SFSpeaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSpeaker.m; sourceTree = "<group>"; };
+		2E5AB92B18DA628F00FAD67E /* SFImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFImageManager.h; sourceTree = "<group>"; };
+		2E5AB92C18DA628F00FAD67E /* SFImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFImageManager.m; sourceTree = "<group>"; };
 		2E7E325F18C216A800426121 /* Conference.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Conference.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E7E326218C216A800426121 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2E7E326418C216A800426121 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -199,6 +208,28 @@
 			name = BackGroundLayer;
 			sourceTree = "<group>";
 		};
+		2E5AB92A18DA400200FAD67E /* Speakers */ = {
+			isa = PBXGroup;
+			children = (
+				2E5AB92718DA3FFD00FAD67E /* SFSpeaker.h */,
+				2E5AB92818DA3FFD00FAD67E /* SFSpeaker.m */,
+				2E88D3D418D0D4EE00EFE315 /* SFSpeakerViewController.h */,
+				2E88D3D518D0D4EE00EFE315 /* SFSpeakerViewController.m */,
+			);
+			name = Speakers;
+			sourceTree = "<group>";
+		};
+		2E5AB92E18DA66B800FAD67E /* ImageUtil */ = {
+			isa = PBXGroup;
+			children = (
+				2E88D39018C4581700EFE315 /* IconDownloader.h */,
+				2E88D39118C4581700EFE315 /* IconDownloader.m */,
+				2E5AB92B18DA628F00FAD67E /* SFImageManager.h */,
+				2E5AB92C18DA628F00FAD67E /* SFImageManager.m */,
+			);
+			name = ImageUtil;
+			sourceTree = "<group>";
+		};
 		2E7E325618C216A800426121 = {
 			isa = PBXGroup;
 			children = (
@@ -245,14 +276,12 @@
 			children = (
 				2E7E327118C216A800426121 /* SFAppDelegate.h */,
 				2E7E327218C216A800426121 /* SFAppDelegate.m */,
-				2E88D39018C4581700EFE315 /* IconDownloader.h */,
-				2E88D39118C4581700EFE315 /* IconDownloader.m */,
+				2E5AB92E18DA66B800FAD67E /* ImageUtil */,
 				2E5AB92318DA09BE00FAD67E /* BackGroundLayer */,
 				2E88D3DA18D0FFE300EFE315 /* Sessions */,
 				2E88D3DB18D0FFF700EFE315 /* Sponsors */,
 				2E88D3DC18D1002200EFE315 /* Filters */,
 				2E88D3DD18D1002F00EFE315 /* Feedbacks */,
-				2E88D3DE18D1004000EFE315 /* Speakers */,
 				2E88D3ED18D177AC00EFE315 /* KeyboardAvoidingScrollView */,
 				2E88D3EC18D1776D00EFE315 /* TextAnimation */,
 				2E7E327D18C216A800426121 /* Images.xcassets */,
@@ -335,14 +364,17 @@
 		2E88D3DA18D0FFE300EFE315 /* Sessions */ = {
 			isa = PBXGroup;
 			children = (
+				2E5AB92418DA38C500FAD67E /* SFSession.h */,
+				2E5AB92518DA38C500FAD67E /* SFSession.m */,
+				2E9FBD1618D79AF8004B945F /* SFSessionsManager.h */,
+				2E9FBD1718D79AF8004B945F /* SFSessionsManager.m */,
+				2E7E32AD18C2293800426121 /* SFSessionsViewController.h */,
+				2E7E32AE18C2293800426121 /* SFSessionsViewController.m */,
 				2E9FBD1918D8A064004B945F /* SFSessionDetailsViewController.h */,
 				2E9FBD1A18D8A064004B945F /* SFSessionDetailsViewController.m */,
 				2E7E32B418C22B2E00426121 /* SFSessionCell.h */,
 				2E7E32B518C22B2E00426121 /* SFSessionCell.m */,
-				2E7E32AD18C2293800426121 /* SFSessionsViewController.h */,
-				2E7E32AE18C2293800426121 /* SFSessionsViewController.m */,
-				2E9FBD1618D79AF8004B945F /* SFSessionsManager.h */,
-				2E9FBD1718D79AF8004B945F /* SFSessionsManager.m */,
+				2E5AB92A18DA400200FAD67E /* Speakers */,
 			);
 			name = Sessions;
 			sourceTree = "<group>";
@@ -370,21 +402,12 @@
 		2E88D3DD18D1002F00EFE315 /* Feedbacks */ = {
 			isa = PBXGroup;
 			children = (
-				2E88D3A618C9370300EFE315 /* SFThankYouViewController.h */,
-				2E88D3A718C9370300EFE315 /* SFThankYouViewController.m */,
 				2E88D39D18C7EC1B00EFE315 /* SFFeedbackViewController.h */,
 				2E88D39E18C7EC1B00EFE315 /* SFFeedbackViewController.m */,
+				2E88D3A618C9370300EFE315 /* SFThankYouViewController.h */,
+				2E88D3A718C9370300EFE315 /* SFThankYouViewController.m */,
 			);
 			name = Feedbacks;
-			sourceTree = "<group>";
-		};
-		2E88D3DE18D1004000EFE315 /* Speakers */ = {
-			isa = PBXGroup;
-			children = (
-				2E88D3D418D0D4EE00EFE315 /* SFSpeakerViewController.h */,
-				2E88D3D518D0D4EE00EFE315 /* SFSpeakerViewController.m */,
-			);
-			name = Speakers;
 			sourceTree = "<group>";
 		};
 		2E88D3EC18D1776D00EFE315 /* TextAnimation */ = {
@@ -571,13 +594,16 @@
 				2E88D3CB18CE41A200EFE315 /* SFSponsorsCell.m in Sources */,
 				2E88D39F18C7EC1B00EFE315 /* SFFeedbackViewController.m in Sources */,
 				2E9FBD1B18D8A064004B945F /* SFSessionDetailsViewController.m in Sources */,
+				2E5AB92918DA3FFD00FAD67E /* SFSpeaker.m in Sources */,
 				2E7E326F18C216A800426121 /* main.m in Sources */,
 				2E7E327318C216A800426121 /* SFAppDelegate.m in Sources */,
 				2E88D3CE18CE440000EFE315 /* SFSponsorsViewController.m in Sources */,
 				2E5AB92218DA09B000FAD67E /* BackgroundLayer.m in Sources */,
 				2E88D39218C4581700EFE315 /* IconDownloader.m in Sources */,
 				2E9FBD1818D79AF8004B945F /* SFSessionsManager.m in Sources */,
+				2E5AB92618DA38C500FAD67E /* SFSession.m in Sources */,
 				2E88D3D918D0FB4C00EFE315 /* SFFilterViewController.m in Sources */,
+				2E5AB92D18DA628F00FAD67E /* SFImageManager.m in Sources */,
 				2E7E32B018C2293800426121 /* SFSessionsViewController.m in Sources */,
 				2E7E32B618C22B2E00426121 /* SFSessionCell.m in Sources */,
 				2E88D3E918D1776300EFE315 /* GM_FSHighlightAnimationAdditions.m in Sources */,

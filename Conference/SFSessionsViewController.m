@@ -7,28 +7,33 @@
 //
 
 #import "SFSessionsViewController.h"
-#import "IconDownloader.h"
+//#import "IconDownloader.h"
 #import "SFFeedbackViewController.h"
 #import "SFSpeakerViewController.h"
 #import "SFFilterViewController.h"
 #import "SFSessionDetailsViewController.h"
+#import "SFSession.h"
+#import "SFSpeaker.h"
+#import "SFImageManager.h"
+
 
 @interface SFSessionsViewController ()
 @property(strong, nonatomic) NSMutableDictionary *sections;
 @property(strong, nonatomic) NSArray *sortedStartTimes;
-@property(strong, nonatomic) NSDateFormatter *dateToStringFormatter;
-@property(strong, nonatomic) NSDateFormatter *salesforceDateFormatter;
-@property(strong, nonatomic) NSMutableDictionary *imageDownloadsInProgress;
-@property(strong, nonatomic) NSMutableDictionary *imageCache;
+//@property(strong, nonatomic) NSDateFormatter *dateToStringFormatter;
+//@property(strong, nonatomic) NSDateFormatter *salesforceDateFormatter;
+//@property(strong, nonatomic) NSMutableDictionary *imageDownloadsInProgress;
+//@property(strong, nonatomic) NSMutableDictionary *imageCache;
 @property(strong, nonatomic) UIColor *defaultCellBGColor;
 @property(strong, nonatomic) GIConnection *conn;
 @property(strong, nonatomic) GIChannel *channel;
-@property(strong, nonatomic) NSDictionary *currentSession; //used by feedback segue
+//@property(strong, nonatomic) NSDictionary *currentSession; //used by feedback segue
 @property(strong, nonatomic) UIAlertView *reloadAlert;
-@property(strong, nonatomic) NSDictionary *currentSpeaker; //used by speaker segue
+//@property(strong, nonatomic) NSDictionary *currentSpeaker; //used by speaker segue
 @property(strong, nonatomic) SFSessionsManager *sessionsManager;
 @property(strong, nonatomic)  NSString *currentSessionsFormattedTimeStr;//used by session details segue
 //@property BOOL useCurrentDataButReloadTable;
+@property(strong, nonatomic) SFImageManager *imageManager;
 @end
 
 @implementation SFSessionsViewController
@@ -44,34 +49,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //init
+    //load sessionsManager singleton
     self.sessionsManager = [SFSessionsManager sharedInstance];
     if(!self.sessionsManager.loaded) {
         [self.sessionsManager loadSessions];
     }
     
+    //load imageManager singleton
+    self.imageManager = [SFImageManager sharedInstance];
     
-    //init
-    self.imageCache = [NSMutableDictionary dictionary];
+//    self.imageCache = [NSMutableDictionary dictionary];
+//    self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
+    
     self.sessionsManager.sessionsModifiedByUser = NO;
 
     
-    //Used to convert Salesforce date+time string "2014-03-01T16:00:00.000+0000" to NSDate
-    self.salesforceDateFormatter = [[NSDateFormatter alloc] init];
-    [self.salesforceDateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.zzzZ"];
-    
-    //Converts a NSDate to a readable string like: "10/10/2014 10:00PM"
-    self.dateToStringFormatter = [[NSDateFormatter alloc] init];
-    [self.dateToStringFormatter setDateStyle:NSDateFormatterLongStyle];
-    [self.dateToStringFormatter setTimeStyle:NSDateFormatterShortStyle];
+//    //Used to convert Salesforce date+time string "2014-03-01T16:00:00.000+0000" to NSDate
+//    self.salesforceDateFormatter = [[NSDateFormatter alloc] init];
+//    [self.salesforceDateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.zzzZ"];
+//    
+//    //Converts a NSDate to a readable string like: "10/10/2014 10:00PM"
+//    self.dateToStringFormatter = [[NSDateFormatter alloc] init];
+//    [self.dateToStringFormatter setDateStyle:NSDateFormatterLongStyle];
+//    [self.dateToStringFormatter setTimeStyle:NSDateFormatterShortStyle];
     
     
     //register main table view's xib file
     [self.tableView registerNib:[UINib nibWithNibName:@"SessionsCustomCell"
                                                bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"sessionCell"];
- 
-    //load sessions
-    [self.sessionsManager loadSessions];
+
     [self createSectionsAndreloadTableView:NO]; //create sections but dont reload as it will be automatically done
     
     //initialize goInstant
@@ -135,28 +143,27 @@
     NSLog(@"**********************%lu", (unsigned long)self.navigationController.tabBarController.selectedIndex);
 
     self.sections = [NSMutableDictionary dictionary];
-    for (id session in self.sessionsManager.allSessions) {
+    for (SFSession *session in self.sessionsManager.allSessions) {
         //in sessions tab..
         if(self.navigationController.tabBarController.selectedIndex == 0) {
             //ignore filter for None and nil.
             if(self.currentFilter != nil && ![self.currentFilter isEqualToString:@"None"]) {
-                BOOL filterMatched = [[session objectForKey:@"Track__c"] isEqualToString:self.currentFilter];
+                BOOL filterMatched = [session.Track__c isEqualToString:self.currentFilter];
                 if(!filterMatched) {//dont add session that dont match filter
                     continue;
                 }
             }
             
         } else if(self.navigationController.tabBarController.selectedIndex == 1) {//in favorites tab..
-            if(![self.sessionsManager.favorites containsObject:[session objectForKey:@"Id"]]) {
+            if(![self.sessionsManager.favorites containsObject:session.Id]) {
                 //skip if not in favorites list
                 continue;
             }
         }
-        // Get NSDate from "2014-03-01T16:00:00.000+0000" string
-        NSDate *currentStartTime = [self.salesforceDateFormatter dateFromString:[session objectForKey:@"Start_Date_And_Time__c"]];
+        // Get "NSDate" from "2014-03-01T16:00:00.000+0000" string
+        NSDate *currentStartTime = session.Start_Date_FormattedAsNSDate;
         
-        //        // Format it to look like like: "10/10/2014 10:00PM"
-        //        NSString* currentStartDateAndTime = [dateToStringFormatter stringFromDate:sessionNSDate];
+ 
         
         // See if we have sessions for current start date and time
         NSMutableArray *sessionsAtThisTime = [self.sections objectForKey:currentStartTime];
@@ -235,22 +242,24 @@
 #pragma mark - feedbackButtonClickedOnCell and likeButtonClickedOnCell (SessionCellDelegate)
 
 - (void) feedbackButtonClickedOnCell:(id)cell {
-    self.currentSession = [self getSessionForCell:cell]; // save it to property
+   [self setSessionAsCurrentForCell:cell]; // set current cell's session as current
     [self performSegueWithIdentifier:@"showFeedbackViewSegue" sender:self];
 }
 
 
 - (void) likeButtonClickedOnCell:(id)cell forButton:(UIButton *)button {
-    self.currentSession = [self getSessionForCell:cell]; // save it to property
     [self toggleFavoritesForCell:(SFSessionCell *) cell];
 }
 
 //show session details when textViewButtonClickedOnCell
 - (void) textViewButtonClickedOnCell:(id)cell forButton:(UIButton *)button {
-    self.currentSession = [self getSessionForCell:cell]; // save it to property
-    NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
-    NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
-   self.currentSessionsFormattedTimeStr = [self.dateToStringFormatter stringFromDate:currentStartTime];
+    // set current cell's session as current
+    [self setSessionAsCurrentForCell:cell];
+    
+    
+//    NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
+//    NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
+//    self.currentSessionsFormattedTimeStr = [self.dateToStringFormatter stringFromDate:currentStartTime];
 
     [self performSegueWithIdentifier:@"showSessionDetailsSegue" sender:self];
 }
@@ -265,11 +274,11 @@
 
 
 
--(NSDictionary *)getSessionForCell:(id) cell {
+-(void)setSessionAsCurrentForCell:(id) cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
     NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
     NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
-    return [sessionsAtThisStartTime objectAtIndex:indexPath.row];
+    self.sessionsManager.currentSession =  [sessionsAtThisStartTime objectAtIndex:indexPath.row];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -285,7 +294,8 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:section];
-    NSString *timeStr = [self.dateToStringFormatter stringFromDate:currentStartTime];
+    NSString *timeStr = [SFSession prettyfyDate:currentStartTime];
+    //NSString *timeStr = [self.dateToStringFormatter stringFromDate:currentStartTime];
     
     NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
     if ([sessionsAtThisStartTime count] > 1) {
@@ -330,18 +340,18 @@
     
     NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
     NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
-    NSDictionary *session = [sessionsAtThisStartTime objectAtIndex:indexPath.row];
+    SFSession *session = [sessionsAtThisStartTime objectAtIndex:indexPath.row];
     
-    NSString *sessionId = [session objectForKey:@"Id"];
+    NSString *sessionId = session.Id;
     
     //reset like image before setting it filled (coz cells are reused!)
     [cell.likeButton setImage:[UIImage imageNamed:@"like-32.png"] forState:UIControlStateNormal];
     if([self.sessionsManager.favorites containsObject:sessionId]) {//set filled if found
         [cell.likeButton setImage:[UIImage imageNamed:@"like-filled-32.png"] forState:UIControlStateNormal];
     }
-    cell.sessionTitleTextView.text = [session objectForKey:@"Title__c"];
-    cell.trackLabel.text = [session objectForKey:@"Track__c"];
-    cell.sessionRoomLabel.text = [session objectForKey:@"Location__c"];
+    cell.sessionTitleTextView.text = session.Title__c;
+    cell.trackLabel.text = session.Track__c;
+    cell.sessionRoomLabel.text = session.Location__c;
     
     //speaker scroll view..
     //Make the cell scrollview's delegate here(as cell's init is not called when we use xib)
@@ -351,8 +361,9 @@
     cell.scrollView.showsHorizontalScrollIndicator = NO;
     
     
-    if([session objectForKey:@"Background_Image_Url__c"] != nil && [session objectForKey:@"Background_Image_Url__c"] != (id)[NSNull null]) {
-        [self setBackgroundImageForCell:cell withImageUrl:[session objectForKey:@"Background_Image_Url__c"]];
+    if(session.Background_Image_Url__c != nil && session.Background_Image_Url__c != (id)[NSNull null]) {
+        //[self setBackgroundImageForView:cell.contentView withImageUrl:session.Background_Image_Url__c];
+        [self.imageManager setBackgroundImageForView:cell.contentView withImageUrl:session.Background_Image_Url__c];
     }
     
     
@@ -360,9 +371,9 @@
     for (UIView *view in [cell.scrollView subviews]) {
         [view removeFromSuperview];
     }
-    NSArray *speakers = [session objectForKey:@"speakers"];
+    NSArray *speakers = session.speakers;
     for (int i = 0; i < [speakers count]; i++) {
-        NSDictionary *speaker = speakers[i];
+        SFSpeaker *speaker = speakers[i];
         //We'll create a button that represent each frame of the scroll view and embed everything else as its sub view.
         CGRect frame;
         frame.origin.x = cell.scrollView.frame.size.width * i;
@@ -377,23 +388,24 @@
         
         UIImageView *speakerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
         speakerImageView.contentMode = UIViewContentModeScaleAspectFit;
-        [self setImageView:speakerImageView forSpeakerImageUrl:[speaker objectForKey:@"Photo_Url__c"]];
+        [self.imageManager setImageView:speakerImageView forImageUrl:speaker.Photo_Url__c WithRadius:40.0];
+        //[self.imageManager makeImageViewRounded:speakerImageView withRadius:40.0];
         [button addSubview:speakerImageView];
         
         UILabel *speakerNamelabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 5, 200, 20)];
-        speakerNamelabel.text = [speaker objectForKey:@"Name"];
+        speakerNamelabel.text = speaker.Name;
         [speakerNamelabel setFont:[UIFont fontWithName:@"HelveticaNeue-Regular" size:18.0f]];
         speakerNamelabel.textColor = [UIColor whiteColor];
         [button addSubview:speakerNamelabel];
         
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 20, 200, 30)];
-        titleLabel.text = [speaker objectForKey:@"Title__c"];
+        titleLabel.text = speaker.Title__c;
         titleLabel.textColor = [UIColor whiteColor];
         [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:12.0f]];
         [button addSubview:titleLabel];
     
         UILabel *twitterLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 35, 200, 30)];
-        twitterLabel.text = [speaker objectForKey:@"Twitter__c"];
+        twitterLabel.text = speaker.Twitter__c;
         twitterLabel.textColor = [UIColor whiteColor];
         [twitterLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:12.0f]];
         [button addSubview:twitterLabel];
@@ -411,96 +423,96 @@
 
     return cell;
 }
-
-// -------------------------------------------------------------------------------
-//	setImageView:
-// -------------------------------------------------------------------------------
-- (void)setImageView:(UIImageView *)speakerImageView forSpeakerImageUrl:(NSString *)imageUrl {
-    
-    UIImage *image = [self.imageCache objectForKey:imageUrl];
-    if (image != nil) {
-        [self makeImageViewRounded:speakerImageView AndSetImage:image];
-        return;
-    }
-    
-    IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:imageUrl];
-    if (iconDownloader == nil) {
-        iconDownloader = [[IconDownloader alloc] init];
-        [iconDownloader setCompletionHandler:^(UIImage *image) {
-            
-            
-            // Display the newly loaded image
-            [self.imageCache setObject:image forKey:imageUrl];
-            [self makeImageViewRounded:speakerImageView AndSetImage:image];
-            
-            
-            // Remove the IconDownloader from the in progress list.
-            // This will result in it being deallocated.
-            [self.imageDownloadsInProgress removeObjectForKey:imageUrl];
-            
-        }];
-        [self.imageDownloadsInProgress setObject:iconDownloader forKey:imageUrl];
-        
-        [iconDownloader startDownloadWithURL:imageUrl AndToken:nil];
-    }
-}
-
-// -------------------------------------------------------------------------------
-//	setImageView:withImageUrl
-// -------------------------------------------------------------------------------
-- (void)setBackgroundImageForCell:(SFSessionCell *)cell withImageUrl:(NSString *)imageUrl {
-    
-    UIImage *image = [self.imageCache objectForKey:imageUrl];
-    if (image != nil) {
-        cell.contentView.backgroundColor = [UIColor colorWithPatternImage:image];
-        
-        return;
-    }
-    
-    IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:imageUrl];
-    if (iconDownloader == nil) {
-        iconDownloader = [[IconDownloader alloc] init];
-        [iconDownloader setCompletionHandler:^(UIImage *image) {
-            
-            
-            // Display the newly loaded image
-            [self.imageCache setObject:image forKey:imageUrl];
-            cell.contentView.backgroundColor = [UIColor colorWithPatternImage:image];
-            
-            
-            // Remove the IconDownloader from the in progress list.
-            // This will result in it being deallocated.
-            [self.imageDownloadsInProgress removeObjectForKey:imageUrl];
-            
-        }];
-        [self.imageDownloadsInProgress setObject:iconDownloader forKey:imageUrl];
-        
-        [iconDownloader startDownloadWithURL:imageUrl AndToken:nil];
-    }
-}
-
-
-- (void)makeImageViewRounded:(UIImageView *)speakerImageView AndSetImage:(UIImage *)image {
-    
-    speakerImageView.image = image;
-    
-    // Begin a new image that will be the new image with the rounded corners
-    // (here with the size of an UIImageView)
-    UIGraphicsBeginImageContextWithOptions(speakerImageView.bounds.size, NO, [UIScreen mainScreen].scale);
-    
-    // Add a clip before drawing anything, in the shape of an rounded rect
-    [[UIBezierPath bezierPathWithRoundedRect:speakerImageView.bounds
-                                cornerRadius:40.0] addClip];
-    // Draw your image
-    [image drawInRect:speakerImageView.bounds];
-    
-    // Get the image, here setting the UIImageView image
-    speakerImageView.image = UIGraphicsGetImageFromCurrentImageContext();
-    
-    // Lets forget about that we were drawing
-    UIGraphicsEndImageContext();
-    
-}
+//
+//// -------------------------------------------------------------------------------
+////	setImageView:
+//// -------------------------------------------------------------------------------
+//- (void)setImageView:(UIImageView *)speakerImageView forSpeakerImageUrl:(NSString *)imageUrl {
+//    
+//    UIImage *image = [self.imageCache objectForKey:imageUrl];
+//    if (image != nil) {
+//        [self makeImageViewRounded:speakerImageView AndSetImage:image];
+//        return;
+//    }
+//    
+//    IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:imageUrl];
+//    if (iconDownloader == nil) {
+//        iconDownloader = [[IconDownloader alloc] init];
+//        [iconDownloader setCompletionHandler:^(UIImage *image) {
+//            
+//            
+//            // Display the newly loaded image
+//            [self.imageCache setObject:image forKey:imageUrl];
+//            [self makeImageViewRounded:speakerImageView AndSetImage:image];
+//            
+//            
+//            // Remove the IconDownloader from the in progress list.
+//            // This will result in it being deallocated.
+//            [self.imageDownloadsInProgress removeObjectForKey:imageUrl];
+//            
+//        }];
+//        [self.imageDownloadsInProgress setObject:iconDownloader forKey:imageUrl];
+//        
+//        [iconDownloader startDownloadWithURL:imageUrl AndToken:nil];
+//    }
+//}
+//
+//// -------------------------------------------------------------------------------
+////	setImageView:withImageUrl
+//// -------------------------------------------------------------------------------
+//- (void)setBackgroundImageForView:(UIView *)view withImageUrl:(NSString *)imageUrl {
+//    
+//    UIImage *image = [self.imageCache objectForKey:imageUrl];
+//    if (image != nil) {
+//        view.backgroundColor = [UIColor colorWithPatternImage:image];
+//        
+//        return;
+//    }
+//    
+//    IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:imageUrl];
+//    if (iconDownloader == nil) {
+//        iconDownloader = [[IconDownloader alloc] init];
+//        [iconDownloader setCompletionHandler:^(UIImage *image) {
+//            
+//            
+//            // Display the newly loaded image
+//            [self.imageCache setObject:image forKey:imageUrl];
+//            view.backgroundColor = [UIColor colorWithPatternImage:image];
+//            
+//            
+//            // Remove the IconDownloader from the in progress list.
+//            // This will result in it being deallocated.
+//            [self.imageDownloadsInProgress removeObjectForKey:imageUrl];
+//            
+//        }];
+//        [self.imageDownloadsInProgress setObject:iconDownloader forKey:imageUrl];
+//        
+//        [iconDownloader startDownloadWithURL:imageUrl AndToken:nil];
+//    }
+//}
+//
+//
+//- (void)makeImageViewRounded:(UIImageView *)speakerImageView AndSetImage:(UIImage *)image {
+//    
+//    speakerImageView.image = image;
+//    
+//    // Begin a new image that will be the new image with the rounded corners
+//    // (here with the size of an UIImageView)
+//    UIGraphicsBeginImageContextWithOptions(speakerImageView.bounds.size, NO, [UIScreen mainScreen].scale);
+//    
+//    // Add a clip before drawing anything, in the shape of an rounded rect
+//    [[UIBezierPath bezierPathWithRoundedRect:speakerImageView.bounds
+//                                cornerRadius:40.0] addClip];
+//    // Draw your image
+//    [image drawInRect:speakerImageView.bounds];
+//    
+//    // Get the image, here setting the UIImageView image
+//    speakerImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+//    
+//    // Lets forget about that we were drawing
+//    UIGraphicsEndImageContext();
+//    
+//}
 
 
 - (void)aMethod:sender {
@@ -511,14 +523,14 @@
     //Get list of speakers for the current session
     NSDate *currentStartTime = [self.sortedStartTimes objectAtIndex:indexPath.section];
     NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
-    NSDictionary *session = [sessionsAtThisStartTime objectAtIndex:indexPath.row];
-    NSArray *speakers = [session objectForKey:@"speakers"];
+    SFSession *session = [sessionsAtThisStartTime objectAtIndex:indexPath.row];
+    NSArray *speakers = session.speakers;
     
     //get cell for the indexPath
     SFSessionCell * cell = (SFSessionCell *) [self.tableView cellForRowAtIndexPath:indexPath];
     
     //Get current speaker via cell's pagecontrol's currentPage
-    self.currentSpeaker = speakers[cell.pageControl.currentPage];
+    self.sessionsManager.currentSpeaker = speakers[cell.pageControl.currentPage];
 
     //perform segue to show speaker details
     [self performSegueWithIdentifier:@"showSpeakerViewSegue" sender:self];
@@ -529,21 +541,21 @@
 #pragma mark - segue
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue identifier] isEqualToString:@"showFeedbackViewSegue"]) {
-        [(SFFeedbackViewController*)[segue destinationViewController] setSession: self.currentSession];
+       [(SFFeedbackViewController*)[segue destinationViewController] setSession: self.sessionsManager.currentSession];
     } else if ([[segue identifier] isEqualToString:@"showSpeakerViewSegue"]) {
-        SFSpeakerViewController *svc = (SFSpeakerViewController*)[segue destinationViewController];
-        [svc setSpeaker:self.currentSpeaker];
-        [svc setSpeakerImage:[self.imageCache objectForKey:[self.currentSpeaker objectForKey:@"Photo_Url__c"]]];
+       // SFSpeakerViewController *svc = (SFSpeakerViewController*)[segue destinationViewController];
+       // [svc setSpeaker:self.currentSpeaker];
+       // [svc setCachedSpeakerImage:[self.imageCache objectForKey:self.sessionsManager.currentSpeaker.Photo_Url__c]];
     } else if ([[segue identifier] isEqualToString:@"showFilterViewSegue"]) {
         SFFilterViewController *fvc = (SFFilterViewController *)[segue destinationViewController];
         [fvc setTracks:self.sessionsManager.tracks];
         [fvc setSessionsViewController:self];
         [fvc setSelectedTrack: self.currentFilter];
     } else if ([[segue identifier] isEqualToString:@"showSessionDetailsSegue"]) {
-        SFSessionDetailsViewController *sdvc = (SFSessionDetailsViewController *)[segue destinationViewController];
-        [sdvc setSession:self.currentSession];
-        [sdvc setCurrentSessionsFormattedTimeStr:self.currentSessionsFormattedTimeStr];
-        [sdvc setImageCache:self.imageCache];
+       // SFSessionDetailsViewController *sdvc = (SFSessionDetailsViewController *)[segue destinationViewController];
+        //[sdvc setSession:self.sessionsManager.currentSession];
+      //  [sdvc setCurrentSessionsFormattedTimeStr:self.currentSessionsFormattedTimeStr];
+      //  [sdvc setImageCache:self.imageCache];
     }
 }
 
@@ -565,22 +577,22 @@
 
 #pragma mark - toggle favorites
 -(void)toggleFavoritesForCell: (SFSessionCell *) cell {
-    NSString *imageName = @"like-filled-32.png";
-    NSString *sessionId = [self.currentSession objectForKey:@"Id"];
-    if(![self.sessionsManager.favorites containsObject:sessionId]) {
-        [self.sessionsManager.favorites addObject: sessionId];
-    } else {//unfavorite
-        [self.sessionsManager.favorites removeObject:sessionId];
-        [self.sessionsManager.userDefaults setObject:self.sessionsManager.favorites forKey:@"favorites"];
-        imageName = @"like-32.png";
-    }
-    //add to defaults and save it
-    [self.sessionsManager.userDefaults setObject:self.sessionsManager.favorites forKey:@"favorites"];
-    [self.sessionsManager.userDefaults synchronize];
+    
+    // set current cell's session as current
+    [self setSessionAsCurrentForCell:cell];
+
+ 
+    //toggle
+    [self.sessionsManager toggleCurrentSessionFavorite];
+    
     
     //change button's background
+    NSString *imageName = @"like-32.png";
+    if(self.sessionsManager.isCurrentSessionFavorite) {
+        imageName = @"like-filled-32.png";//make it un
+    }
     [cell.likeButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    self.sessionsManager.sessionsModifiedByUser = YES;
+    
 }
 
 @end
