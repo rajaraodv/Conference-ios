@@ -47,6 +47,12 @@
     
     SFSession *session = self.sessionsManager.currentSession;
  
+    NSString *imageName = @"like-32.png";
+    if(self.sessionsManager.isCurrentSessionFavorite) {
+        imageName = @"like-filled-32.png";//make it un
+    }
+    [self.favButtonOutlet setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+
 
    // self.sessionTitleTextview.textAlignment = NSTextAlignmentJustified;
     self.sessionDetailsTextView.textAlignment = NSTextAlignmentJustified;
@@ -242,10 +248,44 @@
 //    }
 }
 
+#pragma mark - toggle favorites
+//-(void)toggleFavoritesForCell: (SFSessionCell *) cell {
+// 
+//
+//    //toggle
+//    [self.sessionsManager toggleCurrentSessionFavorite];
+//    
+//    
+//    //change button's background
+//    NSString *imageName = @"like-32.png";
+//    if(self.sessionsManager.isCurrentSessionFavorite) {
+//        imageName = @"like-filled-32.png";//make it un
+//    }
+//    [cell.likeButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+//    
+//}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (IBAction)favButton:(id)sender {
+
+    
+    
+    //toggle
+    [self.sessionsManager toggleCurrentSessionFavorite];
+    
+    
+    //change button's background
+    NSString *imageName = @"like-32.png";
+    if(self.sessionsManager.isCurrentSessionFavorite) {
+        imageName = @"like-filled-32.png";//make it un
+    }
+    [self.favButtonOutlet setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+}
+
 
 @end

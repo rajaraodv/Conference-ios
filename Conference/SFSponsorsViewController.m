@@ -177,7 +177,7 @@
     NSArray *sponsorsAtThisLevel = [self.sections objectForKey:currentLevel];
     NSDictionary *currentSponsor = [sponsorsAtThisLevel objectAtIndex:indexPath.row];
     
-    cell.levelLabel.text = [currentSponsor objectForKey:@"Sponsorship_Level_Name"];
+    //cell.levelLabel.text = [currentSponsor objectForKey:@"Sponsorship_Level_Name"];
     cell.boothLabel.text = [currentSponsor objectForKey:@"Booth_Number__c"];
     cell.sponsorNameLabel.text = [currentSponsor objectForKey:@"Name"];
     cell.giveAwayTextView.text = [currentSponsor objectForKey:@"Give_Away_Details__c"];
@@ -202,8 +202,8 @@
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
     // Background color
-    view.tintColor = [UIColor colorWithRed:(47/255.0) green:(80/255.0) blue:(173/255.0) alpha:1] ;
-    
+    //view.tintColor = [UIColor colorWithRed:(47/255.0) green:(80/255.0) blue:(173/255.0) alpha:1] ;
+    view.tintColor = [UIColor grayColor];
     // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     [header.textLabel setTextColor:[UIColor whiteColor]];
@@ -222,7 +222,7 @@
 
 -(CGFloat)tableView:(UITableView*)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 20.0;
+    return 0.0;
 }
 
 

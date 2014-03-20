@@ -26,7 +26,10 @@
 @property (strong, nonatomic) IBOutlet UITextView *sessionDetailsTextView;
 @property (strong, nonatomic) IBOutlet UIScrollView *speakersScrollView;
 @property (strong, nonatomic) IBOutlet UIPageControl *speakersPageControl;
-@property (strong, nonatomic) IBOutlet UIImageView *favoriteImageView;
+- (IBAction)favButton:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *favButtonOutlet;
+
+
 
 
 
