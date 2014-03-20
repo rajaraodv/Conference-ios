@@ -37,15 +37,15 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Feedback">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.3058823645" green="0.49411767719999999" blue="0.7607843876" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="feedbackButton:" destination="3MU-54-fTx" eventType="touchUpInside" id="xsL-sg-OlB"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.75332828443877553" green="0.75332828443877553" blue="0.75332828443877553" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GLo-sH-jbN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
@@ -73,9 +73,9 @@
                         <color key="backgroundColor" red="0.3058823645" green="0.49411767719999999" blue="0.7607843876" alpha="1" colorSpace="deviceRGB"/>
                     </view>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O3h-0Z-BZA">
-                        <rect key="frame" x="0.0" y="287" width="320" height="2"/>
+                        <rect key="frame" x="0.0" y="297" width="320" height="2"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.30739795918367352" green="0.30739795918367352" blue="0.30739795918367352" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.3058823645" green="0.49411767719999999" blue="0.7607843876" alpha="1" colorSpace="deviceRGB"/>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

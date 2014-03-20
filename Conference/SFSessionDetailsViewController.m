@@ -12,6 +12,7 @@
 #import "SFSpeakerViewController.h"
 #import "SFSessionsManager.h"
 #import "SFImageManager.h"
+#import "SFSession.h"
 
 @interface SFSessionDetailsViewController ()
 @property(strong, nonatomic) NSMutableDictionary *imageDownloadsInProgress;
@@ -20,6 +21,8 @@
 //load image manager and sessions manager
 @property(strong, nonatomic) SFImageManager *imageManager;
 @property (strong, nonatomic) SFSessionsManager *sessionsManager;
+
+@property(strong, nonatomic) NSMutableArray *relatedSessionsArray;
 
 
 @end
@@ -35,9 +38,18 @@
     return self;
 }
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    //init
+    self.relatedSessionsArray = [[NSMutableArray alloc] init];
+    self.relatedSessionsTableView.delegate = self;
+    self.relatedSessionsTableView.dataSource = self;
+    
     
     //init - get singleton sessionsManager and reuse it
     self.sessionsManager = [SFSessionsManager sharedInstance];
@@ -45,20 +57,57 @@
     //init - load imageManager singleton and reuse it
     self.imageManager = [SFImageManager sharedInstance];
     
+
+    //add blue gradient
+    [self addBlueGradientToView:self.view];
+    
+    //speaker scroll view..
+    //Make the view scrollview's delegate here(as cell's init is not called when we use xib)
+    self.speakersScrollView.delegate = self;
+}
+
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    //add main session details like title, abstract, room etc
+    [self addMainSessionDetails];
+    
+    //add speakers view
+    [self addSpeakersToScrollView];
+    
+    //add related sessions table view
+    [self createRelatedSessionsTable];
+
+}
+
+- (void)createRelatedSessionsTable {
+    NSMutableArray *allsessions =  self.sessionsManager.allSessions;
+    for(int i = 0; i < allsessions.count; i++) {
+        SFSession *session = allsessions[i];
+        [self.relatedSessionsArray addObject:session.Title__c];
+    }
+//    self.relatedSessionsArray = [[NSMutableArray alloc] initWithObjects:@"Gray", @"Sepia", @"Color Invert", @"Emboss", @"Polka Dot",  @"Toon", @"Hue", @"Stretch", @"Pinch", @"Sphear", @"None", nil];
+    [self.relatedSessionsTableView reloadData];
+}
+
+
+- (void)addMainSessionDetails
+{
     SFSession *session = self.sessionsManager.currentSession;
- 
+    
     NSString *imageName = @"like-32.png";
     if(self.sessionsManager.isCurrentSessionFavorite) {
         imageName = @"like-filled-32.png";//make it un
     }
     [self.favButtonOutlet setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-
-
-   // self.sessionTitleTextview.textAlignment = NSTextAlignmentJustified;
+    
+    
+    // self.sessionTitleTextview.textAlignment = NSTextAlignmentJustified;
     self.sessionDetailsTextView.textAlignment = NSTextAlignmentJustified;
     self.sessionDateAndtimeLabel.text = self.sessionsManager.currentSession.Start_Date_PrettyAsString;
     self.sessionTitleTextview.text = session.Title__c;
-
+    
     self.sessionDetailsTextView.scrollEnabled = NO;
     self.sessionDetailsTextView.text = session.Description__c;
     
@@ -66,23 +115,12 @@
     self.trackNameLabel.text = session.Track__c;
     
     CGFloat fixedWidth = self.sessionDetailsTextView.frame.size.width;
-
+    
     CGSize textViewSize = [self.sessionDetailsTextView sizeThatFits:CGSizeMake(fixedWidth, FLT_MAX)];
-
+    
     CGRect textViewFrame= self.sessionDetailsTextView.frame;
     textViewFrame.size = CGSizeMake(fmaxf(textViewSize.width, fixedWidth), textViewSize.height);
     [self.sessionDetailsTextView setFrame:textViewFrame];
-    
-//    CAGradientLayer *bgLayer = [BackgroundLayer blueGradient];
-//    bgLayer.frame = self.view.bounds;
-//    [self.view.layer insertSublayer:bgLayer atIndex:0];
-    
-    //speaker scroll view..
-    //Make the view scrollview's delegate here(as cell's init is not called when we use xib)
-    self.speakersScrollView.delegate = self;
-    
-    [self addSpeakersToScrollView];
-    
 }
 
 -(void) addSpeakersToScrollView {
@@ -148,65 +186,53 @@
     self.speakersPageControl.currentPage = page;
 }
 
--(void)aMethod {
-    
+
+
+
+#pragma mark - related sessions table view delegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    // If You have only one(1) section, return 1, otherwise you must handle sections
+    return 1;
+}
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.relatedSessionsArray count];
 }
 
-//// -------------------------------------------------------------------------------
-////	setImageView:
-//// -------------------------------------------------------------------------------
-//- (void)setImageView:(UIImageView *)speakerImageView forSpeakerImageUrl:(NSString *)imageUrl {
-//    
-//    UIImage *image = [self.imageCache objectForKey:imageUrl];
-//    if (image != nil) {
-//        [self makeImageViewRounded:speakerImageView AndSetImage:image];
-//        return;
-//    }
-//    
-//    IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:imageUrl];
-//    if (iconDownloader == nil) {
-//        iconDownloader = [[IconDownloader alloc] init];
-//        [iconDownloader setCompletionHandler:^(UIImage *image) {
-//            
-//            
-//            // Display the newly loaded image
-//            [self.imageCache setObject:image forKey:imageUrl];
-//            [self makeImageViewRounded:speakerImageView AndSetImage:image];
-//            
-//            
-//            // Remove the IconDownloader from the in progress list.
-//            // This will result in it being deallocated.
-//            [self.imageDownloadsInProgress removeObjectForKey:imageUrl];
-//            
-//        }];
-//        [self.imageDownloadsInProgress setObject:iconDownloader forKey:imageUrl];
-//        
-//        [iconDownloader startDownloadWithURL:imageUrl AndToken:nil];
-//    }
-//}
-//
-//
-//- (void)makeImageViewRounded:(UIImageView *)speakerImageView AndSetImage:(UIImage *)image {
-//    
-//    speakerImageView.image = image;
-//    
-//    // Begin a new image that will be the new image with the rounded corners
-//    // (here with the size of an UIImageView)
-//    UIGraphicsBeginImageContextWithOptions(speakerImageView.bounds.size, NO, [UIScreen mainScreen].scale);
-//    
-//    // Add a clip before drawing anything, in the shape of an rounded rect
-//    [[UIBezierPath bezierPathWithRoundedRect:speakerImageView.bounds
-//                                cornerRadius:40.0] addClip];
-//    // Draw your image
-//    [image drawInRect:speakerImageView.bounds];
-//    
-//    // Get the image, here setting the UIImageView image
-//    speakerImageView.image = UIGraphicsGetImageFromCurrentImageContext();
-//    
-//    // Lets forget about that we were drawing
-//    UIGraphicsEndImageContext();
-//    
-//}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];//deselect
+    SFSession *session = [self.sessionsManager.allSessions objectAtIndex:indexPath.row];
+
+    //set session as current session in sessionsManager
+    self.sessionsManager.currentSession = session;
+    
+    //reload view
+    [self viewDidLoad];
+    [self viewWillAppear:NO];
+    //scroll to the top (-70 is used to include bounce height thingy; or else, it wont scroll all the way to the top)
+    [self.mainScrollView setContentOffset:CGPointMake(0, -70) animated:YES];
+   
+
+
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tblView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"relatedSessionsCell";
+    
+    UITableViewCell *cell = [tblView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    // Configure the cell...
+    [cell.textLabel setTextColor:[UIColor whiteColor]];
+     [cell.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:15.0f]];
+    [cell.textLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    cell.textLabel.numberOfLines = 0;
+    cell.textLabel.text = [self.relatedSessionsArray objectAtIndex:indexPath.row];
+    
+    
+    return cell;
+}
 
 
 - (void)aMethod:sender {
@@ -287,5 +313,11 @@
     [self.favButtonOutlet setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
 }
 
+-(void) addBlueGradientToView:(UIView *) view {
+    //add blue gradient
+    CAGradientLayer *bgLayer = [BackgroundLayer blueGradient];
+    bgLayer.frame = view.bounds;
+    [view.layer insertSublayer:bgLayer atIndex:0];
+}
 
 @end

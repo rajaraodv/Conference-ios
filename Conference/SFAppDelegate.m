@@ -18,6 +18,9 @@
 //    [[ETPush pushManager] shouldDisplayAlertViewIfPushReceived:YES];
 //    [[ETPush pushManager] applicationLaunchedWithOptions:launchOptions];
     
+    self.window.backgroundColor = [UIColor whiteColor];
+
+    
     return YES;
 }
 

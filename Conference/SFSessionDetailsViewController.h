@@ -11,7 +11,7 @@
 #import "SFSpeaker.h"
 
 
-@interface SFSessionDetailsViewController : UIViewController<UIScrollViewDelegate>
+@interface SFSessionDetailsViewController : UIViewController<UIScrollViewDelegate,UITableViewDataSource, UITableViewDelegate>
 
 //set session, currentSessionsFormattedTimeStr and imageCache from previous view
 //@property(nonatomic, strong) SFSession *session;
@@ -29,7 +29,9 @@
 - (IBAction)favButton:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *favButtonOutlet;
 
+@property (strong, nonatomic) IBOutlet UIScrollView *mainScrollView;
 
+@property (strong, nonatomic) IBOutlet UITableView *relatedSessionsTableView;
 
 
 

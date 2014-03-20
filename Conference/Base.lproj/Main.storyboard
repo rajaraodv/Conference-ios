@@ -426,7 +426,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L56-gL-7MR">
-                                        <rect key="frame" x="6" y="548" width="309" height="88"/>
+                                        <rect key="frame" x="6" y="475" width="309" height="88"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="309" id="Hrf-OJ-OKG"/>
@@ -434,7 +434,7 @@
                                         </constraints>
                                     </scrollView>
                                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="oo2-a6-nQn">
-                                        <rect key="frame" x="141" y="630" width="39" height="37"/>
+                                        <rect key="frame" x="141" y="557" width="39" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="39" id="NT6-la-aNV"/>
@@ -455,6 +455,40 @@
                                             <action selector="favButton:" destination="49u-EI-3Nu" eventType="touchUpInside" id="oX3-uO-ZGq"/>
                                         </connections>
                                     </button>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="734-Pa-eqr">
+                                        <rect key="frame" x="6" y="641" width="309" height="194"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="309" id="GpY-ZG-pFT"/>
+                                            <constraint firstAttribute="height" constant="194" id="lVy-FD-hcV"/>
+                                        </constraints>
+                                        <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="sectionIndexTrackingBackgroundColor" red="0.3058823645" green="0.49411767719999999" blue="0.7607843876" alpha="1" colorSpace="deviceRGB"/>
+                                        <prototypes>
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="relatedSessionsCell" id="2OJ-kb-OBl">
+                                                <rect key="frame" x="0.0" y="22" width="309" height="60"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2OJ-kb-OBl" id="kbb-eH-SUH">
+                                                    <rect key="frame" x="0.0" y="0.0" width="309" height="59"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" red="0.3058823645" green="0.49411767719999999" blue="0.7607843876" alpha="1" colorSpace="deviceRGB"/>
+                                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Related Sessions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i2b-Mr-qB3">
+                                        <rect key="frame" x="78" y="612" width="164" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="SvU-Qz-Kq7"/>
+                                            <constraint firstAttribute="width" constant="164" id="dDH-XU-jVP"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="TCb-gp-8l4" firstAttribute="leading" secondItem="lLX-ZP-n3U" secondAttribute="leading" constant="139" id="0hM-j4-zvd"/>
@@ -463,6 +497,7 @@
                                     <constraint firstAttribute="bottom" secondItem="TCb-gp-8l4" secondAttribute="bottom" constant="8" id="4Nw-xI-IhL"/>
                                     <constraint firstItem="L56-gL-7MR" firstAttribute="leading" secondItem="lLX-ZP-n3U" secondAttribute="leading" constant="6" id="8QI-GA-vpe"/>
                                     <constraint firstItem="jse-bL-3Ic" firstAttribute="top" secondItem="vIo-mL-rwN" secondAttribute="bottom" constant="6" id="8RX-Ip-3EB"/>
+                                    <constraint firstItem="i2b-Mr-qB3" firstAttribute="top" secondItem="oo2-a6-nQn" secondAttribute="bottom" constant="18" id="9XK-0i-p3E"/>
                                     <constraint firstItem="yoq-O9-nA8" firstAttribute="leading" secondItem="P6g-r5-yuh" secondAttribute="trailing" constant="14" id="9pK-eZ-cBb"/>
                                     <constraint firstAttribute="trailing" secondItem="lQ7-e0-6hN" secondAttribute="trailing" constant="173" id="C7H-UB-cod"/>
                                     <constraint firstAttribute="trailing" secondItem="yoq-O9-nA8" secondAttribute="trailing" constant="11" id="Diq-ae-8kU"/>
@@ -476,11 +511,14 @@
                                     <constraint firstItem="lQ7-e0-6hN" firstAttribute="top" secondItem="Ohs-1O-N8S" secondAttribute="bottom" constant="8" id="U2F-fr-Uzp"/>
                                     <constraint firstAttribute="trailing" secondItem="Zss-bP-MPF" secondAttribute="trailing" id="UUQ-ap-Iv6"/>
                                     <constraint firstItem="Zss-bP-MPF" firstAttribute="top" secondItem="lLX-ZP-n3U" secondAttribute="top" id="W0B-HI-bin"/>
-                                    <constraint firstItem="L56-gL-7MR" firstAttribute="top" secondItem="Cqr-YA-cjc" secondAttribute="bottom" constant="118" id="XlE-G4-Jul"/>
+                                    <constraint firstAttribute="trailing" secondItem="i2b-Mr-qB3" secondAttribute="trailing" constant="78" id="Wcf-lG-9Z0"/>
+                                    <constraint firstItem="L56-gL-7MR" firstAttribute="top" secondItem="Cqr-YA-cjc" secondAttribute="bottom" constant="45" id="XlE-G4-Jul"/>
                                     <constraint firstItem="TCb-gp-8l4" firstAttribute="top" secondItem="lLX-ZP-n3U" secondAttribute="top" constant="971" id="YXf-zn-HF8"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="1000" id="Z5i-xA-5GP"/>
                                     <constraint firstAttribute="width" constant="320" id="ZId-FK-SPy"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="TCb-gp-8l4" secondAttribute="bottom" constant="8" id="Zyy-7B-K3L"/>
+                                    <constraint firstAttribute="trailing" secondItem="734-Pa-eqr" secondAttribute="trailing" constant="5" id="ae2-dx-BfE"/>
+                                    <constraint firstItem="i2b-Mr-qB3" firstAttribute="leading" secondItem="lLX-ZP-n3U" secondAttribute="leading" constant="78" id="bRF-PJ-EEk"/>
                                     <constraint firstItem="Ohs-1O-N8S" firstAttribute="leading" secondItem="Cqr-YA-cjc" secondAttribute="trailing" constant="14" id="byD-ci-SHT"/>
                                     <constraint firstAttribute="trailing" secondItem="frk-4C-cPA" secondAttribute="trailing" constant="11" id="dBl-yu-OeQ"/>
                                     <constraint firstItem="oo2-a6-nQn" firstAttribute="top" secondItem="L56-gL-7MR" secondAttribute="bottom" constant="-6" id="e1H-bZ-JYT"/>
@@ -489,10 +527,12 @@
                                     <constraint firstItem="Zss-bP-MPF" firstAttribute="leading" secondItem="lLX-ZP-n3U" secondAttribute="leading" id="h96-4g-rNc"/>
                                     <constraint firstItem="Flo-NF-GCJ" firstAttribute="leading" secondItem="lLX-ZP-n3U" secondAttribute="leading" constant="20" id="i3k-UJ-a45"/>
                                     <constraint firstItem="Flo-NF-GCJ" firstAttribute="top" secondItem="Cqr-YA-cjc" secondAttribute="bottom" constant="8" id="itK-uh-Heo"/>
+                                    <constraint firstItem="734-Pa-eqr" firstAttribute="top" secondItem="L56-gL-7MR" secondAttribute="bottom" constant="78" id="kUr-15-qG6"/>
                                     <constraint firstItem="P6g-r5-yuh" firstAttribute="top" secondItem="jse-bL-3Ic" secondAttribute="bottom" constant="8" id="nMz-NL-oiJ"/>
                                     <constraint firstItem="lQ7-e0-6hN" firstAttribute="leading" secondItem="Flo-NF-GCJ" secondAttribute="trailing" constant="14" id="oCN-Ts-d5f"/>
                                     <constraint firstItem="P6g-r5-yuh" firstAttribute="leading" secondItem="lLX-ZP-n3U" secondAttribute="leading" constant="20" id="oOZ-Lg-S57"/>
                                     <constraint firstItem="Cqr-YA-cjc" firstAttribute="top" secondItem="P6g-r5-yuh" secondAttribute="bottom" constant="8" id="sgE-Nu-jpV"/>
+                                    <constraint firstItem="734-Pa-eqr" firstAttribute="leading" secondItem="lLX-ZP-n3U" secondAttribute="leading" constant="6" id="slJ-Gn-fnc"/>
                                     <constraint firstItem="vIo-mL-rwN" firstAttribute="leading" secondItem="lLX-ZP-n3U" secondAttribute="leading" constant="6" id="thj-lq-jti"/>
                                     <constraint firstAttribute="trailing" secondItem="L56-gL-7MR" secondAttribute="trailing" constant="5" id="vVA-mP-ibp"/>
                                     <constraint firstItem="Ohs-1O-N8S" firstAttribute="top" secondItem="yoq-O9-nA8" secondAttribute="bottom" constant="8" id="w27-ju-mCu"/>
@@ -517,6 +557,8 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="favButtonOutlet" destination="lQ7-e0-6hN" id="SZn-xe-zVC"/>
+                        <outlet property="mainScrollView" destination="lLX-ZP-n3U" id="bPp-6x-E2n"/>
+                        <outlet property="relatedSessionsTableView" destination="734-Pa-eqr" id="GVz-Xm-iq6"/>
                         <outlet property="roomNameLabel" destination="frk-4C-cPA" id="o1t-lc-0f9"/>
                         <outlet property="sessionDateAndtimeLabel" destination="yoq-O9-nA8" id="u5m-XM-f0z"/>
                         <outlet property="sessionDetailsTextView" destination="vIo-mL-rwN" id="9ct-aF-FqJ"/>
