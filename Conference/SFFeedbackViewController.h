@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "SFThankYouViewController.h"
-#import "SFSession.h"
+
 
 @interface SFFeedbackViewController : UIViewController<ThankYouViewDelegate>
-@property (strong, atomic) SFSession *session;
-@property (strong, atomic) NSDictionary *sponsor;
+//@property (strong, atomic) SFSession *session;
+//@property (strong, atomic) NSDictionary *sponsor;
 
+@property (strong, atomic) NSString *type;
 @property (strong, nonatomic) IBOutlet UISlider *ratingsSlider;
 
 @property (strong, nonatomic) IBOutlet UITextView *feedbackTextView;

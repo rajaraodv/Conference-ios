@@ -7,11 +7,16 @@
 //
 
 #import "SFFeedbackViewController.h"
+#import "SFSession.h"
+#import "SFSessionsManager.h"
+#import "SFSponsorsManager.h"  
+#import "SFSponsor.h"
 
 @interface SFFeedbackViewController ()
-
 @property NSUInteger rating;
 @property NSString *appId;
+@property (nonatomic, strong) SFSponsorsManager *sponsorsManager;
+@property (nonatomic, strong) SFSessionsManager *sessionsManager;
 @end
 
 @implementation SFFeedbackViewController
@@ -42,6 +47,11 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    //init and load imageManager singleton
+    self.sessionsManager = [SFSessionsManager sharedInstance];
+    //init and load imageManager singleton
+    self.sponsorsManager = [SFSponsorsManager sharedInstance];
     
     //reset slider
     [self.ratingsSlider setValue:0 animated:NO];
@@ -77,11 +87,10 @@
     [jsonDict setValue:[@(self.rating) stringValue] forKey:@"Rating__c"];
     [jsonDict setValue:self.feedbackTextView.text forKey:@"Text__c"];
     [jsonDict setValue:self.appId forKey:@"Anonymous_App_Id__c"];
-    if(self.session != nil) {
-        [jsonDict setValue:self.session.Id forKey:@"Session__c"];
-    }
-    if(self.sponsor != nil) {
-        [jsonDict setValue:[self.sponsor objectForKey:@"Id"] forKey:@"Sponsor__c"];
+    if([self.type isEqualToString: @"Session"]) {
+        [jsonDict setValue:self.sessionsManager.currentSession.Id forKey:@"Session__c"];
+    } else if([self.type isEqualToString:@"Sponsor"]) {
+        [jsonDict setValue:self.sponsorsManager.currentSponsor.Id forKey:@"Sponsor__c"];
     }
  
 

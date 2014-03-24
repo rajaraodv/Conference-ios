@@ -79,6 +79,8 @@
 		2E9FBD1518D789D4004B945F /* like-filled-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E9FBD1418D789D4004B945F /* like-filled-32.png */; };
 		2E9FBD1818D79AF8004B945F /* SFSessionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9FBD1718D79AF8004B945F /* SFSessionsManager.m */; };
 		2E9FBD1B18D8A064004B945F /* SFSessionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9FBD1A18D8A064004B945F /* SFSessionDetailsViewController.m */; };
+		2ECF057318DBA52F00F594A6 /* SFSponsor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ECF057218DBA52F00F594A6 /* SFSponsor.m */; };
+		2ECF057618DBA70A00F594A6 /* SFSponsorsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ECF057518DBA70A00F594A6 /* SFSponsorsManager.m */; };
 		533E1502ABF64EF9945964ED /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F15F53602B641A881152715 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -195,6 +197,10 @@
 		2E9FBD1718D79AF8004B945F /* SFSessionsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSessionsManager.m; sourceTree = "<group>"; };
 		2E9FBD1918D8A064004B945F /* SFSessionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSessionDetailsViewController.h; sourceTree = "<group>"; };
 		2E9FBD1A18D8A064004B945F /* SFSessionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSessionDetailsViewController.m; sourceTree = "<group>"; };
+		2ECF057118DBA52F00F594A6 /* SFSponsor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSponsor.h; sourceTree = "<group>"; };
+		2ECF057218DBA52F00F594A6 /* SFSponsor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSponsor.m; sourceTree = "<group>"; };
+		2ECF057418DBA70A00F594A6 /* SFSponsorsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSponsorsManager.h; sourceTree = "<group>"; };
+		2ECF057518DBA70A00F594A6 /* SFSponsorsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSponsorsManager.m; sourceTree = "<group>"; };
 		9F15F53602B641A881152715 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20A02FD691B4D4F97A98A6C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -427,10 +433,14 @@
 		2E88D3DB18D0FFF700EFE315 /* Sponsors */ = {
 			isa = PBXGroup;
 			children = (
-				2E88D3C918CE41A200EFE315 /* SFSponsorsCell.h */,
-				2E88D3CA18CE41A200EFE315 /* SFSponsorsCell.m */,
+				2ECF057118DBA52F00F594A6 /* SFSponsor.h */,
+				2ECF057218DBA52F00F594A6 /* SFSponsor.m */,
+				2ECF057418DBA70A00F594A6 /* SFSponsorsManager.h */,
+				2ECF057518DBA70A00F594A6 /* SFSponsorsManager.m */,
 				2E88D3CC18CE440000EFE315 /* SFSponsorsViewController.h */,
 				2E88D3CD18CE440000EFE315 /* SFSponsorsViewController.m */,
+				2E88D3C918CE41A200EFE315 /* SFSponsorsCell.h */,
+				2E88D3CA18CE41A200EFE315 /* SFSponsorsCell.m */,
 			);
 			name = Sponsors;
 			sourceTree = "<group>";
@@ -663,9 +673,11 @@
 				2E9FBD1818D79AF8004B945F /* SFSessionsManager.m in Sources */,
 				2E5AB92618DA38C500FAD67E /* SFSession.m in Sources */,
 				2E88D3D918D0FB4C00EFE315 /* SFFilterViewController.m in Sources */,
+				2ECF057318DBA52F00F594A6 /* SFSponsor.m in Sources */,
 				2E5AB92D18DA628F00FAD67E /* SFImageManager.m in Sources */,
 				2E7E32B018C2293800426121 /* SFSessionsViewController.m in Sources */,
 				2E7E32B618C22B2E00426121 /* SFSessionCell.m in Sources */,
+				2ECF057618DBA70A00F594A6 /* SFSponsorsManager.m in Sources */,
 				2E88D3E918D1776300EFE315 /* GM_FSHighlightAnimationAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

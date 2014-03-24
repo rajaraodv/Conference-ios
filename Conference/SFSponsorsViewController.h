@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SFSponsorsCell.h"
+#import "SFSponsorsManager.h"   
 
 @interface SFSponsorsViewController : UITableViewController<FeedbackButtonDelegate, UIAlertViewDelegate>
 

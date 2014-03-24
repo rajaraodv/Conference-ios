@@ -17,6 +17,7 @@ static NSDateFormatter *salesforceDateFormatter;
     return  [dateToStringFormatter stringFromDate:date];
 }
 
+//initialize static properties
 + (void)initialize {
     if (self == [SFSession class]) {
         //Used to convert Salesforce date+time string "2014-03-01T16:00:00.000+0000" to NSDate

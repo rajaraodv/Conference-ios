@@ -33,6 +33,7 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *relatedSessionsTableView;
 
+@property (strong, nonatomic) IBOutlet UILabel *relatedSessionsLabel;
 
 
 

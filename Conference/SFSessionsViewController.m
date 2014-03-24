@@ -541,7 +541,7 @@
 #pragma mark - segue
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue identifier] isEqualToString:@"showFeedbackViewSegue"]) {
-       [(SFFeedbackViewController*)[segue destinationViewController] setSession: self.sessionsManager.currentSession];
+       [(SFFeedbackViewController*)[segue destinationViewController] setType:@"Session"];
     } else if ([[segue identifier] isEqualToString:@"showSpeakerViewSegue"]) {
        // SFSpeakerViewController *svc = (SFSpeakerViewController*)[segue destinationViewController];
        // [svc setSpeaker:self.currentSpeaker];

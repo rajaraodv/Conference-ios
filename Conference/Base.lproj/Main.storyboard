@@ -557,7 +557,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="favButtonOutlet" destination="lQ7-e0-6hN" id="SZn-xe-zVC"/>
-                        <outlet property="mainScrollView" destination="lLX-ZP-n3U" id="bPp-6x-E2n"/>
+                        <outlet property="relatedSessionsLabel" destination="i2b-Mr-qB3" id="seN-uY-lIO"/>
                         <outlet property="relatedSessionsTableView" destination="734-Pa-eqr" id="GVz-Xm-iq6"/>
                         <outlet property="roomNameLabel" destination="frk-4C-cPA" id="o1t-lc-0f9"/>
                         <outlet property="sessionDateAndtimeLabel" destination="yoq-O9-nA8" id="u5m-XM-f0z"/>

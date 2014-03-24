@@ -82,12 +82,31 @@
 }
 
 - (void)createRelatedSessionsTable {
+    
+    //set the label hidden until we see there is at least 1 related session
+    [self.relatedSessionsLabel setHidden:YES];
+    
+    //make background color clear so empty cells don't show
+    self.relatedSessionsTableView.backgroundColor = [UIColor clearColor];
+
+    // Below code removes 'empty' table cells (i.e. if there are less tracks than # of cells)
+    UIView* footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320.0, 0)];
+    [footerView setBackgroundColor:[UIColor clearColor]];
+    self.relatedSessionsTableView.tableFooterView = footerView;
+    
+    SFSession *currentSession = self.sessionsManager.currentSession;
     NSMutableArray *allsessions =  self.sessionsManager.allSessions;
     for(int i = 0; i < allsessions.count; i++) {
         SFSession *session = allsessions[i];
-        [self.relatedSessionsArray addObject:session.Title__c];
+        if([currentSession.Track__c isEqualToString:session.Track__c] && ![currentSession.Id isEqualToString:session.Id]) {
+            [self.relatedSessionsArray addObject:session.Title__c];
+        }
     }
-//    self.relatedSessionsArray = [[NSMutableArray alloc] initWithObjects:@"Gray", @"Sepia", @"Color Invert", @"Emboss", @"Polka Dot",  @"Toon", @"Hue", @"Stretch", @"Pinch", @"Sphear", @"None", nil];
+    
+    if([self.relatedSessionsArray count] > 0) {
+        [self.relatedSessionsLabel setHidden:NO];
+    }
+    
     [self.relatedSessionsTableView reloadData];
 }
 

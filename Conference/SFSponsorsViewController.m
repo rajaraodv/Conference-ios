@@ -24,6 +24,8 @@
 @property(nonatomic, strong) NSMutableDictionary *imageDownloadsInProgress;
 //@property(strong, nonatomic) NSMutableDictionary *imageCache;
 
+@property(strong, nonatomic) SFSponsorsManager *sponsorsManager;
+
 @property(strong, nonatomic) UIColor *headerBGColor;
 
 @property(strong, nonatomic) SFImageManager *imageManager;
@@ -55,7 +57,8 @@
                                                bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"sponsorCell"];
 
-    
+    //init - get singleton sessionsManager and reuse it
+    self.sponsorsManager = [SFSponsorsManager sharedInstance];
 
     [self loadSessionDataAndReloadTable:NO];
     
@@ -64,30 +67,15 @@
 }
 
 -(void)loadSessionDataAndReloadTable:(BOOL) reloadTableView{
-    
-    NSString *str = @"http://localhost:3000/sponsors";
-    str = @"https://raw.github.com/rajaraodv/Conference-ios/master/sponsorsTest.json";
-    NSURL *url = [NSURL URLWithString:str];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    if (data == nil) {
-        [self showAlertWithTitle:@"No Data From Server" AndMessage:@"Looks like there is no Internet or the server is down."];
-        return;
+    if(![self.sponsorsManager loaded]) {
+        [self.sponsorsManager loadSponsors];
     }
-    NSError *error = nil;
-    NSMutableDictionary *groupedByLevel = [NSJSONSerialization JSONObjectWithData:data options:
-                                       NSJSONReadingMutableContainers                              error:&error];
-    
-    if (error != nil) {
-        [self showAlertWithTitle:@"No Valid Data" AndMessage:@"Data from server is not a valid JSON. Please Contact Admin. "];
-        return;
-    }
-    
 
     //initialize sections
     self.sections = [NSMutableDictionary dictionary];
     
     //populate sections
-    self.sections = groupedByLevel;
+    self.sections = self.sponsorsManager.allSponsors;
 
     // Create a sorted list of days
     NSArray *unsortedLevels = [self.sections allKeys];
@@ -112,7 +100,7 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell: cell];
     NSString *currentLevel = [self.sortedLevels objectAtIndex:indexPath.section];
     NSArray *sponsorsAtThisLevel = [self.sections objectForKey:currentLevel];
-    self.currentSponsor = [sponsorsAtThisLevel objectAtIndex:indexPath.row];
+    self.sponsorsManager.currentSponsor = [sponsorsAtThisLevel objectAtIndex:indexPath.row];
    // NSArray *sessionsAtThisStartTime = [self.sections objectForKey:currentStartTime];
    // self.currentSession = [sessionsAtThisStartTime objectAtIndex:indexPath.row]; // save it to property
     
@@ -127,12 +115,11 @@
 #pragma mark - segue
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue identifier] isEqualToString:@"showFeedbackViewSegue2"]) {
-        [(SFFeedbackViewController*)[segue destinationViewController] setSponsor: self.currentSponsor];
+        [(SFFeedbackViewController*)[segue destinationViewController] setType:@"Sponsor"];
     }
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -148,7 +135,8 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *currentLevel = [self.sortedLevels objectAtIndex:section];
     NSArray *sponsorsAtThisLevel = [self.sections objectForKey:currentLevel];
-    NSString *levelName = [sponsorsAtThisLevel[0] objectForKey:@"Sponsorship_Level_Name"];
+    SFSponsor *currentSponsor = sponsorsAtThisLevel[0];
+    NSString *levelName = currentSponsor.Sponsorship_Level_Name;
     if ([sponsorsAtThisLevel count] > 1) {
         NSString *sponsorsCount = [@([sponsorsAtThisLevel count]) stringValue];
         return [NSString stringWithFormat:@"   %@\t\t\t\t\t\t[%@ Sponsors]", levelName, sponsorsCount];
@@ -175,12 +163,12 @@
     //Get current sponsor from indexPath
     NSString *currentLevel = [self.sortedLevels objectAtIndex:indexPath.section];
     NSArray *sponsorsAtThisLevel = [self.sections objectForKey:currentLevel];
-    NSDictionary *currentSponsor = [sponsorsAtThisLevel objectAtIndex:indexPath.row];
+    SFSponsor *currentSponsor = [sponsorsAtThisLevel objectAtIndex:indexPath.row];
     
     //cell.levelLabel.text = [currentSponsor objectForKey:@"Sponsorship_Level_Name"];
-    cell.boothLabel.text = [currentSponsor objectForKey:@"Booth_Number__c"];
-    cell.sponsorNameLabel.text = [currentSponsor objectForKey:@"Name"];
-    cell.giveAwayTextView.text = [currentSponsor objectForKey:@"Give_Away_Details__c"];
+    cell.boothLabel.text = currentSponsor.Booth_Number__c;
+    cell.sponsorNameLabel.text = currentSponsor.Name;
+    cell.giveAwayTextView.text = currentSponsor.Give_Away_Details__c;
    
     
     cell.logoImageView.layer.cornerRadius = 20.0;
@@ -191,7 +179,7 @@
         self.headerBGColor = cell.levelLabel.backgroundColor;
     
     //[self setImageView:cell.logoImageView forSponsorLogoUrl:[currentSponsor objectForKey:@"Image_Url__c"]];
-    [self.imageManager setImageView:cell.logoImageView forImageUrl:[currentSponsor objectForKey:@"Image_Url__c"] WithRadius:0.0];
+    [self.imageManager setImageView:cell.logoImageView forImageUrl:currentSponsor.Image_Url__c WithRadius:0.0];
    
   //  [cell.levelLabel GM_setAnimationLTRWithText:[currentSponsor objectForKey:@"Sponsorship_Level_Name"] andWithDuration:2.0f andWithRepeatCount:0];
    
@@ -226,43 +214,6 @@
 }
 
 
-// -------------------------------------------------------------------------------
-//	setImageView:
-// -------------------------------------------------------------------------------
-//- (void)setImageView:(UIImageView *)logoImageView forSponsorLogoUrl:(NSString *)imageUrl {
-//    
-//    
-//    UIImage *image = [self.imageCache objectForKey:imageUrl];
-//    if (image != nil) {
-//        logoImageView.image = image;
-//        [self spinImageView:logoImageView];
-//
-//       // [self makeImageViewRounded:logoImageView AndSetImage:image];
-//        return;
-//    }
-//    IconDownloader *iconDownloader = [self.imageDownloadsInProgress objectForKey:imageUrl];
-//    if (iconDownloader == nil) {
-//        iconDownloader = [[IconDownloader alloc] init];
-//        [iconDownloader setCompletionHandler:^(UIImage *image) {
-//            
-//            
-//            // Display the newly loaded image
-//            [self.imageCache setObject:image forKey:imageUrl];
-//            logoImageView.image = image;
-//            [self spinImageView:logoImageView];
-//            //[self makeImageViewRounded:logoImageView AndSetImage:image];
-//
-//            // Remove the IconDownloader from the in progress list.
-//            // This will result in it being deallocated.
-//            [self.imageDownloadsInProgress removeObjectForKey:imageUrl];
-//            
-//        }];
-//        [self.imageDownloadsInProgress setObject:iconDownloader forKey:imageUrl];
-//        
-//        [iconDownloader startDownloadWithURL:imageUrl AndToken:nil];
-//    }
-//}
-
 - (void)spinImageView:(UIImageView *)imageView  {
 //    CABasicAnimation *rotation;
 //    rotation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
@@ -282,15 +233,5 @@
 }
 
 
-- (void)showAlertWithTitle:(NSString *)title AndMessage: (NSString *)message {
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                    message:message
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
-    
-}
 
 @end
