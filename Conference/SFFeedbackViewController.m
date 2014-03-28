@@ -25,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self performSegueWithIdentifier:@"showAuthViewSegue" sender:self];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.appId = [defaults objectForKey:@"appId"];

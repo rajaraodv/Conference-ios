@@ -35,16 +35,16 @@
     SFSpeaker *speaker = sessionsManager.currentSpeaker;
     self.speakerBioTextView.backgroundColor = [UIColor clearColor];
     self.speakerBioTextView.textAlignment = NSTextAlignmentJustified;
-    self.speakerBioTextView.text = speaker.Speaker_Bio__c;
+    self.speakerBioTextView.text = speaker.Description;
     
    // [self.speakerBioTextView setFont:[UIFont fontWithName:@"HelveticaNeue-Regular" size:17.0f]];
 
     //self.speakerImageView.image = self.speakerImage;
-    UIImage *cachedSpeakerImage = [imageManager.imageCache objectForKey:speaker.Photo_Url__c];
+    UIImage *cachedSpeakerImage = [imageManager.imageCache objectForKey:speaker.Photo_URL__c];
     self.speakerImageView.image = cachedSpeakerImage;
     [imageManager makeImageViewRounded:self.speakerImageView withRadius:90.0];
     
-    self.speakerTitleLabel.text = speaker.Title__c;
+    self.speakerTitleLabel.text = speaker.Title;
     self.speakerNameLabel.text = speaker.Name;
     self.speakerTwitterLabel.text = speaker.Twitter__c;
     self.speakerCompany.text = speaker.Company__c;

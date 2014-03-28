@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E4A4F2C18E4C0D90044FA91 /* SFAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A4F2B18E4C0D90044FA91 /* SFAuthViewController.m */; };
+		2E4A4F3018E4C6A10044FA91 /* SFUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E4A4F2F18E4C6A10044FA91 /* SFUser.m */; };
 		2E56D6DB18DB458C001BD8E2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E56D6D418DB458C001BD8E2 /* Default-568h@2x.png */; };
 		2E56D6DC18DB458C001BD8E2 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E56D6D518DB458C001BD8E2 /* Default-Landscape@2x~ipad.png */; };
 		2E56D6DD18DB458C001BD8E2 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E56D6D618DB458C001BD8E2 /* Default-Landscape~ipad.png */; };
@@ -95,6 +97,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E4A4F2A18E4C0D90044FA91 /* SFAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFAuthViewController.h; path = ../SFAuthViewController.h; sourceTree = "<group>"; };
+		2E4A4F2B18E4C0D90044FA91 /* SFAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFAuthViewController.m; path = ../SFAuthViewController.m; sourceTree = "<group>"; };
+		2E4A4F2E18E4C6A10044FA91 /* SFUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFUser.h; sourceTree = "<group>"; };
+		2E4A4F2F18E4C6A10044FA91 /* SFUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFUser.m; sourceTree = "<group>"; };
 		2E56D6D418DB458C001BD8E2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2E56D6D518DB458C001BD8E2 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		2E56D6D618DB458C001BD8E2 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
@@ -235,6 +241,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E4A4F2D18E4C0E60044FA91 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				2E4A4F2A18E4C0D90044FA91 /* SFAuthViewController.h */,
+				2E4A4F2B18E4C0D90044FA91 /* SFAuthViewController.m */,
+				2E4A4F2E18E4C6A10044FA91 /* SFUser.h */,
+				2E4A4F2F18E4C6A10044FA91 /* SFUser.m */,
+			);
+			name = Auth;
+			sourceTree = "<group>";
+		};
 		2E5AB92318DA09BE00FAD67E /* BackGroundLayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,6 +327,7 @@
 		2E7E326818C216A800426121 /* Conference */ = {
 			isa = PBXGroup;
 			children = (
+				2E4A4F2D18E4C0E60044FA91 /* Auth */,
 				2E7E327118C216A800426121 /* SFAppDelegate.h */,
 				2E7E327218C216A800426121 /* SFAppDelegate.m */,
 				2E5AB92E18DA66B800FAD67E /* ImageUtil */,
@@ -661,6 +679,7 @@
 				2E88D3D618D0D4EE00EFE315 /* SFSpeakerViewController.m in Sources */,
 				2E88D3A818C9370300EFE315 /* SFThankYouViewController.m in Sources */,
 				2E88D3A218C7FBE900EFE315 /* TPKeyboardAvoidingScrollView.m in Sources */,
+				2E4A4F3018E4C6A10044FA91 /* SFUser.m in Sources */,
 				2E88D3CB18CE41A200EFE315 /* SFSponsorsCell.m in Sources */,
 				2E88D39F18C7EC1B00EFE315 /* SFFeedbackViewController.m in Sources */,
 				2E9FBD1B18D8A064004B945F /* SFSessionDetailsViewController.m in Sources */,
@@ -677,6 +696,7 @@
 				2E5AB92D18DA628F00FAD67E /* SFImageManager.m in Sources */,
 				2E7E32B018C2293800426121 /* SFSessionsViewController.m in Sources */,
 				2E7E32B618C22B2E00426121 /* SFSessionCell.m in Sources */,
+				2E4A4F2C18E4C0D90044FA91 /* SFAuthViewController.m in Sources */,
 				2ECF057618DBA70A00F594A6 /* SFSponsorsManager.m in Sources */,
 				2E88D3E918D1776300EFE315 /* GM_FSHighlightAnimationAdditions.m in Sources */,
 			);

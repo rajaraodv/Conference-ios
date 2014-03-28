@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F16037AC-225E-43EC-A2E6-B8CE1E9C5461</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Conference</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B68D32C2-A848-4C07-A784-B342721C090A</key>
+		<string>ssh://github.com/rajaraodv/Conference-ios.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Conference.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B68D32C2-A848-4C07-A784-B342721C090A</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/rajaraodv/Conference-ios.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B68D32C2-A848-4C07-A784-B342721C090A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B68D32C2-A848-4C07-A784-B342721C090A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Conference</string>
+		</dict>
+	</array>
+</dict>
+</plist>

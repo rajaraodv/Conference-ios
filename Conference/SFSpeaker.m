@@ -13,10 +13,10 @@
     
     self.Name = [dict objectForKey:@"Name"];
     self.Id = [dict objectForKey:@"Id"];
-    self.Speaker_Bio__c = [dict objectForKey:@"Speaker_Bio__c"];
-    self.Photo_Url__c = [dict objectForKey:@"Photo_Url__c"];
+    self.Description = [dict objectForKey:@"Description"];
+    self.Photo_URL__c = [dict objectForKey:@"Photo_URL__c"];
     self.Twitter__c = [dict objectForKey:@"Twitter__c"];
-    self.Title__c = [dict objectForKey:@"Title__c"];
+    self.Title = [dict objectForKey:@"Title"];
     self.Company__c = [dict objectForKey:@"Company__c"];
 
     return self;

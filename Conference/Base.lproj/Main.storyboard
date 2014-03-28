@@ -61,6 +61,39 @@
             </objects>
             <point key="canvasLocation" x="1141" y="-480"/>
         </scene>
+        <!--Auth View Controller-->
+        <scene sceneID="Tt8-Qq-8PF">
+            <objects>
+                <viewController id="lTC-v2-UGM" customClass="SFAuthViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Nju-1B-zR9"/>
+                        <viewControllerLayoutGuide type="bottom" id="1qd-xg-zbq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ydq-LT-EE2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VhZ-aa-NEX">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ZeP-nA-JQd">
+                                <rect key="frame" x="150" y="230" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="ZeP-nA-JQd" id="ALq-uc-YVR"/>
+                        <outlet property="webView" destination="VhZ-aa-NEX" id="TMz-3q-qEj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iCk-Mh-LNZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2725" y="37"/>
+        </scene>
         <!--Table View Controller-->
         <scene sceneID="SON-8y-z8d">
             <objects>
@@ -645,6 +678,7 @@
                         <outlet property="ratingsLabel" destination="W2V-Wu-5xm" id="K16-KP-N0B"/>
                         <outlet property="ratingsSlider" destination="3C7-Fg-IJt" id="YFZ-F0-NjI"/>
                         <segue destination="IEt-qu-gXw" kind="modal" identifier="showThankYouSegue" modalTransitionStyle="flipHorizontal" id="6Sm-64-xh3"/>
+                        <segue destination="lTC-v2-UGM" kind="modal" identifier="showAuthViewSegue" id="E8c-xn-sac"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXR-eM-Hnj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -691,7 +725,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hQV-1R-yht" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2681" y="285"/>
+            <point key="canvasLocation" x="2725" y="641"/>
         </scene>
         <!--Navigation Controller - Sessions-->
         <scene sceneID="idC-ff-UbK">

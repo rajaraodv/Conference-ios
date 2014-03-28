@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SFThankYouViewController.h"
-
+#import "SFAuthViewController.h"
 
 @interface SFFeedbackViewController : UIViewController<ThankYouViewDelegate>
 //@property (strong, atomic) SFSession *session;

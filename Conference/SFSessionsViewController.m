@@ -388,7 +388,7 @@
         
         UIImageView *speakerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
         speakerImageView.contentMode = UIViewContentModeScaleAspectFit;
-        [self.imageManager setImageView:speakerImageView forImageUrl:speaker.Photo_Url__c WithRadius:40.0];
+        [self.imageManager setImageView:speakerImageView forImageUrl:speaker.Photo_URL__c WithRadius:40.0];
         //[self.imageManager makeImageViewRounded:speakerImageView withRadius:40.0];
         [button addSubview:speakerImageView];
         
@@ -399,7 +399,7 @@
         [button addSubview:speakerNamelabel];
         
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 20, 200, 30)];
-        titleLabel.text = speaker.Title__c;
+        titleLabel.text = speaker.Title;
         titleLabel.textColor = [UIColor whiteColor];
         [titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:12.0f]];
         [button addSubview:titleLabel];
